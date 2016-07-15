@@ -16,47 +16,40 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name="RequestManagerPilot")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RequestPilot{
+public class RequestPilot extends Request{
 
-	@XmlElement(name = "NOME_PILOTA",nillable = false)
+	@XmlElement(name = "NAME_PILOT")
 	private String name;
 
-	@XmlElement(name = "COGNOME_PILOTA",nillable = false)
+	@XmlElement(name = "SURNAME_PILOTA")
 	private String surname;
 
-	@XmlElement(name = "NAZIONE",nillable = false)
+	@XmlElement(name = "NATION")
 	private String nation;
 	
-	@XmlElement(name = "STATO",nillable = false)
+	@XmlElement(name = "STATE")
 	private String state;
 	
-	@XmlElement(name = "LICENZA_PILOTA",nillable = false)
+	@XmlElement(name = "LICENSE_PILOT")
 	private String pilotLicense;
 
-	@XmlElement(name = "TaxCode",nillable = false)
+	@XmlElement(name = "TAX_CODE")
 	private String taxCode;
 	
-	@XmlElement(name = "DATA_NASCITA",nillable = false)
+	@XmlElement(name = "BIRTH_DATE")
 	private Date birthDate;
 	
-	@XmlElement(name = "RESIDENZA",nillable = false)
+	@XmlElement(name = "RESIDENCE")
 	private String residence;
 	
-	@XmlElement(name = "PHONE",nillable = false)
+	@XmlElement(name = "PHONE")
 	private String phone;
 	
-	@XmlElement(name = "MAIL",nillable = false)
+	@XmlElement(name = "MAIL")
 	private String mail;
 	
-	@XmlElement(name = "PASSWORD",nillable = false)
+	@XmlElement(name = "PASSWORD")
 	private String password;
-	
-	@XmlElement(name = "OPERAZIONE", nillable = false)
-	private operazione op;
-	
-	public enum operazione{
-		ADD,DELETE
-	};
 	
 	public RequestPilot() {
 		super();
@@ -64,7 +57,7 @@ public class RequestPilot{
 	}
 
 	public RequestPilot(String name, String surname, String nation, String state, String pilotLicense, String taxCode,
-			Date birthDate, String residence, String phone, String mail, String password, operazione op) {
+			Date birthDate, String residence, String phone, String mail, String password,operation op) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -168,23 +161,14 @@ public class RequestPilot{
 		this.password = password;
 	}
 
-	public operazione getOp() {
-		return op;
-	}
-
-	public void setOp(operazione op) {
-		this.op = op;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
 		result = prime * result + ((mail == null) ? 0 : mail.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((nation == null) ? 0 : nation.hashCode());
-		result = prime * result + ((op == null) ? 0 : op.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
 		result = prime * result + ((pilotLicense == null) ? 0 : pilotLicense.hashCode());
@@ -199,7 +183,7 @@ public class RequestPilot{
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -223,8 +207,6 @@ public class RequestPilot{
 			if (other.nation != null)
 				return false;
 		} else if (!nation.equals(other.nation))
-			return false;
-		if (op != other.op)
 			return false;
 		if (password == null) {
 			if (other.password != null)

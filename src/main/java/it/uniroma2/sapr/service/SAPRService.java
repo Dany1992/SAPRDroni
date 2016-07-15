@@ -7,6 +7,7 @@ import javax.xml.ws.BindingType;
 
 
 import it.uniroma2.sapr.bean.RequestPilot;
+import it.uniroma2.sapr.bean.RequestSAPR;
 
 @WebService
 @BindingType("http://schemas.xmlsoap.org/wsdl/soap/http")
@@ -16,5 +17,12 @@ public class SAPRService implements SAPRServiceInterface{
 	public Boolean requestManagerPilot(@WebParam(name = "request")RequestPilot request) throws Exception {
 		throw new Exception("metodo non implementato");
 	}
+	
+	@WebMethod(operationName = "managerSAPR")
+	public Boolean requestManagerSAPR(@WebParam(name = "request")RequestSAPR request) throws Exception {
+		throw new Exception("metodo non implementato");
+	}
+	
+	
 
 }
