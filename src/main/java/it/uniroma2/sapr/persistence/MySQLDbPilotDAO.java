@@ -1,8 +1,10 @@
 package it.uniroma2.sapr.persistence;
 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.logging.Logger;
-import com.mysql.cj.jdbc.PreparedStatement;
 
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.tansfer.bean.Pilot;
@@ -21,18 +23,27 @@ public class MySQLDbPilotDAO implements PilotDAO {
 	final static Logger logger = Logger.getLogger("PESISTENCE");
 	
 	/**
+	 *  
 	 * Inserisce nel db un pilota
-	 * @param pilot è il bean contente tutti i dati da inserire nel db
+	 * @param pilot è il bean contente tutti i dati da inserire nel db 
+	 * @throws SQLException
 	 */
-	public boolean insertPilot(Pilot pilot){
+	public boolean insertPilot(Pilot pilot) throws SQLException{
 		String method = "insertPilot";
+		Connection con = null;
+		PreparedStatement pt = null;
 		String query = "INSERT INTO table_name (pilotLicense, name," +
 		"surname,birthDate,nation,taxCode,state,residence,phone,mail,password) VALUES "
 		+ "(?,?,?,?,?,?,?,?,?,?,?) ";
+		
 		try {
+			//logger per segnalare l'inizio della scrittura del metodo
 			logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilot.toString()));
 					
-			PreparedStatement pt = (PreparedStatement)MySQLDbDAOFactory.createConnection().prepareStatement(query);
+			con = MySQLDbDAOFactory.createConnection();
+			pt = con.prepareStatement(query);
+			
+			//compilo i campi ? nella query
 			pt.setString(1, pilot.getPilotLicense());
 			pt.setString(2, pilot.getName());
 			pt.setString(3, pilot.getSurname());
@@ -45,29 +56,40 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			pt.setString(10, pilot.getMail());
 			pt.setString(11, pilot.getPassword());
 			
+			//eseguo la query
 			pt.execute();
+			pt.close();
+			con.close();
 			
 			logger.info(String.format("Class:%s-Method:%s::END", classe,method));
 			return true;
 		} catch (Exception e) {
-			logger.warning("Errore scrittura db" + e);
+			logger.info(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
 			return false;
+		} finally {
+			if (pt != null) {
+				pt.close();
+			}
+
+			if (con != null) {
+				con.close();
+			}
 		}
 		
 	}
 
-	public boolean deletePilot(Pilot pilot) {
-		
+	public boolean deletePilot(Pilot pilot) throws SQLException {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean updatePilot(Pilot pilot) {
-		
+	public boolean updatePilot(Pilot pilot) throws SQLException {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public RequestPilot selectPilot(Long idSapr) {
-		
+	public RequestPilot selectPilot(Long idSapr) throws SQLException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
