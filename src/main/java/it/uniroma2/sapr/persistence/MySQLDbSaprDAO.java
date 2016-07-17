@@ -5,24 +5,22 @@ import it.uniroma2.sapr.tansfer.bean.Sapr;
 
 public class MySQLDbSaprDAO implements SaprDAO {
 
-	public boolean insertPilot(Sapr pilot) {
-		// TODO Auto-generated method stub
+	public boolean insertPilot(Sapr sapr) {
 		return false;
 	}
 
-	public boolean deletePilot(Sapr pilot) {
-		// TODO Auto-generated method stub
+	public boolean deletePilot(Sapr sapr) {
 		return false;
 	}
 
-	public boolean updatePilot(Sapr pilot) {
-		// TODO Auto-generated method stub
+	public boolean updatePilot(Sapr sapr) {
 		return false;
 	}
 
-	public RequestPilot selectPilot(String pilotLicense) {
-		// TODO Auto-generated method stub
+	public RequestPilot selectPilot(String idSapr) {
 		return null;
 	}
+
+	
 
 }
