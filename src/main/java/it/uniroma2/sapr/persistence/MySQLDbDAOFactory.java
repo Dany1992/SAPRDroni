@@ -16,20 +16,28 @@ import java.sql.SQLException;
  */
 public class MySQLDbDAOFactory extends DAOFactory {
 
-	public static final String DRIVER = "sun.jdbc.odbc.JdbcOdbcDriver";
-	public static final String DBURL = "jdbc:odbc:myDataSource";
+	public static final String DRIVER = "com.mysql.jdbc.Driver";
+	public static final String DBURL = "jdbc:mysql://localhost/sapr";
 		 
 	/**
 	 * Instaura la connessione con il DB, sarebbe utile magari portare su file esterni la username
 	 * e la password. Per il momento sono camblate nel codice. Poi permette di richiamare 
 	 * @return 
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
 	 */
-	public static Connection createConnection() throws SQLException {
+	public static Connection createConnection() {
 	//Occorre fare un singleton per la connessione al db
 	//connection pool implementation
-		String url = "jdbc:odbc:myDataSource";
-		Connection con = DriverManager.getConnection(url, "username", "password");
+		Connection con = null;
+		try {
+			Class.forName(DRIVER).newInstance();
+			con = DriverManager.getConnection(DBURL, "root", "");
+			return con;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return con;
 	}
 

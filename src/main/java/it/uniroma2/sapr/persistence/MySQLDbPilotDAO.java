@@ -4,10 +4,12 @@ package it.uniroma2.sapr.persistence;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Logger;
+import java.text.ParseException;
+
+import org.apache.log4j.Logger;
 
 import it.uniroma2.sapr.bean.RequestPilot;
-import it.uniroma2.sapr.tansfer.bean.Pilot;
+import it.uniroma2.sapr.pojo.Pilot;
 
 /**
  * 
@@ -32,14 +34,14 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		String method = "insertPilot";
 		Connection con = null;
 		PreparedStatement pt = null;
-		String query = "INSERT INTO table_name (pilotLicense, name," +
+		String query = "INSERT INTO pilot (pilotLicense, name," +
 		"surname,birthDate,nation,taxCode,state,residence,phone,mail,password) VALUES "
 		+ "(?,?,?,?,?,?,?,?,?,?,?) ";
 		
 		try {
 			//logger per segnalare l'inizio della scrittura del metodo
 			logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilot.toString()));
-					
+			
 			con = MySQLDbDAOFactory.createConnection();
 			pt = con.prepareStatement(query);
 			
@@ -47,7 +49,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			pt.setString(1, pilot.getPilotLicense());
 			pt.setString(2, pilot.getName());
 			pt.setString(3, pilot.getSurname());
-			pt.setDate(4, pilot.getBirthDate());
+			pt.setString(4, pilot.getBirthDate());
 			pt.setString(5, pilot.getNation());
 			pt.setString(6, pilot.getTaxCode());
 			pt.setString(7, pilot.getState());
@@ -57,14 +59,24 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			pt.setString(11, pilot.getPassword());
 			
 			//eseguo la query
-			pt.execute();
-			pt.close();
-			con.close();
+			if(pt.executeUpdate() == 1){
+				pt.close();
+				con.close();
+				System.out.println("a buon fine");
+				logger.info(String.format("Class:%s-Method:%s::END add pilot with license code-%s", //
+						classe,method,pilot.getPilotLicense()));
+				return true;
+			}else {
+				pt.close();
+				con.close();
+				System.out.println("male");
+				logger.info(String.format("Class:%s-Method:%s::END dont add pilot with license code-%s", //
+						classe,method,pilot.getPilotLicense()));
+				return false;
+			}
 			
-			logger.info(String.format("Class:%s-Method:%s::END", classe,method));
-			return true;
 		} catch (Exception e) {
-			logger.info(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+			logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
 			return false;
 		} finally {
 			if (pt != null) {
@@ -76,6 +88,20 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			}
 		}
 		
+	}
+	
+	public static void main(String args[]) throws ParseException{
+		
+		Pilot pilot = new Pilot("Danilo", "Butrico", "Italiana", "Italia", "11l23kk",
+				"00132", "22-06-1992", "Roma", "3272871227", "dbutricod@gmail.com", "123");
+		MySQLDbPilotDAO mysqlTest = new MySQLDbPilotDAO();
+		try {
+			System.out.println("sto per iniserire");
+			mysqlTest.insertPilot(pilot);
+		} catch (SQLException e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
 	}
 
 	public boolean deletePilot(Pilot pilot) throws SQLException {

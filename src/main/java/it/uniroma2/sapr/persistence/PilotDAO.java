@@ -3,7 +3,7 @@ package it.uniroma2.sapr.persistence;
 
 import java.sql.SQLException;
 import it.uniroma2.sapr.bean.RequestPilot;
-import it.uniroma2.sapr.tansfer.bean.Pilot;
+import it.uniroma2.sapr.pojo.Pilot;
 
 public interface PilotDAO {
 	public boolean insertPilot(Pilot pilot) throws SQLException;
