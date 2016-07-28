@@ -1,7 +1,5 @@
 package it.uniroma2.sapr.bean;
 
-import java.sql.Date;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,14 +9,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by Tiziano on 28/07/16.
  */
-@XmlRootElement(name="RequestManagerPilot")
+@XmlRootElement(name="requestManagerNote")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RequestNote extends Request{
     @XmlElement(name = "ID_NOTE")
     private int idNote;
-    @XmlElement(name = "TEXT_NOTE")
+    @XmlElement(name = "TEXT_NOTE", nillable = false)
     private String textNote;
-    @XmlElement(name = "DATE_NOTE")
+    @XmlElement(name = "DATE_NOTE", nillable = false)
     private String date;
 
     public RequestNote(int idNote, String textNote, String date, operation op) {
