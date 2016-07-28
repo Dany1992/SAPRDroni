@@ -42,11 +42,11 @@ public class SAPRService implements SAPRServiceInterface{
 	}
 	
 	/**
-	 * Il webMethod che si occupa di aggiungere o eliminare un drone. Questa operazione viene effettuata
+	 * Il webMethod che si occupa di aggiungere o eliminare un Device. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequetSAPR
 	 */
 	@WebMethod(operationName = "managerDevice")
-	public Boolean requestManagerSAPR(@WebParam(name = "request")RequestDevice request) throws Exception {
+	public Boolean requestManagerDevice(@WebParam(name = "request")RequestDevice request) throws Exception {
 		throw new Exception("metodo non implementato");
 	}	
 
