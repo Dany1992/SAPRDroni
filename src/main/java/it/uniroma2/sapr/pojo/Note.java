@@ -51,7 +51,13 @@ public class Note {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Note)) return false;
+<<<<<<< HEAD
         Note note = (Note) o;
+=======
+
+        Note note = (Note) o;
+
+>>>>>>> tizianoBranch
         if (getIdNote() != note.getIdNote()) return false;
         if (!getTextNote().equals(note.getTextNote())) return false;
         return getDate().equals(note.getDate());

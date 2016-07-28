@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="334dcb96-25ba-44f3-b229-176ecd261dcc" name="Default" comment="">
 <<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/persistence/MySQLDbDAOFactory.java" afterPath="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/persistence/MySQLDbDAOFactory.java" />
@@ -9,6 +10,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Note.java" afterPath="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Note.java" />
 >>>>>>> tizianoBranch
     </list>
+=======
+    <list default="true" id="334dcb96-25ba-44f3-b229-176ecd261dcc" name="Default" comment="" />
+>>>>>>> tizianoBranch
     <ignored path="SAPR.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -32,6 +36,7 @@
       <file leaf-file-name="Device.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Device.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
 <<<<<<< HEAD
             <state relative-caret-position="1440">
               <caret line="124" column="5" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
@@ -59,6 +64,10 @@
             <state relative-caret-position="105">
               <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
 >>>>>>> tizianoBranch
+=======
+            <state relative-caret-position="105">
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+>>>>>>> tizianoBranch
               <folding />
             </state>
           </provider>
@@ -68,11 +77,16 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Note.java">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <state relative-caret-position="453">
               <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
 =======
             <state relative-caret-position="288">
               <caret line="50" column="37" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
+>>>>>>> tizianoBranch
+=======
+            <state relative-caret-position="408">
+              <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
 >>>>>>> tizianoBranch
               <folding />
             </state>
@@ -100,7 +114,10 @@
     <option name="CHANGED_PATHS">
       <list>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/persistence/MySQLDbDAOFactory.java" />
+=======
+>>>>>>> tizianoBranch
 =======
 >>>>>>> tizianoBranch
         <option value="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Note.java" />
@@ -157,7 +174,10 @@
       <pane id="Scratches" />
       <pane id="Scope" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <pane id="PackagesPane" />
+=======
+>>>>>>> tizianoBranch
 =======
 >>>>>>> tizianoBranch
       <pane id="ProjectPane">
@@ -261,6 +281,7 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
 <<<<<<< HEAD
+<<<<<<< HEAD
               <option name="myItemId" value="persistence" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -293,6 +314,8 @@
             <PATH_ELEMENT>
 =======
 >>>>>>> tizianoBranch
+=======
+>>>>>>> tizianoBranch
               <option name="myItemId" value="bean" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -300,6 +323,10 @@
         </subPane>
       </pane>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+      <pane id="PackagesPane" />
+>>>>>>> tizianoBranch
 =======
       <pane id="PackagesPane" />
 >>>>>>> tizianoBranch
@@ -477,15 +504,21 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <editor active="false" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23424879" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
 =======
+=======
+>>>>>>> tizianoBranch
     <editor active="true" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23424879" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+<<<<<<< HEAD
+>>>>>>> tizianoBranch
+=======
 >>>>>>> tizianoBranch
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -527,6 +560,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Device.java">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state relative-caret-position="1440">
           <caret line="124" column="5" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
           <folding />
@@ -561,6 +595,8 @@
       <provider selected="true" editor-type-id="text-editor">
 =======
 >>>>>>> tizianoBranch
+=======
+>>>>>>> tizianoBranch
         <state relative-caret-position="105">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding />
@@ -577,6 +613,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Device.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
 <<<<<<< HEAD
         <state relative-caret-position="1440">
           <caret line="124" column="5" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
@@ -600,18 +637,27 @@
         <state relative-caret-position="105">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
 >>>>>>> tizianoBranch
+=======
+        <state relative-caret-position="105">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+>>>>>>> tizianoBranch
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Note.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
 <<<<<<< HEAD
         <state relative-caret-position="453">
           <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
 =======
         <state relative-caret-position="288">
           <caret line="50" column="37" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
+>>>>>>> tizianoBranch
+=======
+        <state relative-caret-position="408">
+          <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
 >>>>>>> tizianoBranch
           <folding />
         </state>
