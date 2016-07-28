@@ -123,6 +123,6 @@ public class Device {
     public String toString() {
         return "Device{" + "idDevice=" + idDevice + ", model=" + model + ", type=" + type + ", weight=" + weight + ", producer=" + producer + ", pilotLicense=" + pilotLicense + '}';
     }
-
+    
     
 }
