@@ -21,10 +21,11 @@ public class RequestNote extends Request{
     @XmlElement(name = "DATE_NOTE")
     private String date;
 
-    public RequestNote(int idNote, String textNote, String date) {
+    public RequestNote(int idNote, String textNote, String date, operation op) {
         this.idNote = idNote;
         this.textNote = textNote;
         this.date = date;
+        this.op = op;
     }
 
     public int getIdNote() {
