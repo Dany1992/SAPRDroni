@@ -51,9 +51,7 @@ public class Note {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Note)) return false;
-
         Note note = (Note) o;
-
         if (getIdNote() != note.getIdNote()) return false;
         if (!getTextNote().equals(note.getTextNote())) return false;
         return getDate().equals(note.getDate());
