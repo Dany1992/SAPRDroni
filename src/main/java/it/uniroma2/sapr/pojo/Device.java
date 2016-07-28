@@ -6,7 +6,9 @@
 package it.uniroma2.sapr.pojo;
 
 /**
- *
+ * Questa classe è l'oggetto che viene creato prelevando i dati dalla RequestDevice.
+ * Questo oggetto serve per le operazioni che faremo nel DB
+ * 
  * @author dario
  */
 public class Device {
@@ -123,6 +125,5 @@ public class Device {
     public String toString() {
         return "Device{" + "idDevice=" + idDevice + ", model=" + model + ", type=" + type + ", weight=" + weight + ", producer=" + producer + ", pilotLicense=" + pilotLicense + '}';
     }
-
     
 }
