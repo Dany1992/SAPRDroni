@@ -5,8 +5,7 @@ import javax.jws.WebService;
 
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
-import it.uniroma2.sapr.bean.RequestDevice;
-        
+
 @WebService
 public interface SAPRServiceInterface {
 	
@@ -14,5 +13,5 @@ public interface SAPRServiceInterface {
 	
 	public Boolean requestManagerSAPR(@WebParam(name="request")RequestSAPR request) throws Exception;
 	
-	public Boolean requestManagerSAPR(@WebParam(name="request")RequestDevice request) throws Exception;
+	
 }
