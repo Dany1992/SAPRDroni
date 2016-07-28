@@ -24,7 +24,6 @@ public class MySQLDbDeviceDAO implements DeviceDAO{
         * @param device è il bean contente tutti i dati da inserire nel db 
         * @throws SQLException
         */
-        System.out.print("entrato nel metodo INSERT!!!");
         String method = "insertDevice";
 	Connection con = null;
 	PreparedStatement pt = null;
@@ -38,8 +37,6 @@ public class MySQLDbDeviceDAO implements DeviceDAO{
                     
             con = MySQLDbDAOFactory.createConnection();
             pt = con.prepareStatement(query);    
-            
-            System.out.print("Connessione db");
             
             //compilo i campi ? nella query
             pt.setInt(1, device.getIdDevice());
@@ -82,7 +79,22 @@ public class MySQLDbDeviceDAO implements DeviceDAO{
         }
 
     }
-    
+
+    public boolean deleteDevice(Device device) throws SQLException {
+    /**
+     * questo metodo elimina un dispositivo dal DB
+     * @param device è il bean contente tutti i dati da inserire nel db 
+     * @throws SQLException
+    */
+        
+        
+        return false;
+    }    
+
+    public RequestDevice selectDevice(Long idDevice, String owner) throws SQLException {
+        
+        return null;
+    }    
     
     public static void main(String args[]) throws ParseException{
         Device device = new Device(70,"A144","tipo",520,"Prod1","0000000003");
@@ -95,15 +107,6 @@ public class MySQLDbDeviceDAO implements DeviceDAO{
             System.out.println(e);
             e.printStackTrace();
 	}
-    }
-
-    public boolean deleteDevice(Device device) throws SQLException {
-        return false;
-    }
-
-    public RequestDevice selectDevice(Long idDevice, String owner) throws SQLException {
-        
-        return null;
     }
     
 }
