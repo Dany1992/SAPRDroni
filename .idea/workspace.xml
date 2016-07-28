@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <list default="true" id="334dcb96-25ba-44f3-b229-176ecd261dcc" name="Default" comment="">
 <<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/persistence/MySQLDbDAOFactory.java" afterPath="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/persistence/MySQLDbDAOFactory.java" />
@@ -12,6 +13,12 @@
     </list>
 =======
     <list default="true" id="334dcb96-25ba-44f3-b229-176ecd261dcc" name="Default" comment="" />
+>>>>>>> tizianoBranch
+=======
+    <list default="true" id="334dcb96-25ba-44f3-b229-176ecd261dcc" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/bean/RequestNote.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
 >>>>>>> tizianoBranch
     <ignored path="SAPR.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,10 +39,11 @@
     <favorites_list name="SAPR" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Device.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Device.java">
+    <leaf>
+      <file leaf-file-name="Request.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/bean/Request.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
             <state relative-caret-position="1440">
@@ -68,14 +76,19 @@
             <state relative-caret-position="105">
               <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
 >>>>>>> tizianoBranch
+=======
+            <state relative-caret-position="165">
+              <caret line="13" column="18" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+>>>>>>> tizianoBranch
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Note.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Note.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Note.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
             <state relative-caret-position="453">
@@ -88,7 +101,47 @@
             <state relative-caret-position="408">
               <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
 >>>>>>> tizianoBranch
+=======
+            <state relative-caret-position="87">
+              <caret line="8" column="24" selection-start-line="6" selection-start-column="4" selection-end-line="8" selection-end-column="24" />
+>>>>>>> tizianoBranch
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RequestPilot.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/bean/RequestPilot.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1707">
+              <caret line="60" column="16" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RequestNote.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/bean/RequestNote.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1309">
+              <caret line="77" column="18" selection-start-line="77" selection-start-column="18" selection-end-line="77" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#792#793#0" expanded="true" />
+                <element signature="e#821#822#0" expanded="true" />
+                <element signature="e#862#863#0" expanded="true" />
+                <element signature="e#898#899#0" expanded="true" />
+                <element signature="e#933#934#0" expanded="true" />
+                <element signature="e#964#965#0" expanded="true" />
+                <element signature="e#1012#1013#0" expanded="true" />
+                <element signature="e#1052#1053#0" expanded="true" />
+                <element signature="e#1083#1084#0" expanded="true" />
+                <element signature="e#1110#1111#0" expanded="true" />
+                <element signature="e#1150#1151#0" expanded="true" />
+                <element signature="e#1182#1183#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -121,6 +174,7 @@
 =======
 >>>>>>> tizianoBranch
         <option value="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Note.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/bean/RequestNote.java" />
       </list>
     </option>
   </component>
@@ -171,7 +225,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -329,6 +382,10 @@
 >>>>>>> tizianoBranch
 =======
       <pane id="PackagesPane" />
+<<<<<<< HEAD
+>>>>>>> tizianoBranch
+=======
+      <pane id="Scratches" />
 >>>>>>> tizianoBranch
     </panes>
   </component>
@@ -649,6 +706,7 @@
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state relative-caret-position="453">
           <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
 =======
@@ -659,7 +717,67 @@
         <state relative-caret-position="408">
           <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
 >>>>>>> tizianoBranch
+=======
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> tizianoBranch
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/bean/Request.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="13" column="18" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/pojo/Note.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="8" column="24" selection-start-line="6" selection-start-column="4" selection-end-line="8" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/bean/RequestPilot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1707">
+          <caret line="60" column="16" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/uniroma2/sapr/bean/RequestNote.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1309">
+          <caret line="77" column="18" selection-start-line="77" selection-start-column="18" selection-end-line="77" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#792#793#0" expanded="true" />
+            <element signature="e#821#822#0" expanded="true" />
+            <element signature="e#862#863#0" expanded="true" />
+            <element signature="e#898#899#0" expanded="true" />
+            <element signature="e#933#934#0" expanded="true" />
+            <element signature="e#964#965#0" expanded="true" />
+            <element signature="e#1012#1013#0" expanded="true" />
+            <element signature="e#1052#1053#0" expanded="true" />
+            <element signature="e#1083#1084#0" expanded="true" />
+            <element signature="e#1110#1111#0" expanded="true" />
+            <element signature="e#1150#1151#0" expanded="true" />
+            <element signature="e#1182#1183#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
