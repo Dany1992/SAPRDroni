@@ -74,6 +74,55 @@ public class Device {
         this.pilotLicense = pilotLicense;
     }
     
-    
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + this.idDevice;
+        hash = 17 * hash + (this.model != null ? this.model.hashCode() : 0);
+        hash = 17 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 17 * hash + this.weight;
+        hash = 17 * hash + (this.producer != null ? this.producer.hashCode() : 0);
+        hash = 17 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Device other = (Device) obj;
+        if (this.idDevice != other.idDevice) {
+            return false;
+        }
+        if (this.weight != other.weight) {
+            return false;
+        }
+        if ((this.model == null) ? (other.model != null) : !this.model.equals(other.model)) {
+            return false;
+        }
+        if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
+            return false;
+        }
+        if ((this.producer == null) ? (other.producer != null) : !this.producer.equals(other.producer)) {
+            return false;
+        }
+        if ((this.pilotLicense == null) ? (other.pilotLicense != null) : !this.pilotLicense.equals(other.pilotLicense)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Device{" + "idDevice=" + idDevice + ", model=" + model + ", type=" + type + ", weight=" + weight + ", producer=" + producer + ", pilotLicense=" + pilotLicense + '}';
+    }
+
     
 }
