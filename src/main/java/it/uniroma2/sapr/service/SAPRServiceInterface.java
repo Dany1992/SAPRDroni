@@ -13,4 +13,5 @@ public interface SAPRServiceInterface {
 	
 	public Boolean requestManagerSAPR(@WebParam(name="request")RequestSAPR request) throws Exception;
 	
+	
 }
