@@ -10,5 +10,10 @@ package it.uniroma2.sapr.pojo;
  * @author dario
  */
 public class Device {
-    
+    private int idDevice;
+    private String model;
+    private String type;
+    private int weight;
+    private String producer;
+    private String pilotLicense;
 }
