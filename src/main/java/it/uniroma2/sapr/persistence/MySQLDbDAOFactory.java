@@ -33,7 +33,6 @@ public class MySQLDbDAOFactory extends DAOFactory {
 		try {
 			Class.forName(DRIVER).newInstance();
 			con = DriverManager.getConnection(DBURL, "root", "");
-			//con = DriverManager.getConnection(DBURL, "dindi", "torvergata");
 			return con;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

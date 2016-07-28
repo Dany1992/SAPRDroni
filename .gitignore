@@ -1,15 +1,1 @@
 /target/
-
-<<<<<<< HEAD
-
-src/main/java/it/uniroma2/sapr/persistence/MySQLDbDAOFactory.java
-
-src/main/java/it/uniroma2/sapr/pojo/Device.java
-
-=======
-<<<<<<< HEAD
-src/main/java/it/uniroma2/sapr/persistence/MySQLDbDAOFactory.java
-=======
-src/main/java/it/uniroma2/sapr/pojo/Device.java
->>>>>>> darioBranch
->>>>>>> origin/master
