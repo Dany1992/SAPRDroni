@@ -118,4 +118,17 @@ public class MySQLDbNoteDAO implements NoteDAO {
 
         return null;
     }
+
+    public static void main(String args[]) throws ParseException{
+
+        Note note = new Note(3, "Nota uno", "2016-07-28");
+        MySQLDbNoteDAO mysqlTest = new MySQLDbNoteDAO();
+        try {
+            System.out.println("sto per iniserire");
+            mysqlTest.insertNote(note);
+        } catch (SQLException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
 }

@@ -3,6 +3,7 @@ package it.uniroma2.sapr.service;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+import it.uniroma2.sapr.bean.RequestNote;
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
 
@@ -12,6 +13,8 @@ public interface SAPRServiceInterface {
 	public Boolean requestManagerPilot(@WebParam(name="request")RequestPilot request) throws Exception;
 	
 	public Boolean requestManagerSAPR(@WebParam(name="request")RequestSAPR request) throws Exception;
-	
-	
+
+	public Boolean requestManagerNote(@WebParam(name="request")RequestNote request) throws Exception;
+
+
 }
