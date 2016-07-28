@@ -3,7 +3,7 @@ package it.uniroma2.sapr.persistence;
 import java.sql.SQLException;
 
 import it.uniroma2.sapr.bean.RequestPilot;
-import it.uniroma2.sapr.tansfer.bean.Sapr;
+import it.uniroma2.sapr.pojo.Sapr;
 
 public class MySQLDbSaprDAO implements SaprDAO {
 

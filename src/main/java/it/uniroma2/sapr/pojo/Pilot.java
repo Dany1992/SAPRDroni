@@ -1,4 +1,4 @@
-package it.uniroma2.sapr.tansfer.bean;
+package it.uniroma2.sapr.pojo;
 
 import java.sql.Date;
 
@@ -18,14 +18,14 @@ public class Pilot {
 	private String state;
 	private String pilotLicense;
 	private String taxCode;
-	private Date birthDate;
+	private String birthDate;
 	private String residence;
 	private String phone;
 	private String mail;
 	private String password;
 	
 	public Pilot(String name, String surname, String nation, String state, String pilotLicense, String taxCode,
-			Date birthDate, String residence, String phone, String mail, String password) {
+			String birthDate, String residence, String phone, String mail, String password) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -88,11 +88,11 @@ public class Pilot {
 		this.taxCode = taxCode;
 	}
 
-	public Date getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 
