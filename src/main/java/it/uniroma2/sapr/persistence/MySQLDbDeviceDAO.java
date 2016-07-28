@@ -2,7 +2,6 @@
 package it.uniroma2.sapr.persistence;
 
 import it.uniroma2.sapr.bean.RequestDevice;
-import static it.uniroma2.sapr.persistence.MySQLDbPilotDAO.logger;
 import it.uniroma2.sapr.pojo.Device;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +24,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO{
         * @param device è il bean contente tutti i dati da inserire nel db 
         * @throws SQLException
         */
-        
+        System.out.print("entrato nel metodo INSERT!!!");
         String method = "insertDevice";
 	Connection con = null;
 	PreparedStatement pt = null;
@@ -69,7 +68,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO{
             
         }catch(Exception e){
             logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
-            System.out.print("CATCH");
+            System.out.println("inserimento NON andato a buon fine");
             return false;
         }
         finally{
@@ -90,7 +89,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO{
         
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {
-            System.out.println("sto per iniserire");
+            System.out.println("sto per iniziare");
             mysqlTest.insertDevice(device);
 	} catch (SQLException e) {
             System.out.println(e);
