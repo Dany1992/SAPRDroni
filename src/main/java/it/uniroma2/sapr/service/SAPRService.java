@@ -42,7 +42,7 @@ public class SAPRService implements SAPRServiceInterface{
 	}
 	
 	/**
-	 * Il webMethod che si occupa di aggiungere o eliminare un drone. Questa operazione viene effettuata
+	 * Il webMethod che si occupa di aggiungere o eliminare un Device. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequetSAPR
 	 */
 	@WebMethod(operationName = "managerDevice")
