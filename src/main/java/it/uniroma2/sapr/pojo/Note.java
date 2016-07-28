@@ -46,4 +46,25 @@ public class Note {
                 ", date='" + date + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Note)) return false;
+
+        Note note = (Note) o;
+
+        if (getIdNote() != note.getIdNote()) return false;
+        if (!getTextNote().equals(note.getTextNote())) return false;
+        return getDate().equals(note.getDate());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getIdNote();
+        result = 31 * result + getTextNote().hashCode();
+        result = 31 * result + getDate().hashCode();
+        return result;
+    }
 }
