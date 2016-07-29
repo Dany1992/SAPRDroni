@@ -14,13 +14,9 @@ public interface SAPRServiceInterface {
 	public Boolean requestManagerPilot(@WebParam(name="request")RequestPilot request) throws Exception;
 	
 	public Boolean requestManagerSAPR(@WebParam(name="request")RequestSAPR request) throws Exception;
-<<<<<<< HEAD
 	
 	public Boolean requestManagerDevice(@WebParam(name="request")RequestDevice request) throws Exception;
-=======
 
 	public Boolean requestManagerNote(@WebParam(name="request")RequestNote request) throws Exception;
 
-
->>>>>>> tizianoBranch
 }
