@@ -1,6 +1,7 @@
 package it.uniroma2.sapr.persistence;
 
-import it.uniroma2.sapr.bean.RequestDevice;
+
+import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.pojo.Device;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,6 +13,6 @@ import java.util.ArrayList;
 public interface DeviceDAO {
     public boolean insertDevice(Device device) throws SQLException;
     public boolean deleteDevice(int device) throws SQLException;
-    public ArrayList<Device> selectDevice(String owner) throws SQLException;
-    public Device selectDevice(int idDevice) throws SQLException;
+    public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException;
+    public ResponseDevice selectDevice(int idDevice) throws SQLException;
 }
