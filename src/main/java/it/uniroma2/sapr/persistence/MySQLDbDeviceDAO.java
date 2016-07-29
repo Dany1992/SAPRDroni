@@ -1,8 +1,8 @@
 package it.uniroma2.sapr.persistence;
 
 import it.uniroma2.sapr.bean.Request;
-import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.ResponseDevice;
+import it.uniroma2.sapr.pojo.Device;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +20,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
     String classe = "MySQLDbDeviceDAO";
     final static Logger logger = Logger.getLogger("PESISTENCE");
 
-    public boolean insertDevice(RequestDevice device) throws SQLException {
+    public boolean insertDevice(Device device) throws SQLException {
         /**
          * questo metodo inserisce un dispositivo nel DB
          *
@@ -275,8 +275,8 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
     }
 
     public static void main(String args[]) throws ParseException {
-        // in teoria op serve per capire quale operazione va fatta
-        //RequestDevice device = new RequestDevice(70, "A144", "tipo", 520, "Prod1", "0000000003",op);
+        
+        Device device = new Device(70, "A144", "tipo", 520, "Prod1", "0000000003");
 
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {
