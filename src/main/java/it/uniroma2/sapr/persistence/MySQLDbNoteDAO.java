@@ -42,14 +42,14 @@ public class MySQLDbNoteDAO implements NoteDAO {
             if(pt.executeUpdate() == 1){
                 pt.close();
                 con.close();
-                System.out.println("a buon fine");
+                System.out.println("Query OK");
                 logger.info(String.format("Class:%s-Method:%s::END add note with id-%s", //
                         classe,method,note.getIdNote()));
                 return true;
             }else {
                 pt.close();
                 con.close();
-                System.out.println("male");
+                System.out.println("Query Aborted");
                 logger.info(String.format("Class:%s-Method:%s::END don't add note with id-%s", //
                         classe,method,note.getIdNote()));
                 return false;
@@ -88,14 +88,14 @@ public class MySQLDbNoteDAO implements NoteDAO {
             if(pt.executeUpdate() == 1){
                 pt.close();
                 con.close();
-                System.out.println("a buon fine");
+                System.out.println("Query OK");
                 logger.info(String.format("Class:%s-Method:%s::END delete note with id-%s", //
                         classe,method,idNote));
                 return true;
             }else {
                 pt.close();
                 con.close();
-                System.out.println("male");
+                System.out.println("Query Aborted");
                 logger.info(String.format("Class:%s-Method:%s::END don't delete note with id-%s", //
                         classe,method,idNote));
                 return false;
@@ -121,11 +121,13 @@ public class MySQLDbNoteDAO implements NoteDAO {
 
     public static void main(String args[]) throws ParseException{
 
-        Note note = new Note(3, "Nota uno", "2016-07-28");
+        //Inserimento nuova nota
+        Note note = new Note("Il drone e' patito", "2016-07-28");
         MySQLDbNoteDAO mysqlTest = new MySQLDbNoteDAO();
         try {
-            System.out.println("sto per iniserire");
+            System.out.println("Starting Operation.....");
             mysqlTest.insertNote(note);
+            //mysqlTest.deleteNote(5);
         } catch (SQLException e) {
             System.out.println(e);
             e.printStackTrace();

@@ -9,6 +9,7 @@ import java.text.ParseException;
 import org.apache.log4j.Logger;
 
 import it.uniroma2.sapr.bean.RequestPilot;
+import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.pojo.Pilot;
 
 /**
@@ -118,5 +119,13 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    void insertDevice(Device d) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void insertD(Device d) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
