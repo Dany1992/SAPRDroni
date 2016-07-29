@@ -1,6 +1,8 @@
 package it.uniroma2.sapr.persistence;
 
-import it.uniroma2.sapr.pojo.Device;
+import it.uniroma2.sapr.bean.Request;
+import it.uniroma2.sapr.bean.RequestDevice;
+import it.uniroma2.sapr.bean.ResponseDevice;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +20,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
     String classe = "MySQLDbDeviceDAO";
     final static Logger logger = Logger.getLogger("PESISTENCE");
 
-    public boolean insertDevice(Device device) throws SQLException {
+    public boolean insertDevice(RequestDevice device) throws SQLException {
         /**
          * questo metodo inserisce un dispositivo nel DB
          *
@@ -134,7 +136,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         }
     }
 
-    public ArrayList<Device> selectDevice(String owner) throws SQLException {
+    public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException {
         /**
          * questo metodo prende in input l'id del pilota e ci restituisce tutti
          * i suoi dispositivi
@@ -146,7 +148,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         String method = "selectDevice";
         Connection con = null;
         PreparedStatement pt = null;
-        ArrayList<Device> arr_device = new ArrayList<Device>();
+        ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
 
         String query = "SELECT idDevice, model, type, weight, producer, pilotLicense"
                 + " FROM device WHERE pilotLicense = ?";
@@ -177,7 +179,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                     String producer = rs.getString("producer");
                     String pilotLicense = rs.getString("pilotLicense");
 
-                    Device d = new Device(id, md, type, weight, producer, pilotLicense);
+                    ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense);
                     System.out.println(d.toString());
                     arr_device.add(d);
                 }
@@ -208,7 +210,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
 
     }
 
-    public Device selectDevice(int idDevice) throws SQLException {
+    public ResponseDevice selectDevice(int idDevice) throws SQLException {
 
         String method = "selectDevice";
         Connection con = null;
@@ -243,7 +245,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                 String producer = rs.getString("producer");
                 String pilotLicense = rs.getString("pilotLicense");
                 
-                Device d = new Device(id, md, type, weight, producer, pilotLicense);
+                ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense);
 
                 System.out.println(d.toString());
 
@@ -273,8 +275,8 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
     }
 
     public static void main(String args[]) throws ParseException {
-
-        Device device = new Device(70, "A144", "tipo", 520, "Prod1", "0000000003");
+        // in teoria op serve per capire quale operazione va fatta
+        //RequestDevice device = new RequestDevice(70, "A144", "tipo", 520, "Prod1", "0000000003",op);
 
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {
