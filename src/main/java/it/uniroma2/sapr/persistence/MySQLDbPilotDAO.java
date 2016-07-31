@@ -9,9 +9,7 @@ import java.text.ParseException;
 
 import org.apache.log4j.Logger;
 
-import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.bean.ResponsePilot;
-import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.pojo.Pilot;
 
 /**
@@ -52,7 +50,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			pt.setString(1, pilot.getPilotLicense());
 			pt.setString(2, pilot.getName());
 			pt.setString(3, pilot.getSurname());
-			pt.setString(4, pilot.getBirthDate());
+			pt.setDate(4, pilot.getBirthDate());
 			pt.setString(5, pilot.getNation());
 			pt.setString(6, pilot.getTaxCode());
 			pt.setString(7, pilot.getState());
@@ -219,16 +217,9 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		}
 	}
 
-    void insertDevice(Device d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    void insertD(Device d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public static void main(String args[]) throws ParseException{
-		
+		/*
 		Pilot pilot = new Pilot("Danilo", "Butrico", "Italiana", "Italia", "11l23kk",
 				"00132", "22-06-1992", "Roma", "3272871227", "dbutricod@gmail.com", "123");
 		MySQLDbPilotDAO mysqlTest = new MySQLDbPilotDAO();
@@ -239,6 +230,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			System.out.println(e);
 			e.printStackTrace();
 		}
+		*/
 	}
 
 
