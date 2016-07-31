@@ -18,8 +18,15 @@ public class RequestNote extends Request{
     private String textNote;
     @XmlElement(name = "DATE_NOTE", nillable = false)
     private String date;
+    
+    
 
-    public RequestNote(int idNote, String textNote, String date, operation op) {
+    public RequestNote() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public RequestNote(int idNote, String textNote, String date, operation op) {
         this.idNote = idNote;
         this.textNote = textNote;
         this.date = date;

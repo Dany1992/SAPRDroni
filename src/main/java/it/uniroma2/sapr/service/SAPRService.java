@@ -48,6 +48,7 @@ public class SAPRService implements SAPRServiceInterface{
 	 */
 	@WebMethod(operationName = "managerDevice")
 	public Boolean requestManagerDevice(@WebParam(name = "request")RequestDevice request) throws Exception {
+		
 		throw new Exception("metodo non implementato");
 	}
 
