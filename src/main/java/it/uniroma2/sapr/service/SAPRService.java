@@ -1,5 +1,6 @@
 package it.uniroma2.sapr.service;
 
+import it.uniroma2.sapr.bean.RequestFlightPlan;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -40,6 +41,14 @@ public class SAPRService implements SAPRServiceInterface{
 		throw new Exception("metodo non implementato");
 	}
 	
+        /**
+	 * Il webMethod che si occupa di aggiungere o eliminare un piano di volo. Questa operazione viene effettuata
+	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequetFlightPlan
+	 */
+	@WebMethod(operationName = "managerFlightPlan")
+	public Boolean requestManagerFlightPlan(@WebParam(name = "request")RequestFlightPlan request) throws Exception {
+		throw new Exception("metodo non implementato");
+	}
 	
 
 }

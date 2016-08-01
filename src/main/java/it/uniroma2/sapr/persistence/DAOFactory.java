@@ -17,6 +17,7 @@ public abstract class DAOFactory {
 		 
 	public abstract PilotDAO getPilotDAO();
 	public abstract SaprDAO getSaprDAO();
+        public abstract FlightPlanDAO getFlightPlanDAO(); 
 
 		  
 	/**
