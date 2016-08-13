@@ -68,10 +68,11 @@ public class MySQLDbNoteDAO implements NoteDAO {
         }
     }
 
-    public boolean deleteNote(int idNote) throws SQLException {
+    public boolean deleteNote(Note note) throws SQLException {
         String method = "deleteNote";
         Connection con = null;
         PreparedStatement pt = null;
+        int idNote = note.getIdNote();
         String query = "DELETE FROM note WHERE idNote = ?";
         try{
             //Logger per notificare l'inserimento di un oggetto

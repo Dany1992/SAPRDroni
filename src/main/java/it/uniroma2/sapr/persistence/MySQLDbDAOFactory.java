@@ -53,4 +53,8 @@ public class MySQLDbDAOFactory extends DAOFactory {
                 return new MySQLDbDeviceDAO();
         }
         
+        public NoteDAO getNoteDAO(){
+                return new MySQLDbNoteDAO();
+        }
+        
 }

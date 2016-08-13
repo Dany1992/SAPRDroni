@@ -18,6 +18,7 @@ public abstract class DAOFactory {
 	public abstract PilotDAO getPilotDAO();
 	public abstract SaprDAO getSaprDAO();
         public abstract DeviceDAO getDeviceDAO();
+        public abstract NoteDAO getNoteDAO();
 		  
 	/**
 	 * Questo metodo permette di ottentere una classe per scrivere su un db, attraverso un intero

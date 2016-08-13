@@ -22,11 +22,10 @@ public class RequestNote extends Request{
 
     public RequestNote() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public RequestNote(int idNote, String textNote, String date, operation op) {
-
+        super();
         this.idNote = idNote;
         this.textNote = textNote;
         this.date = date;
