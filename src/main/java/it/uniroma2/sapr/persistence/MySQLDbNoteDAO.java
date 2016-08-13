@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import it.uniroma2.sapr.pojo.FlightPlain;
 import it.uniroma2.sapr.pojo.Note;
-import org.apache.commons.lang.ObjectUtils;
+
 import org.apache.log4j.Logger;
 
 /**

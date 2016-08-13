@@ -33,8 +33,15 @@ public class RequestDevice extends Request{
     
     @XmlElement(name = "PILOTLICENSE")
     private String pilotLicense;
+    
+    
+    public RequestDevice() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-    public RequestDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, operation op) {
+	public RequestDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, operation op) {
+
         super();
         this.idDevice = idDevice;
         this.model = model;
