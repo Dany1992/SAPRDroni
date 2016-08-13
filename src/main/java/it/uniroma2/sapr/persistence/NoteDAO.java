@@ -11,6 +11,6 @@ import java.util.ArrayList;
  */
 public interface NoteDAO {
     public boolean insertNote(Note note) throws SQLException;
-    public boolean deleteNote(int idNote) throws SQLException;
+    public boolean deleteNote(Note note) throws SQLException;
     public ArrayList<Note> selectNote(FlightPlain fp) throws SQLException;
 }
