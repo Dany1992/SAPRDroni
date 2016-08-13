@@ -82,7 +82,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
 
     }
 
-    public boolean deleteDevice(int device) throws SQLException {
+    public boolean deleteDevice(Device device) throws SQLException {
         /**
          * questo metodo elimina un dispositivo dal DB
          *
@@ -92,18 +92,20 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         String method = "deleteDevice";
         Connection con = null;
         PreparedStatement pt = null;
+        
+        int dev = device.getIdDevice();
 
         String query = "DELETE FROM device WHERE idDevice = ?";
 
         try {
             //logger per segnalare l'inizio della scrittura del metodo
-            logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, device));
+            logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, dev));
 
             con = MySQLDbDAOFactory.createConnection();
             pt = con.prepareStatement(query);
 
             //compilo il campo ? nella query
-            pt.setInt(1, device);
+            pt.setInt(1, dev);
 
             // eseguo la query
             if (pt.executeUpdate() == 1) {
@@ -111,14 +113,14 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                 con.close();
                 System.out.println("cancellazione andata a buon fine");
                 logger.info(String.format("Class:%s-Method:%s::END delete device -%s",
-                        classe, method, device));
+                        classe, method, dev));
                 return true;
             } else {
                 pt.close();
                 con.close();
                 System.out.println("cancellazione NON andata a buon fine");
                 logger.info(String.format("Class:%s-Method:%s::END not delete device -%s",
-                        classe, method, device));
+                        classe, method, dev));
                 return false;
             }
         } catch (Exception e) {
@@ -136,7 +138,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         }
     }
 
-    public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException {
+    public ArrayList<Device> selectDevice(String owner) throws SQLException {
         /**
          * questo metodo prende in input l'id del pilota e ci restituisce tutti
          * i suoi dispositivi
@@ -148,7 +150,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         String method = "selectDevice";
         Connection con = null;
         PreparedStatement pt = null;
-        ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
+        ArrayList<Device> arr_device = new ArrayList<Device>();
 
         String query = "SELECT idDevice, model, type, weight, producer, pilotLicense"
                 + " FROM device WHERE pilotLicense = ?";
@@ -179,7 +181,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                     String producer = rs.getString("producer");
                     String pilotLicense = rs.getString("pilotLicense");
 
-                    ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense);
+                    Device d = new Device(id, md, type, weight, producer, pilotLicense);
                     System.out.println(d.toString());
                     arr_device.add(d);
                 }
@@ -210,12 +212,14 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
 
     }
 
-    public ResponseDevice selectDevice(int idDevice) throws SQLException {
+    public Device selectDevice(Device device) throws SQLException {
 
         String method = "selectDevice";
         Connection con = null;
         PreparedStatement pt = null;
-
+        
+        int idDevice = device.getIdDevice();
+        
         String query = "SELECT idDevice, model, type, weight, producer, pilotLicense"
                 + " FROM device WHERE idDevice = ?";
 
@@ -245,7 +249,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                 String producer = rs.getString("producer");
                 String pilotLicense = rs.getString("pilotLicense");
                 
-                ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense);
+                Device d = new Device(id, md, type, weight, producer, pilotLicense);
 
                 System.out.println(d.toString());
 
@@ -282,14 +286,13 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         try {
             System.out.println("sto per iniziare");
             // test insert
-            //mysqlTest.insertDevice(device);
+            mysqlTest.insertDevice(device);
 
             // test delete
             //mysqlTest.deleteDevice(70);
             // test select
-            mysqlTest.selectDevice("0000000003");
-            mysqlTest.selectDevice(1);
-
+            
+            
         } catch (SQLException e) {
             System.out.println(e);
             e.printStackTrace();

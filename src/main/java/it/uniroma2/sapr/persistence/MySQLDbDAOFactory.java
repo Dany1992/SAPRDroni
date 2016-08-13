@@ -48,4 +48,9 @@ public class MySQLDbDAOFactory extends DAOFactory {
 	public SaprDAO getSaprDAO(){
 		return new MySQLDbSaprDAO();
 	}
+        
+        public DeviceDAO getDeviceDAO(){
+                return new MySQLDbDeviceDAO();
+        }
+        
 }

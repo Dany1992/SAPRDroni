@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public interface DeviceDAO {
     public boolean insertDevice(Device device) throws SQLException;
-    public boolean deleteDevice(int device) throws SQLException;
-    public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException;
-    public ResponseDevice selectDevice(int idDevice) throws SQLException;
+    public boolean deleteDevice(Device device) throws SQLException;
+    public ArrayList<Device> selectDevice(String owner) throws SQLException;
+    public Device selectDevice(Device device) throws SQLException;
 }
