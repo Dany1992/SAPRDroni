@@ -241,12 +241,5 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		}
 	}
 
-    void insertDevice(Device d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    void insertD(Device d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }
