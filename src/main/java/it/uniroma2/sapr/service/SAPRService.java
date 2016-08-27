@@ -11,10 +11,7 @@ import it.uniroma2.sapr.bean.RequestNote;
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
 import it.uniroma2.sapr.persistence.DAOFactory;
-import it.uniroma2.sapr.persistence.MySQLDbDAOFactory;
-import it.uniroma2.sapr.persistence.MySQLDbPilotDAO;
 import it.uniroma2.sapr.persistence.PilotDAO;
-import it.uniroma2.sapr.persistence.SaprDAO;
 import it.uniroma2.sapr.pojo.Pilot;
 import it.uniroma2.sapr.bean.RequestDevice;
 
@@ -40,6 +37,10 @@ public class SAPRService implements SAPRServiceInterface{
 	public Boolean requestManagerPilot(@WebParam(name = "request")RequestPilot request) throws Exception {
 		String method = "RequestManaerPilot";
 		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
+		logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
+		
+		System.out.println("***********************START WS***********************");
+		System.out.println("La richiesta è: " + request.toString());
 		
 		//Trasferisco i dati dalla request al pojo
 		Pilot pilot = new Pilot(request.getName(), request.getSurname(), request.getNation(), 
@@ -53,19 +54,21 @@ public class SAPRService implements SAPRServiceInterface{
 		
 		//Controllo in base all'operazione nel bean di request quale operazione svolgere
 		Boolean result;
-		if (request.getOp().equals("INSERISCI")){
-			//Inserisco il pilota nel db
+		if (request.getOp().name().equalsIgnoreCase("ADD")){
+			System.out.println("inserisci");
 			result = pilotDAO.insertPilot(pilot);
-			return result;
-		}else if (request.getOp().equals("ELIMINA")) {
+		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
 			result = pilotDAO.deletePilot(pilot);
-			return result;
-		}else if (request.getOp().equals("AGGIORNA")) {
+		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
 			result = pilotDAO.updatePilot(pilot);
-			return result;
 		}else {
-			throw new Exception("error operation");
+			throw new Exception("ERROR OPERATION");
 		}
+		
+		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		System.out.println("***********************END WS***********************");
+
+		return result;
 	}
 	
 	/**

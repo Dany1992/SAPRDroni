@@ -42,7 +42,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		try {
 			//logger per segnalare l'inizio della scrittura del metodo
 			logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilot.toString()));
-			
+			System.out.println(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilot.toString()));
 			con = MySQLDbDAOFactory.createConnection();
 			pt = con.prepareStatement(query);
 			
@@ -78,6 +78,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			
 		} catch (Exception e) {
 			logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+			System.out.println("Si è verificato il seguente errore: " + e.toString());
 			return false;
 		} finally {
 			if (pt != null) {
@@ -103,7 +104,8 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		try {
 			//logger per segnalare l'inizio della scrittura del metodo
 			logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilot.toString()));
-			
+			System.out.println(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilot.toString()));
+
 			con = MySQLDbDAOFactory.createConnection();
 			pt = con.prepareStatement(query);
 			
@@ -129,6 +131,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			
 		} catch (Exception e) {
 			logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+			System.out.println("Si è verificato il seguente errore: " + e.toString());
 			return false;
 		} finally {
 			if (pt != null) {
@@ -159,7 +162,8 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		try {
 			//logger per segnalare l'inizio della scrittura del metodo
 			logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilotLicense));
-			
+			System.out.println(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilotLicense));
+
 			con = MySQLDbDAOFactory.createConnection();
 			pt = con.prepareStatement(query);
 			
@@ -175,7 +179,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 				System.out.println("a buon fine");
 				logger.info(String.format("Class:%s-Method:%s::END add pilot with license code-%s", //
 						classe,method,pilotLicense));
-				
+				System.out.println(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilotLicense));
 				/****************************************************************************
 				 * Qui va parsata la response della query e popolato il bean di risposta    *
 				 ****************************************************************************/
@@ -205,6 +209,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			
 		} catch (Exception e) {
 			logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+			System.out.println("Si è verificato il seguente errore: " + e.toString());
 			return null;
 		} finally {
 			if (pt != null) {

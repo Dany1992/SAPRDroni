@@ -1,7 +1,5 @@
 package it.uniroma2.sapr.persistence;
 
-import it.uniroma2.sapr.bean.Request;
-import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.pojo.Device;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
