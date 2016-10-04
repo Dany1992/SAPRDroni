@@ -26,7 +26,7 @@ import it.uniroma2.sapr.bean.RequestDevice;
 
 @WebService
 @BindingType("http://schemas.xmlsoap.org/wsdl/soap/http")
-public class SAPRService implements SAPRServiceInterface{
+public class SAPRDroni implements SAPRDroniInterface{
 	String classe = "MySQLDbPilotDAO";
 	final static Logger logger = Logger.getLogger("SERVICE");
 	/**
