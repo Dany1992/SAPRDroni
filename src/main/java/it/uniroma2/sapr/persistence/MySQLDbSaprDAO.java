@@ -335,8 +335,6 @@ import it.uniroma2.sapr.pojo.Sapr;
   			for(Sapr s : risul) {
   				res = s.toString();
   			}*/
-
-  			
   			
   		} catch (SQLException e) {
   			
