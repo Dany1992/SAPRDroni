@@ -9,7 +9,7 @@ import it.uniroma2.sapr.bean.RequestSAPR;
 import it.uniroma2.sapr.bean.RequestDevice;
 
 @WebService
-public interface SAPRServiceInterface {
+public interface SAPRDroniInterface {
 	
 	public Boolean requestManagerPilot(@WebParam(name="request")RequestPilot request) throws Exception;
 	

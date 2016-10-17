@@ -1,7 +1,6 @@
 package it.uniroma2.sapr.persistence;
 
 
-import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.pojo.Device;
 import java.sql.SQLException;
 import java.util.ArrayList;

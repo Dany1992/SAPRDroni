@@ -1,7 +1,8 @@
 package it.uniroma2.sapr.pojo;
 
 /**
- * Created by Tiziano on 28/07/16.
+ * Questa classe è l'oggetto che viene creato prelevando i dati dalla RequestSapr.
+ * Tale oggetto viene utilizzazto poi per tutte le operazioni che si vogliono fare sul db
  */
 
 public class Sapr {
@@ -100,35 +101,82 @@ public class Sapr {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Sapr)) return false;
-
-        Sapr sapr = (Sapr) o;
-
-        if (getIdSapr() != sapr.getIdSapr()) return false;
-        if (getWeight() != sapr.getWeight()) return false;
-        if (getHeavyweight() != sapr.getHeavyweight()) return false;
-        if (getMaxDistance() != sapr.getMaxDistance()) return false;
-        if (getMaxHeight() != sapr.getMaxHeight()) return false;
-        if (!getModel().equals(sapr.getModel())) return false;
-        if (!getProducer().equals(sapr.getProducer())) return false;
-        if (!getBattery().equals(sapr.getBattery())) return false;
-        return getPilotLicense().equals(sapr.getPilotLicense());
-
-    }
+	public boolean equals(Object obj) {
+		
+		if (this == obj)
+			return true;
+		
+		if (obj == null)
+			return false;
+		
+		if (getClass() != obj.getClass())
+			return false;
+		
+		 final Sapr other = (Sapr) obj;
+		
+		if (this.idSapr != other.idSapr)
+			return false;
+		
+		if (this.model == null) {
+			if (other.model != null)
+				return false;
+		} else if (!this.model.equals(other.model))
+			return false;
+		
+		if (this.producer == null) {
+			if (other.producer != null)
+				return false;
+		} else if (!this.producer.equals(other.producer))
+			return false;
+		
+		if (this.weight != other.weight)
+			return false;
+		
+		if (this.heavyweight != other.heavyweight)
+			return false;
+		
+		if (this.battery == null) {
+			if (other.battery != null)
+				return false;
+		} else if (!this.battery.equals(other.battery))
+			return false;
+		
+		if (this.pilotLicense == null) {
+			if (other.pilotLicense != null)
+				return false;
+		} else if (!this.pilotLicense.equals(other.pilotLicense))
+			return false;
+		
+		if (this.maxDistance != other.maxDistance)
+			return false;
+		
+		if (this.maxHeight != other.maxHeight)
+			return false;
+		
+		return true;
+	}
 
     @Override
     public int hashCode() {
-        int result = getIdSapr();
-        result = 31 * result + getModel().hashCode();
-        result = 31 * result + getProducer().hashCode();
-        result = 31 * result + getWeight();
-        result = 31 * result + getHeavyweight();
-        result = 31 * result + getBattery().hashCode();
-        result = 31 * result + getMaxDistance();
-        result = 31 * result + getMaxHeight();
-        result = 31 * result + getPilotLicense().hashCode();
-        return result;
+        int result = 9;
+        
+        result = 52 * result + this.idSapr;
+		result = 52 * result + ((model == null) ? 0 : model.hashCode());
+		result = 52 * result + ((producer == null) ? 0 : producer.hashCode());
+		result = 52 * result + this.weight;
+		result = 52 * result + this.heavyweight;
+		result = 52 * result + ((battery == null) ? 0 : battery.hashCode());
+		result = 52 * result + this.maxDistance;
+		result = 52 * result + this.maxHeight;
+		result = 52 * result + ((pilotLicense == null) ? 0 : pilotLicense.hashCode());
+		
+		return result;
     }
+    
+    @Override
+	public String toString() {
+		return "Sapr [idSapr=" + idSapr + ", model=" + model + ", producer=" + producer + ", weight=" + weight
+				+ ", pilotLicense=" + pilotLicense + ", heavyweight=" + heavyweight + ", battery=" + battery
+				+ ", maxDistance=" + maxDistance + ", maxHeight=" + maxHeight + "]";
+	}
 }

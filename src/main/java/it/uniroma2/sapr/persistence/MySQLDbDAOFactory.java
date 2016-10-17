@@ -49,12 +49,12 @@ public class MySQLDbDAOFactory extends DAOFactory {
 		return new MySQLDbSaprDAO();
 	}
         
-        public DeviceDAO getDeviceDAO(){
-                return new MySQLDbDeviceDAO();
-        }
+    public DeviceDAO getDeviceDAO(){
+        return new MySQLDbDeviceDAO();
+    }
         
-        public NoteDAO getNoteDAO(){
-                return new MySQLDbNoteDAO();
-        }
+    public NoteDAO getNoteDAO(){
+        return new MySQLDbNoteDAO();
+    }
         
 }

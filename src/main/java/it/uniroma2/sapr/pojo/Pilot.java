@@ -18,14 +18,14 @@ public class Pilot {
 	private String state;
 	private String pilotLicense;
 	private String taxCode;
-	private String birthDate;
+	private Date birthDate;
 	private String residence;
 	private String phone;
 	private String mail;
 	private String password;
 	
 	public Pilot(String name, String surname, String nation, String state, String pilotLicense, String taxCode,
-			String birthDate, String residence, String phone, String mail, String password) {
+			Date birthDate, String residence, String phone, String mail, String password) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -88,11 +88,11 @@ public class Pilot {
 		this.taxCode = taxCode;
 	}
 
-	public String getBirthDate() {
+	public Date getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 
