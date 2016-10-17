@@ -14,6 +14,7 @@ import it.uniroma2.sapr.persistence.DAOFactory;
 import it.uniroma2.sapr.persistence.PilotDAO;
 import it.uniroma2.sapr.pojo.Pilot;
 import it.uniroma2.sapr.bean.RequestDevice;
+import it.uniroma2.sapr.bean.RequestFlightPlan;
 
 /**
  * Questa classe è colei che si occupa di esporre i servizi offerti dal WS
@@ -98,6 +99,10 @@ public class SAPRDroni implements SAPRDroniInterface{
 	public Boolean requestManagerNote(@WebParam(name = "request")RequestNote request) throws Exception {
 		throw new Exception("metodo non implementato");
 	}
+
+    public Boolean requestManagerFlightPlan(RequestFlightPlan request) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 
 }

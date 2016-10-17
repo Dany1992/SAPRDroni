@@ -3,30 +3,55 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.uniroma2.sapr.pojo;
+package it.uniroma2.sapr.bean;
 
-import java.util.ArrayList;
-
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 /**
- * Questa classe è l'oggetto che viene creato prelevando i dati dalla RequestFlightPlain.
- * Tale oggetto viene utilizzato per le operazioni CRUD sul db;
+ *
  * @author pierfrancescotommasino
- * @mail tommasinofrancesco@hotmail.it
+ * Questa classe è il bean che viene ricevuto dal webService attraverso il webMethod
  */
-public class FlightPlain {
-    private String destination;
-    private String departure;
-    private String dateDeparture;
-    private String timeDeparture;
-    private String nowArriving;
-    private int idSapr;
-    private int idNote;
-    private int idDevice;
-    private String pilotLicense;
-    private ArrayList<CheckElement> checkList;
 
-    public FlightPlain(String destination, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, int idDevice, String pilotLicense, ArrayList<CheckElement> checkList) {
-        this.destination = destination;
+@XmlRootElement(name="RequestManagerFlightPlan")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class RequestFlightPlan extends Request{
+
+	@XmlElement(name = "DESTINATIONS")
+	private String destinations;
+
+	@XmlElement(name = "DEPARTURE")
+	private String departure;
+
+	@XmlElement(name = "DATE_DEPARTURE")
+	private String dateDeparture;
+   
+	@XmlElement(name = "TIME_DEPARTURE")
+        private String timeDeparture;
+	
+	@XmlElement(name = "NOW_ARRIVING")
+	private String nowArriving;
+
+	@XmlElement(name = "ID_SAPR")
+	private int idSapr;
+	
+	@XmlElement(name = "ID_NOTE")
+	private int idNote;
+	
+	@XmlElement(name = "ID_DEVICE")
+	private int idDevice;
+	
+	@XmlElement(name = "PILOT_LICENSE")
+	private String pilotLicense;
+
+    public RequestFlightPlan() {
+		super();
+		// TODO Auto-generated constructor stub
+    }
+    public RequestFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, int idDevice,Request.operation op) {
+        this.destinations = destinations;
         this.departure = departure;
         this.dateDeparture = dateDeparture;
         this.timeDeparture = timeDeparture;
@@ -34,16 +59,15 @@ public class FlightPlain {
         this.idSapr = idSapr;
         this.idNote = idNote;
         this.idDevice = idDevice;
-        this.pilotLicense = pilotLicense;
-        this.checkList = checkList;
-    } 
-
-    public String getDestination() {
-        return destination;
+        this.op=op;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public String getDestinations() {
+        return destinations;
+    }
+
+    public void setDestinations(String destinations) {
+        this.destinations = destinations;
     }
 
     public String getDeparture() {
@@ -110,27 +134,18 @@ public class FlightPlain {
         this.pilotLicense = pilotLicense;
     }
 
-    public ArrayList<CheckElement> getCheckList() {
-        return checkList;
-    }
-
-    public void setCheckList(ArrayList<CheckElement> checkList) {
-        this.checkList = checkList;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 41 * hash + (this.destination != null ? this.destination.hashCode() : 0);
-        hash = 41 * hash + (this.departure != null ? this.departure.hashCode() : 0);
-        hash = 41 * hash + (this.dateDeparture != null ? this.dateDeparture.hashCode() : 0);
-        hash = 41 * hash + (this.timeDeparture != null ? this.timeDeparture.hashCode() : 0);
-        hash = 41 * hash + (this.nowArriving != null ? this.nowArriving.hashCode() : 0);
-        hash = 41 * hash + this.idSapr;
-        hash = 41 * hash + this.idNote;
-        hash = 41 * hash + this.idDevice;
-        hash = 41 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
-        hash = 41 * hash + (this.checkList != null ? this.checkList.hashCode() : 0);
+        int hash = 3;
+        hash = 53 * hash + (this.destinations != null ? this.destinations.hashCode() : 0);
+        hash = 53 * hash + (this.departure != null ? this.departure.hashCode() : 0);
+        hash = 53 * hash + (this.dateDeparture != null ? this.dateDeparture.hashCode() : 0);
+        hash = 53 * hash + (this.timeDeparture != null ? this.timeDeparture.hashCode() : 0);
+        hash = 53 * hash + (this.nowArriving != null ? this.nowArriving.hashCode() : 0);
+        hash = 53 * hash + this.idSapr;
+        hash = 53 * hash + this.idNote;
+        hash = 53 * hash + this.idDevice;
+        hash = 53 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
         return hash;
     }
 
@@ -145,7 +160,7 @@ public class FlightPlain {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final FlightPlain other = (FlightPlain) obj;
+        final RequestFlightPlan other = (RequestFlightPlan) obj;
         if (this.idSapr != other.idSapr) {
             return false;
         }
@@ -155,7 +170,7 @@ public class FlightPlain {
         if (this.idDevice != other.idDevice) {
             return false;
         }
-        if ((this.destination == null) ? (other.destination != null) : !this.destination.equals(other.destination)) {
+        if ((this.destinations == null) ? (other.destinations != null) : !this.destinations.equals(other.destinations)) {
             return false;
         }
         if ((this.departure == null) ? (other.departure != null) : !this.departure.equals(other.departure)) {
@@ -173,16 +188,13 @@ public class FlightPlain {
         if ((this.pilotLicense == null) ? (other.pilotLicense != null) : !this.pilotLicense.equals(other.pilotLicense)) {
             return false;
         }
-        if (this.checkList != other.checkList && (this.checkList == null || !this.checkList.equals(other.checkList))) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "FlightPlain{" + "destination=" + destination + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", idDevice=" + idDevice + ", pilotLicense=" + pilotLicense + ", checkList=" + checkList + '}';
-    }  
-  
+        return "RequestFlightPlan{" + "destinations=" + destinations + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", idDevice=" + idDevice + ", pilotLicense=" + pilotLicense +"op="+op+'}';
+    }
+           
     
 }

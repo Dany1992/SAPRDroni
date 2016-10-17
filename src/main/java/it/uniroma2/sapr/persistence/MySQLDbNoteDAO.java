@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import it.uniroma2.sapr.pojo.FlightPlain;
+import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 
 import org.apache.log4j.Logger;
@@ -165,7 +165,7 @@ public class MySQLDbNoteDAO implements NoteDAO {
         }
     }
 
-    public ArrayList<Note> selectNote(FlightPlain fp) throws SQLException {
+    public ArrayList<Note> selectNote(FlightPlan fp) throws SQLException {
         String method = "selectNote";
         Connection con = null;
         PreparedStatement pt = null;
@@ -223,7 +223,8 @@ public class MySQLDbNoteDAO implements NoteDAO {
     public static void main(String args[]) throws ParseException{
 
         //Inserimento nuova nota
-        FlightPlain fp = new FlightPlain("Ciampino", "Fiumicino", "2016-07-29", "20:00:00", "21:00:00", 1, 1, 1, "0000000001", new ArrayList<CheckElement>());
+        ArrayList<CheckElement> check = new ArrayList<CheckElement>();
+        FlightPlan fp = new FlightPlan("Ciampino", "Fiumicino", "2016-07-29", "20:00:00", "21:00:00", 1, 1, 1, "0000000001", check); 
         int idNote = fp.getIdNote();
         MySQLDbNoteDAO mysqlTest = new MySQLDbNoteDAO();
         //int i;
