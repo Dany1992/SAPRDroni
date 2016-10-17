@@ -50,7 +50,15 @@ public class MySQLDbDAOFactory extends DAOFactory {
 	}
         
         public DeviceDAO getDeviceDAO(){
-                return new MySQLDbDeviceDAO();
+            return new MySQLDbDeviceDAO();
+        }
+        
+        public FlightPlanDAO getFlightPlanDAO(){
+		return new MySQLDbFlightPlanDAO();
+	}
+
+        public NoteDAO getNoteDAO(){
+            return new MySQLDbNoteDAO();
         }
         
 }

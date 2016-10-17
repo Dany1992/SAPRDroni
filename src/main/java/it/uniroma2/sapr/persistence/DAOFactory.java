@@ -14,12 +14,30 @@ public abstract class DAOFactory {
 		 
 	// List of DAO types supported by the factory
 	public static final int MYSQL = 1;
-		 
+	
 	public abstract PilotDAO getPilotDAO();
 	public abstract SaprDAO getSaprDAO();
         public abstract DeviceDAO getDeviceDAO();
+        public abstract NoteDAO getNoteDAO();
+   
+        private static MySQLDbDAOFactory mysqlDbFactory;
+	
+    /**
+=======
+        public abstract FlightPlanDAO getFlightPlanDAO(); 
+
 		  
 	/**
+>>>>>>> dindiBranch
+=======
+        public abstract DeviceDAO getDeviceDAO();
+        public abstract NoteDAO getNoteDAO();
+        public abstract FlightPlanDAO getFlightPlanDAO();
+        private static MySQLDbDAOFactory mysqlDbFactory;
+	
+         /**
+
+>>>>>>> tizianoBranch
 	 * Questo metodo permette di ottentere una classe per scrivere su un db, attraverso un intero
 	 * che gli viene passato esso sceglie quale classe selezionare
 	 * 
@@ -28,9 +46,12 @@ public abstract class DAOFactory {
 	 */
 	public static DAOFactory getDAOFactory(int whichFactory) {
 		switch (whichFactory) {
-			case MYSQL: 
-				return new MySQLDbDAOFactory();
-		    default           : 
+			case MYSQL:
+				if(mysqlDbFactory == null){
+					mysqlDbFactory = new MySQLDbDAOFactory();
+				}
+				return mysqlDbFactory;
+		    default: 
 		        return null;
 		}
 	}

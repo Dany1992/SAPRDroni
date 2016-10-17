@@ -1,18 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package it.uniroma2.sapr.service;
 
-import javax.jws.WebParam;
-import javax.jws.WebService;
-
-import it.uniroma2.sapr.bean.RequestPilot;
-import it.uniroma2.sapr.bean.RequestSAPR;
-import it.uniroma2.sapr.bean.RequestDevice;
-
-@WebService
-public interface SAPRServiceInterface {
-	
-	public Boolean requestManagerPilot(@WebParam(name="request")RequestPilot request) throws Exception;
-	
-	public Boolean requestManagerSAPR(@WebParam(name="request")RequestSAPR request) throws Exception;
-	
-	public Boolean requestManagerDevice(@WebParam(name="request")RequestDevice request) throws Exception;
+/**
+ *
+ * @author Tiziano
+ */
+interface SAPRServiceInterface {
+    
 }

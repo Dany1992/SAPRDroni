@@ -1,30 +1,49 @@
-package it.uniroma2.sapr.pojo;
+package it.uniroma2.sapr.bean;
 
 import java.sql.Date;
 
-/**
- * Questa classe è l'oggetto che viene creato prelevando i dati dalla RequestPilot.
- * Tale oggetto viene utilizzazto poi per tutte le operazioni che si vogliono fare sul db
- * 
- * @author Danilo Butrico
- * @version 1.0
- * @mail dbutricod@gmail.com
- *
- */
-public class Pilot {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="RequestManagerPilot")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class ResponsePilot {
+	@XmlElement(name = "NAME_PILOT")
 	private String name;
+
+	@XmlElement(name = "SURNAME_PILOTA")
 	private String surname;
+
+	@XmlElement(name = "NATION")
 	private String nation;
-	private String state;
-	private String pilotLicense;
-	private String taxCode;
-	private Date birthDate;
-	private String residence;
-	private String phone;
-	private String mail;
-	private String password;
 	
-	public Pilot(String name, String surname, String nation, String state, String pilotLicense, String taxCode,
+	@XmlElement(name = "STATE")
+	private String state;
+	
+	@XmlElement(name = "LICENSE_PILOT")
+	private String pilotLicense;
+
+	@XmlElement(name = "TAX_CODE")
+	private String taxCode;
+	
+	@XmlElement(name = "BIRTH_DATE")
+	private Date birthDate;
+	
+	@XmlElement(name = "RESIDENCE")
+	private String residence;
+	
+	@XmlElement(name = "PHONE")
+	private String phone;
+	
+	@XmlElement(name = "MAIL")
+	private String mail;
+	
+	@XmlElement(name = "PASSWORD")
+	private String password;
+
+	public ResponsePilot(String name, String surname, String nation, String state, String pilotLicense, String taxCode,
 			Date birthDate, String residence, String phone, String mail, String password) {
 		super();
 		this.name = name;
@@ -38,6 +57,11 @@ public class Pilot {
 		this.phone = phone;
 		this.mail = mail;
 		this.password = password;
+	}
+
+	public ResponsePilot() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getName() {
@@ -154,7 +178,7 @@ public class Pilot {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pilot other = (Pilot) obj;
+		ResponsePilot other = (ResponsePilot) obj;
 		if (birthDate == null) {
 			if (other.birthDate != null)
 				return false;
@@ -215,9 +239,8 @@ public class Pilot {
 
 	@Override
 	public String toString() {
-		return "Pilot [name=" + name + ", surname=" + surname + ", nation=" + nation + ", state=" + state
+		return "ResponsePilot [name=" + name + ", surname=" + surname + ", nation=" + nation + ", state=" + state
 				+ ", pilotLicense=" + pilotLicense + ", taxCode=" + taxCode + ", birthDate=" + birthDate
 				+ ", residence=" + residence + ", phone=" + phone + ", mail=" + mail + ", password=" + password + "]";
 	}
-
 }
