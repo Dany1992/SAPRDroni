@@ -1,5 +1,6 @@
 package it.uniroma2.sapr.persistence;
 
+import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.Device;
 import java.sql.Connection;
@@ -147,7 +148,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
             }
         } catch (Exception e) {
             logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
-            System.out.println("cancellazione NON andata a buon fine");
+            System.out.println(e);
             return false;
         } finally {
             if (pt != null) {
@@ -160,7 +161,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         }
     }
 
-    public ArrayList<Device> selectDevice(String owner) throws SQLException {
+    public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException {
         /**
          * questo metodo prende in input l'id del pilota e ci restituisce tutti
          * i suoi dispositivi
@@ -173,7 +174,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         Connection con = null;
         PreparedStatement pt = null;
         PreparedStatement pt1 = null;
-        ArrayList<Device> arr_device = new ArrayList<Device>();
+        ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
         ArrayList<CheckElement> arr_check = new ArrayList<CheckElement>();
         
         String query = "SELECT idDevice, model, type, weight, producer, pilotLicense"
@@ -214,7 +215,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                         arr_check.add(ck);
                     }
                     
-                    Device d = new Device(id, md, type, weight, producer, pilotLicense, arr_check);
+                    ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense, arr_check);
                     System.out.println(d.toString());
                     arr_device.add(d);
                     arr_check.clear();
@@ -246,7 +247,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
 
     }
 
-    public Device selectDevice(Device device) throws SQLException {
+    public ResponseDevice selectDevice(Device device) throws SQLException {
 
         String method = "selectDevice";
         Connection con = null;
@@ -292,7 +293,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                         arr_check.add(ck);
                     }
                 
-                Device d = new Device(id, md, type, weight, producer, pilotLicense,arr_check);
+                ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense,arr_check);
 
                 System.out.println(d.toString());
                 arr_check.clear();
@@ -328,22 +329,22 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         ck.add(new CheckElement("ciao1"));
         ck.add(new CheckElement("ciao2"));
         
-        Device device = new Device(78, "A144", "tipo", 520, "Prod1", "0000000003",ck);
-
+        Device device = new Device(80, "A144", "tipo", 520, "Prod1", "0000000003",ck);
+        Device deviceDel = new Device(78, "A144", "tipo", 520, "Prod1", "0000000003",ck);
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {
             System.out.println("sto per iniziare");
             // test insert
-            mysqlTest.insertDevice(device);
+            //mysqlTest.insertDevice(device);
 
             // test delete
-            //mysqlTest.deleteDevice(70);
+            mysqlTest.deleteDevice(deviceDel);
             
             // test select dando in input un pilota
             //mysqlTest.selectDevice("0000000001");
 
             // test select dando in input un device
-            mysqlTest.selectDevice(device);
+            //mysqlTest.selectDevice(device);
             
         } catch (SQLException e) {
             System.out.println(e);
