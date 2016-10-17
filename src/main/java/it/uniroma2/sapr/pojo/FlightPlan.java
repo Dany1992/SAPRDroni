@@ -181,7 +181,8 @@ public class FlightPlan{
 
     @Override
     public String toString() {
-        return "FlightPlan{" + "destination=" + destination + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", idDevice=" + idDevice + ", pilotLicense=" + pilotLicense + '}';
-    }
-    
+        return "FlightPlain{" + "destination=" + destination + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", idDevice=" + idDevice + ", pilotLicense=" + pilotLicense + ", checkList=" + checkList + '}';
+    }  
+        
 }
+
