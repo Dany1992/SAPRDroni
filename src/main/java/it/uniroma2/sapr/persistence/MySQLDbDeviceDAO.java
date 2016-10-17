@@ -83,7 +83,6 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                     }
                     pt2.close();
                     pt1.close();
-                    con.close();
                     System.out.println("inserimento andato a buon fine");
                     logger.info(String.format("Class:%s-Method:%s::END add device -%s of pilot %s", //
                             classe, method, device.getIdDevice(), device.getPilotLicense()));

@@ -6,11 +6,8 @@ import javax.jws.WebService;
 import it.uniroma2.sapr.bean.RequestNote;
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
-<<<<<<< HEAD:src/main/java/it/uniroma2/sapr/service/SAPRDroniInterface.java
 import it.uniroma2.sapr.bean.RequestDevice;
-=======
 import it.uniroma2.sapr.bean.RequestFlightPlan;
->>>>>>> dindiBranch:src/main/java/it/uniroma2/sapr/service/SAPRServiceInterface.java
 
 @WebService
 public interface SAPRDroniInterface {
