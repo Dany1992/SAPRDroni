@@ -169,7 +169,11 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
                                 System.out.println("Ho selezionato il flightPlan");
 				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,flight.getIdSapr()));
                                 rs.next();  
+<<<<<<< HEAD
                                 FlightPlan flight1 = new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense"), rs.get);       
+=======
+                                FlightPlan flight1=new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense"));       
+>>>>>>> master
                                 return flight1;
                         }
                         else {
@@ -219,7 +223,15 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
                                 System.out.println("Ho selezionato i flightPlan");
 				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,sapr.getIdSapr()));
                                 while(rs.next()){  
+<<<<<<< HEAD
                                     array.add(new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense"), rs.));       
+=======
+<<<<<<< HEAD
+                                    array.add(new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense")));       
+=======
+                                    array.add(new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense"), rs.));       
+>>>>>>> tizianoBranch
+>>>>>>> master
                                 }
                                 return array;
                         }
