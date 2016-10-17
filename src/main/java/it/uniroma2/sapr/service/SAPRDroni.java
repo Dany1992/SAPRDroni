@@ -100,5 +100,9 @@ public class SAPRDroni implements SAPRDroniInterface{
 		throw new Exception("metodo non implementato");
 	}
 
+    public Boolean requestManagerFlightPlan(RequestFlightPlan request) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 }

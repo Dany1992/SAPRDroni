@@ -32,11 +32,7 @@ public class MySQLDbDAOFactory extends DAOFactory {
 		Connection con = null;
 		try {
 			Class.forName(DRIVER).newInstance();
-<<<<<<< HEAD
 			con = DriverManager.getConnection(DBURL, "root", "");
-=======
-                        con = DriverManager.getConnection(DBURL, "root", "");
->>>>>>> dindiBranch
 			return con;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -54,18 +50,25 @@ public class MySQLDbDAOFactory extends DAOFactory {
 	}
 <<<<<<< HEAD
         
-    public DeviceDAO getDeviceDAO(){
-        return new MySQLDbDeviceDAO();
-    }
+        public DeviceDAO getDeviceDAO(){
+            return new MySQLDbDeviceDAO();
+        }
         
-    public NoteDAO getNoteDAO(){
-        return new MySQLDbNoteDAO();
-    }
-        
+<<<<<<< HEAD
 =======
         public FlightPlanDAO getFlightPlanDAO(){
 		return new MySQLDbFlightPlanDAO();
 	}
 >>>>>>> dindiBranch
+=======
+        public NoteDAO getNoteDAO(){
+            return new MySQLDbNoteDAO();
+        }
+
+        public FlightPlanDAO getFlightPlanDAO(){
+             return new MySQLDbFlightPlanDAO();
+        }
+
+>>>>>>> tizianoBranch
 }
 

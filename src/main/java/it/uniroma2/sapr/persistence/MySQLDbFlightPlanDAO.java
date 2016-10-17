@@ -219,7 +219,11 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
                                 System.out.println("Ho selezionato i flightPlan");
 				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,sapr.getIdSapr()));
                                 while(rs.next()){  
+<<<<<<< HEAD
                                     array.add(new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense")));       
+=======
+                                    array.add(new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense"), rs.));       
+>>>>>>> tizianoBranch
                                 }
                                 return array;
                         }

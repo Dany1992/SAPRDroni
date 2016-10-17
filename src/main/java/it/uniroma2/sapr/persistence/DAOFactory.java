@@ -17,11 +17,10 @@ public abstract class DAOFactory {
 	
 	public abstract PilotDAO getPilotDAO();
 	public abstract SaprDAO getSaprDAO();
-<<<<<<< HEAD
-    public abstract DeviceDAO getDeviceDAO();
-    public abstract NoteDAO getNoteDAO();
+        public abstract DeviceDAO getDeviceDAO();
+        public abstract NoteDAO getNoteDAO();
    
-    private static MySQLDbDAOFactory mysqlDbFactory;
+        private static MySQLDbDAOFactory mysqlDbFactory;
 	
     /**
 =======
@@ -30,6 +29,15 @@ public abstract class DAOFactory {
 		  
 	/**
 >>>>>>> dindiBranch
+=======
+        public abstract DeviceDAO getDeviceDAO();
+        public abstract NoteDAO getNoteDAO();
+        public abstract FlightPlanDAO getFlightPlanDAO();
+        private static MySQLDbDAOFactory mysqlDbFactory;
+	
+         /**
+
+>>>>>>> tizianoBranch
 	 * Questo metodo permette di ottentere una classe per scrivere su un db, attraverso un intero
 	 * che gli viene passato esso sceglie quale classe selezionare
 	 * 

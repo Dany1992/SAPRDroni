@@ -1,6 +1,6 @@
 package it.uniroma2.sapr.persistence;
 
-import it.uniroma2.sapr.pojo.FlightPlain;
+import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 
 import java.sql.SQLException;
@@ -12,5 +12,5 @@ import java.util.ArrayList;
 public interface NoteDAO {
     public boolean insertNote(Note note) throws SQLException;
     public boolean deleteNote(Note note) throws SQLException;
-    public ArrayList<Note> selectNote(FlightPlain fp) throws SQLException;
+    public ArrayList<Note> selectNote(FlightPlan fp) throws SQLException;
 }
