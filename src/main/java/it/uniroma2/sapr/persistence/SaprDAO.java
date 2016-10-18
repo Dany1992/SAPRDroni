@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public interface SaprDAO {
 	public boolean insertSapr(Sapr sapr) throws SQLException;
 	public boolean deleteSapr(Sapr sapr) throws SQLException;
-	public ArrayList<Sapr> selectSapr(String owner) throws SQLException;
+	public ArrayList<ResponseSapr> selectSapr(String owner) throws SQLException;
 	public ResponseSapr selectSapr(Sapr sapr) throws SQLException;
+	public boolean updateSapr(Sapr sapr) throws SQLException;
 }
