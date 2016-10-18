@@ -105,6 +105,10 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
 
     }
 
+    public boolean updateDevice(Device device) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     public boolean deleteDevice(Device device) throws SQLException {
         /**
          * questo metodo elimina un dispositivo dal DB
@@ -118,7 +122,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         
         int dev = device.getIdDevice();
 
-        String query = "DELETE FROM device WHERE idDevice = ?";
+        String query = "UPDATE device SET active = 0 WHERE idDevice = ?";
 
         try {
             //logger per segnalare l'inizio della scrittura del metodo
@@ -141,7 +145,6 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
             } else {
                 pt.close();
                 con.close();
-                System.out.println("cancellazione NON andata a buon fine");
                 logger.info(String.format("Class:%s-Method:%s::END not delete device -%s",
                         classe, method, dev));
                 return false;
@@ -330,7 +333,11 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         ck.add(new CheckElement("ciao2"));
         
         Device device = new Device(80, "A144", "tipo", 520, "Prod1", "0000000003",ck);
+<<<<<<< HEAD
         Device deviceDel = new Device(78, "A144", "tipo", 520, "Prod1", "0000000003",ck);
+=======
+        Device deviceDel = new Device(80, "A144", "tipo", 520, "Prod1", "0000000003",ck);
+>>>>>>> darioBranch
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {
             System.out.println("sto per iniziare");
