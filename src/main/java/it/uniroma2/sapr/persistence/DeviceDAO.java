@@ -14,6 +14,7 @@ public interface DeviceDAO {
     public boolean insertDevice(Device device) throws SQLException;
     public boolean deleteDevice(Device device) throws SQLException;
     public boolean updateDevice(Device device) throws SQLException;
+    // in base ai parametri faccio la giusta select
     public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException;
     public ResponseDevice selectDevice(Device device) throws SQLException;
 }
