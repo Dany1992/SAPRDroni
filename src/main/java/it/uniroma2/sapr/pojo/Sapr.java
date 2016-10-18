@@ -15,7 +15,7 @@ public class Sapr {
     private int maxDistance;
     private int maxHeight;
     private String pilotLicense;
-
+// ecco il costruttore
     public Sapr(int idSapr, String model, String producer, int weight, int heavyweight, String battery, int maxDistance, int maxHeight, String pilotLicense) {
         this.idSapr = idSapr;
         this.model = model;
