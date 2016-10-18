@@ -106,7 +106,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
     }
 
     public boolean updateDevice(Device device) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    return false;
     }
     
     public boolean deleteDevice(Device device) throws SQLException {
