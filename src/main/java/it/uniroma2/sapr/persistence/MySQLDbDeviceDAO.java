@@ -333,11 +333,8 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         ck.add(new CheckElement("ciao2"));
         
         Device device = new Device(80, "A144", "tipo", 520, "Prod1", "0000000003",ck);
-<<<<<<< HEAD
         Device deviceDel = new Device(78, "A144", "tipo", 520, "Prod1", "0000000003",ck);
-=======
-        Device deviceDel = new Device(80, "A144", "tipo", 520, "Prod1", "0000000003",ck);
->>>>>>> darioBranch
+
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {
             System.out.println("sto per iniziare");
