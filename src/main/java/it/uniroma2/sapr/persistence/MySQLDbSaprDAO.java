@@ -8,13 +8,14 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import it.uniroma2.sapr.bean.ResponseSapr;
+import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.Sapr;
   
 
  public class MySQLDbSaprDAO implements SaprDAO {
  
 	  String classe = "MySQLDbSaprDAO";
-	  final static Logger logger = Logger.getLogger("PESISTENCE");
+	  final static Logger logger = Logger.getLogger("PERSISTENCE");
  	
  /**
   * Inserisce nel db un sapr
@@ -25,15 +26,20 @@ import it.uniroma2.sapr.pojo.Sapr;
 	  String method = "insertSapr";
 	  Connection con = null;
 	  PreparedStatement pt = null;
+	  PreparedStatement pt1 = null;
 
  	  String query = "INSERT INTO sapr (idSapr, model," +
- 		"producer,weight,heavyweight,battery,maxDistance,maxHeight,pilotLicense) VALUES "
- 		+ "(?,?,?,?,?,?,?,?,?) ";
+ 		"producer,weight,heavyweight,battery,maxDistance,maxHeight,pilotLicense,active) VALUES "
+ 		+ "(?,?,?,?,?,?,?,?,?,?) ";
+ 	  
+ 	  String query1 = "INSERT INTO checkSAPR (valueCheckElement, idSapr) VALUES "
+ 	 		+ "(?,?) ";
  	  
  	  try {
 			logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,sapr.toString()));
 			con = MySQLDbDAOFactory.createConnection();		
-		    pt = con.prepareStatement(query);
+		    pt = con.prepareStatement(query);		
+		    pt1 = con.prepareStatement(query1);
  			
  			pt.setInt(1, sapr.getIdSapr());
  			pt.setString(2, sapr.getModel());
@@ -44,24 +50,42 @@ import it.uniroma2.sapr.pojo.Sapr;
  			pt.setInt(7, sapr.getMaxDistance());
  			pt.setInt(8, sapr.getMaxHeight());
  			pt.setString(9, sapr.getPilotLicense());
+ 			pt.setInt(10, sapr.getActive());
  			
  			if(pt.executeUpdate() == 1){
-                pt.close();
-                con.close();
+                pt.close(); 
+                
+                for(CheckElement e : sapr.getCheckSapr()){
+	 				pt1.setString(1, e.getValue());
+	 				pt1.setInt(2, sapr.getIdSapr());
+	 				
+	 				if(pt1.executeUpdate() != 1){
+	 					pt1.close();
+	 	            	con.close();
+	 	            	System.out.println("male");
+	 	            	logger.info(String.format("Class:%s-Method:%s::END not add sapr -%s of pilot %s", //
+	 	                        classe,method,sapr.getIdSapr(),sapr.getPilotLicense()));
+	 	            	return false;
+	 				}
+                }
+                
+                pt1.close();
+	            con.close();
                 System.out.println("a buon fine");
                 logger.info(String.format("Class:%s-Method:%s::END add sapr -%s of pilot %s", //
                         classe,method,sapr.getIdSapr(),sapr.getPilotLicense()));
                 return true;
-                
-            }else {
+ 			}
+ 			else {
             	pt.close();
+            	pt1.close();
             	con.close();
             	System.out.println("male");
             	logger.info(String.format("Class:%s-Method:%s::END not add sapr -%s of pilot %s", //
                         classe,method,sapr.getIdSapr(),sapr.getPilotLicense()));
             	return false;
             }
- 			
+
  		} catch (Exception e) {
  			logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
  			System.out.println("Si è verificato il seguente errore: " + e.toString());
@@ -69,10 +93,12 @@ import it.uniroma2.sapr.pojo.Sapr;
   		}
  	  	
  	  	finally{
- 	  		if (pt != null) {
+ 	  		if (pt != null) 
  	  			pt.close();
- 	  		}
-
+ 	  			
+ 	  		if (pt1 != null) 
+ 	  			pt1.close();
+ 	  		
  	  		if (con != null) {
  	  			con.close();
  	  		}
@@ -95,7 +121,7 @@ import it.uniroma2.sapr.pojo.Sapr;
         
         int sap = sapr.getIdSapr();
 
-        String query = "DELETE FROM sapr WHERE idSapr = ?";
+        String query = "UPDATE sapr SET active = 0 WHERE idSapr = ?";
 
         try {
             //logger per segnalare l'inizio della scrittura del metodo
@@ -111,6 +137,7 @@ import it.uniroma2.sapr.pojo.Sapr;
             	
                 pt.close();
                 con.close();
+                System.out.println("delete andata a buon fine");
                 logger.info(String.format("Class:%s-Method:%s::END delete sapr -%s",
                         classe, method, sap));
                 return true;
@@ -119,6 +146,7 @@ import it.uniroma2.sapr.pojo.Sapr;
             	
                 pt.close();
                 con.close();
+                System.out.println("male");
                 logger.info(String.format("Class:%s-Method:%s::END not delete sapr -%s",
                         classe, method, sap));
                 return false;
@@ -128,6 +156,7 @@ import it.uniroma2.sapr.pojo.Sapr;
         } catch (Exception e) {
         	
         	logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+        	System.out.println("Si è verificato il seguente errore: " + e.toString());
             return false;
             
         } finally {
@@ -144,95 +173,125 @@ import it.uniroma2.sapr.pojo.Sapr;
 	
 	/*seleziona tutti i sapr appartenenti al pilota specificato*/
 	
-	public ArrayList<Sapr> selectSapr(String owner) throws SQLException {
-		
-	/**
-     * questo metodo prende in input la licenza del pilota e restituisce tutti
-     * i sapr a sua disposizione
-     *
-     * @param sapr è il bean contente tutti i dati da inserire nel db
-     * @return ArrayList<Sapr> array di sapr
-     * @throws SQLException
-     */
-		
-    String method = "selectSapr";
-    Connection con = null;
-    PreparedStatement pt = null;
-    ArrayList<Sapr> arr_sapr = new ArrayList<Sapr>();
-
-    String query = "SELECT idSapr, model, producer, " +
-    "weight, heavyweight, battery, maxDistance, maxHeight, pilotLicense FROM sapr WHERE pilotLicense = ?";
-
-    try {
-        //logger per segnalare l'inizio della scrittura del metodo
-        logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, owner));
-
-        con = MySQLDbDAOFactory.createConnection();
-        pt = con.prepareStatement(query);
-
-        //compilo il campo ? nella query
-        pt.setString(1, owner);
-
-        // eseguo la query
-        ResultSet rs = pt.executeQuery();
-        if (rs != null) {
-
-            logger.info(String.format("Class:%s-Method:%s::END select all sapr of pilot %s",
-                    classe, method, owner));
-
-            while (rs.next()) {
-                int id = rs.getInt("idSapr");
-                String md = rs.getString("model");
-                String producer = rs.getString("producer");
-                int weight = rs.getInt("weight");
-                int heavyweight = rs.getInt("heavyweight");
-                String battery = rs.getString("battery");
-                int maxDistance = rs.getInt("maxDistance");
-                int maxHeight = rs.getInt("maxHeight");
-                String pilotLicense = rs.getString("pilotLicense");
-
-                Sapr s = new Sapr(id, md, producer, weight, heavyweight, battery, maxDistance, maxHeight, pilotLicense);
-                System.out.println(s.toString());
-                arr_sapr.add(s);
-            }
-
-            return arr_sapr;
-            
-        } else {
-        	
-            pt.close();
-            con.close();
-            logger.info(String.format("Class:%s-Method:%s::END select no one sapr of pilot %s",
-                    classe, method, owner));
-            return arr_sapr;
-        }
-
-    } catch (Exception e) {
+	public ArrayList<ResponseSapr> selectSapr(String owner) throws SQLException {		
+		/**
+	     * questo metodo prende in input la licenza del pilota e restituisce tutti
+	     * i sapr a sua disposizione
+	     *
+	     * @param sapr è il bean contente tutti i dati da inserire nel db
+	     * @return ArrayList<Sapr> array di sapr
+	     * @throws SQLException
+	     */	
+	    String method = "selectSapr";
+	    Connection con = null;
+	    PreparedStatement pt = null;
+	    PreparedStatement pt1 = null;
+	    ArrayList<ResponseSapr> arr_sapr = new ArrayList<ResponseSapr>();
+	
+	    String query = "SELECT idSapr, model, producer, " +
+	    "weight, heavyweight, battery, maxDistance, maxHeight, pilotLicense, active FROM sapr WHERE pilotLicense = ? ";
+	    
+	    String query1 = "SELECT valueCheckElement FROM checkSAPR WHERE idSapr = ?";
+    
+	    try {
+	        //logger per segnalare l'inizio della scrittura del metodo
+	        logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, owner));
+	
+	        con = MySQLDbDAOFactory.createConnection();
+	        pt = con.prepareStatement(query);
+	        pt1 = con.prepareStatement(query1);
+	  
+	        //compilo il campo ? nella query
+	        pt.setString(1, owner);
+	        
+	        // eseguo la query
+	        ResultSet rs = pt.executeQuery();
+	        if (rs != null) {
+	
+	            logger.info(String.format("Class:%s-Method:%s::END select all sapr of pilot %s",
+	                    classe, method, owner));
+	
+	            while (rs.next()) {
+	            	ResponseSapr rispSapr = new ResponseSapr();
+	            	ArrayList<CheckElement> checkSapr = new ArrayList<CheckElement>();
+	            	
+	            	//recupero la licenza dalla query 
+					int idS = rs.getInt("idSapr");
+					rispSapr.setIdSapr(idS);
+					String model = rs.getString("model");
+	                rispSapr.setModel(model);
+	                String producer = rs.getString("producer");
+	                rispSapr.setProducer(producer);
+	                String battery = rs.getString("battery");
+	                rispSapr.setBattery(battery);
+	                int weight = rs.getInt("weight");
+	                rispSapr.setWeight(weight);
+	                int heavyweight = rs.getInt("heavyweight");
+	                rispSapr.setHeavyweight(heavyweight);
+	                int maxDistance = rs.getInt("maxDistance");
+	                rispSapr.setMaxDistance(maxDistance);
+	                int maxHeight = rs.getInt("maxHeight");
+	                rispSapr.setMaxHeight(maxHeight);
+	                String license = rs.getString("pilotLicense");
+	                rispSapr.setPilotLicense(license);
+	                int active = rs.getInt("active");
+	                rispSapr.setActive(active);
+	                   
+	                pt1.setInt(1, idS);
+	                ResultSet rs1 = pt1.executeQuery();
+	                
+	                while(rs1.next()){	
+	                	String valore = rs1.getString("valueCheckElement");
+	                	checkSapr.add(new CheckElement(valore));
+	                }
+	                
+	                rispSapr.setCheckSapr(checkSapr);      
+	                arr_sapr.add(rispSapr);
+	                
+	            }
+	
+	            return arr_sapr;
+	            
+	        } else {
+	        	
+	            pt.close();
+	            pt1.close();
+	            con.close();
+	            logger.info(String.format("Class:%s-Method:%s::END select no one sapr of pilot %s",
+	                    classe, method, owner));
+	            return arr_sapr;
+	        }
+	
+	    } catch (Exception e) {
+	    	
+	    	logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
+	        return arr_sapr;
+	        
+	    }finally {
     	
-    	logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
-        return arr_sapr;
+	        if (pt != null) 
+	            pt.close();
+	        
+	        if (pt1 != null) 
+	            pt.close();
+	        
+	        if (con != null) 
+	            con.close();
         
-    } finally {
-    	
-        if (pt != null) 
-            pt.close();
-        
+    	}
 
-        if (con != null) 
-            con.close();
-        
-    }
-
-}
+	}
  
 	public ResponseSapr selectSapr(Sapr sapr) throws SQLException {
 		
 		String method = "selectSapr";
 		Connection con = null;
 		PreparedStatement pt = null;
+		PreparedStatement pt1 = null;
 		ResponseSapr rispSapr = new ResponseSapr();
 		String query = "SELECT idSapr, model, producer, weight, heavyweight, battery, maxDistance, " +
-        	    " maxHeight, pilotLicense FROM sapr WHERE idSapr = ?";
+        	    " maxHeight, pilotLicense, active FROM sapr WHERE idSapr = ?";
+		String query1 = "SELECT valueCheckElement FROM checkSAPR WHERE idSapr = ? ";
 		int idSapr = sapr.getIdSapr();
 						
 		try {
@@ -242,48 +301,62 @@ import it.uniroma2.sapr.pojo.Sapr;
 
 			con = MySQLDbDAOFactory.createConnection();
 			pt = con.prepareStatement(query);
+			pt1 = con.prepareStatement(query1);
 			
 			//compilo i campi ? nella query
 			pt.setInt(1, idSapr);
+			pt1.setInt(1, idSapr);
 			
 			//eseguo la query
 			ResultSet rs = pt.executeQuery();
+			ResultSet rs1 = pt1.executeQuery();
+			ArrayList<CheckElement> checkSapr = new ArrayList<CheckElement>();
 			
-			if(rs != null){
+			if(rs != null && rs1 != null){
 				rs.next();
+				
                 System.out.println("select andata a buon fine");
 				logger.info(String.format("Class:%s-Method:%s::END select sapr with id-%s", //
 						classe,method,idSapr));
 				System.out.println(String.format("Class:%s-Method:%s::START with dates %s", classe,method,idSapr));
-				/****************************************************************************
-				 * Qui va parsata la response della query e popolato il bean di risposta    *
-				 ****************************************************************************/
 				
-					//recupero la licenza dalla query 
-					int idS = rs.getInt("idSapr");
-					rispSapr.setIdSapr(idS);
-					String model = rs.getString("model");
-                    rispSapr.setModel(model);
-                    String producer = rs.getString("producer");
-                    rispSapr.setProducer(producer);
-                    String battery = rs.getString("battery");
-                    rispSapr.setBattery(battery);
-                    int weight = rs.getInt("weight");
-                    rispSapr.setWeight(weight);
-                    int heavyweight = rs.getInt("heavyweight");
-                    rispSapr.setHeavyweight(heavyweight);
-                    int maxDistance = rs.getInt("maxDistance");
-                    rispSapr.setMaxDistance(maxDistance);
-                    int maxHeight = rs.getInt("maxHeight");
-                    rispSapr.setMaxHeight(maxHeight);
-                    String license = rs.getString("pilotLicense");
-                    rispSapr.setPilotLicense(license);
+				//recupero la licenza dalla query 
+				int idS = rs.getInt("idSapr");
+				rispSapr.setIdSapr(idS);
+				String model = rs.getString("model");
+                rispSapr.setModel(model);
+                String producer = rs.getString("producer");
+                rispSapr.setProducer(producer);
+                String battery = rs.getString("battery");
+                rispSapr.setBattery(battery);
+                int weight = rs.getInt("weight");
+                rispSapr.setWeight(weight);
+                int heavyweight = rs.getInt("heavyweight");
+                rispSapr.setHeavyweight(heavyweight);
+                int maxDistance = rs.getInt("maxDistance");
+                rispSapr.setMaxDistance(maxDistance);
+                int maxHeight = rs.getInt("maxHeight");
+                rispSapr.setMaxHeight(maxHeight);
+                String license = rs.getString("pilotLicense");
+                rispSapr.setPilotLicense(license);
+                int active = rs.getInt("active");
+                rispSapr.setActive(active);
+                
+                String valore;
+                
+                while(rs1.next()){
+                	valore = rs1.getString("valueCheckElement");
+                	checkSapr.add(new CheckElement(valore));
+                }
                     
-                    return rispSapr;
+                rispSapr.setCheckSapr(checkSapr);
+                
+                return rispSapr;
                 	
 			}else {
 				
 				pt.close();
+				pt1.close();
 				con.close();
 				System.out.println("male");
 				logger.info(String.format("Class:%s-Method:%s::END not select sapr with id code-%s", //
@@ -296,7 +369,12 @@ import it.uniroma2.sapr.pojo.Sapr;
 			System.out.println("Si è verificato il seguente errore: " + e.toString());
 			return null;
 		} finally {
+			
 			if (pt != null) {
+				pt.close();
+			}
+			
+			if (pt1 != null) {
 				pt.close();
 			}
 
@@ -305,14 +383,93 @@ import it.uniroma2.sapr.pojo.Sapr;
 			}
 		}
 	}
+	
+	public boolean updateSapr(Sapr sapr) throws SQLException {
+  		/**
+         * questo metodo modifica un sapr dal DB
+         *
+         * @param sapr è il bean contenente tutti i dati da inserire nel db
+         * @throws SQLException
+         */
+  		
+        String method = "updateSapr";
+        Connection con = null;
+        PreparedStatement pt = null;
+        
+        int sap = sapr.getIdSapr();
+
+        String query = "UPDATE sapr SET model = ?, producer = ?, weight = ?, heavyweight = ?, battery = ?, maxDistance = ?, " +
+        	    " maxHeight = ?, pilotLicense = ?, active = ?  WHERE idSapr = ?";
+
+        try {
+            //logger per segnalare l'inizio della scrittura del metodo
+            logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, sap));
+
+            con = MySQLDbDAOFactory.createConnection();
+            pt = con.prepareStatement(query);
+
+ 			pt.setString(1, sapr.getModel());
+ 			pt.setString(2, sapr.getProducer());
+ 			pt.setInt(3, sapr.getWeight());
+ 			pt.setInt(4, sapr.getHeavyweight());
+ 			pt.setString(5, sapr.getBattery());
+ 			pt.setInt(6, sapr.getMaxDistance());
+ 			pt.setInt(7, sapr.getMaxHeight());
+ 			pt.setString(8, sapr.getPilotLicense());
+ 			pt.setInt(9, sapr.getActive());
+ 			pt.setInt(10, sapr.getIdSapr()); 
+ 			
+            // eseguo la query
+            if (pt.executeUpdate() == 1) {
+            	
+                pt.close();
+                con.close();
+                System.out.println("update andata a buon fine");
+                logger.info(String.format("Class:%s-Method:%s::END update sapr -%s",
+                        classe, method, sap));
+                return true;
+                
+            } else {
+            	
+                pt.close();
+                con.close();
+                System.out.println("male");
+                logger.info(String.format("Class:%s-Method:%s::END not update sapr -%s",
+                        classe, method, sap));
+                return false;
+                
+            }
+            
+        } catch (Exception e) {
+        	
+        	logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+        	System.out.println("Si è verificato il seguente errore: " + e.toString());
+            return false;
+            
+        } finally {
+        	
+            if (pt != null) 
+                pt.close();
+            
+
+            if (con != null) 
+                con.close();
+            
+        }
+    }
 		
-		
-		
-		
-		
+			
 	public static void main(String args[]) throws ParseException{
-	  	
-  		Sapr sapr = new Sapr(2314, "ciao", "chiu", 52, 90, "00132", 220, 60, "0000000001");
+
+	
+		ArrayList<CheckElement> checkSapr = new ArrayList<CheckElement>();
+
+		checkSapr.add(new CheckElement("motore"));
+		checkSapr.add(new CheckElement("batteria"));
+		checkSapr.add(new CheckElement("elica"));
+		checkSapr.add(new CheckElement("serbatoio"));
+		
+  		Sapr sapr = new Sapr(300, "ciao", "chiu", 52, 90, "fvhfdibv", 220, 60, "0000000001", checkSapr, 1);
   		MySQLDbSaprDAO mysqlTest = new MySQLDbSaprDAO();
   		
   		try {
@@ -322,18 +479,22 @@ import it.uniroma2.sapr.pojo.Sapr;
   			
   			/*System.out.println("sto per eliminare");
   			mysqlTest.deleteSapr(sapr);*/
+  			/*
+  			System.out.println("sto per modificare");
+  			mysqlTest.updateSapr(sapr);*/
   			
-  			String res;
+  			/*String res;*/
   			
-  			System.out.println("sto per selezionare");
+  			/*System.out.println("sto per selezionare");
   			res = (mysqlTest.selectSapr(sapr)).toString();
-  			System.out.println(res);
+  			System.out.println(res);*/
   			
-  			/*ArrayList<Sapr> risul = new ArrayList<Sapr>();
+  			/*ArrayList<ResponseSapr> risul = new ArrayList<ResponseSapr>();
   			risul = mysqlTest.selectSapr("0000000001");
   			
-  			for(Sapr s : risul) {
+  			for(ResponseSapr s : risul) {
   				res = s.toString();
+  	  			System.out.println(res);
   			}*/
   			
   		} catch (SQLException e) {
