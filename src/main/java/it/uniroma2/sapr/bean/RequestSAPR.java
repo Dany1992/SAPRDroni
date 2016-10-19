@@ -225,7 +225,7 @@ public class RequestSAPR extends Request {
 
 	@Override
 	public String toString() {
-		return "ResponseSapr [idSapr=" + idSapr + ", model=" + model + ", producer=" + producer + ", weight=" + weight
+		return "RequestSapr [idSapr=" + idSapr + ", model=" + model + ", producer=" + producer + ", weight=" + weight
 				+ ", heavyweight=" + heavyweight + ", battery=" + battery + ", maxDistance=" + maxDistance
 				+ ", maxHeight=" + maxHeight + ", pilotLicense=" + pilotLicense + ", active=" + active + ", checkSapr=" + checkSapr
 				+ "]";
