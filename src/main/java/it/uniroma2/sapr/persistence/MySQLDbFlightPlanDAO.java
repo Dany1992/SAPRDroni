@@ -13,6 +13,8 @@ import java.text.ParseException;
 import org.apache.log4j.Logger;
 
 import it.uniroma2.sapr.bean.RequestFlightPlan;
+import it.uniroma2.sapr.bean.ResponseFlightPlan;
+import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Sapr;
 import java.sql.ResultSet;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
  */
 public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
     String classe = "MySQLDbFlightPlanDAO";
+    private boolean result=false;
     final static Logger logger = Logger.getLogger("PESISTENCE");
     /**
 	 *  
@@ -36,10 +39,10 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 		String method = "insertFlightPlan";
 		Connection con = null;
 		PreparedStatement pt = null;
-		String query = "INSERT INTO flightplan(destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,idDevice,pilotLicense) VALUES(?,?,?,?,?,?,?,?,?)";
-                System.out.println(query);
 		try {
-                    
+                     for(int i=0;i<flight.getDevices().size();i++){
+                        String query = "INSERT INTO flightplan(destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,idDevice,pilotLicense) VALUES(?,?,?,?,?,?,?,?,?)";
+                        System.out.println(query);
 			//logger per segnalare l'inizio della scrittura del metodo
 			logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,flight.toString()));
 			
@@ -53,9 +56,10 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 			pt.setString(5, flight.getNowArriving());
 			pt.setInt(6, flight.getIdSapr());
 			pt.setInt(7, flight.getIdNote());
-			pt.setInt(8, flight.getIdDevice());
+			pt.setInt(8, flight.getDevices().get(i).getIdDevice());
 			pt.setString(9, flight.getPilotLicense());
-                    
+    
+                       
 			
 			//esito della query
 			if(pt.executeUpdate() == 1){
@@ -66,15 +70,17 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 				
 				logger.info(String.format("Class:%s-Method:%s::END add flight plan with destination code-%s", //
 						classe,method,flight.getDestination()));
-				return true;
+				result=true;
 			}else {
 				pt.close();
 				con.close();
 				System.out.println("Non ho inserito il flightPlan");
 				logger.info(String.format("Class:%s-Method:%s::END dont add flight plan with destination code-%s", //
 						classe,method,flight.getDestination()));
-				return false;
+				result=false;
 			}
+                    }
+                return result;
 			
 		} catch (Exception e) {
 			logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
@@ -144,13 +150,14 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
                         }
     };
     
-   public FlightPlan selectFlightPlan(FlightPlan flight) throws SQLException{
+   public ResponseFlightPlan selectFlightPlan(FlightPlan flight) throws SQLException{
                 System.out.println("funzione selectFlightPlan(FlightPlan flight)");
 		String method = "selectFlightPlan";
+                ArrayList<Device> array=new ArrayList<Device>();
 		Connection con = null;
 		PreparedStatement pt = null;
                 ResultSet rs=null;
-		String query = "SELECT destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,idDevice,pilotLicense FROM flightplan WHERE idsapr=? and pilotLicense=? and dateDeparture=?";
+		String query = "SELECT destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,flightplan.idDevice,flightplan.pilotLicense,model,type,weight,producer,active from flightplan,device WHERE idsapr=? and flightplan.pilotLicense=? and dateDeparture=? and flightplan.iddevice=device.iddevice;";
                 System.out.println(query);
 		try {
                     
@@ -166,14 +173,16 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
                         rs = pt.executeQuery();
 			//esito della query
 			if(rs!=null){
+                                //da completare la query es:select  destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,flightplan.idDevice,flightplan.pilotLicense,model,type,weight,producer from flightplan,device where idsapr=2 and flightplan.pilotlicense="0000000002" and datedeparture="2016-09-11"and flightplan.iddevice=device.iddevice;
+                                //deve creare prima glio oggetti Device e poi creare un oggetto di tipo ResponseFlightPlan altrimenti non potri passare un arrayList di Device
                                 System.out.println("Ho selezionato il flightPlan");
 				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,flight.getIdSapr()));
-                                rs.next();  
-<<<<<<< HEAD
-                                FlightPlan flight1 = new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense"), rs.get);       
-=======
-                                FlightPlan flight1=new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense"));       
->>>>>>> master
+        
+                                while(rs.next()){ 
+                                    array.add(new Device(rs.getInt("iddevice"),rs.getString("model"),rs.getString("type"),rs.getInt("weight"),rs.getString("producer"),rs.getString("pilotlicense"),null, rs.getInt("active")));
+                                }
+                                rs.first(); 
+                                ResponseFlightPlan flight1 = new ResponseFlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),array,rs.getString("pilotLicense"));
                                 return flight1;
                         }
                         else {
@@ -199,14 +208,14 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
    };
    
    //seleziona tutti i piani di voli che ha svolto un determinato Sapr(gli viene passato un oggetto di tipo Sapr e ricavo l'idSapr)
-    public ArrayList<FlightPlan> selectFlightPlan(Sapr sapr) throws SQLException{
+    public ArrayList<ResponseFlightPlan> selectFlightPlan(Sapr sapr) throws SQLException{
                 System.out.println("funzione selectFlightPlan(Sapr sapr)");
 		String method = "selectFlightPlan";
 		Connection con = null;
 		PreparedStatement pt = null;
                 ResultSet rs=null;
-                ArrayList<FlightPlan> array=new ArrayList<FlightPlan>();
-		String query = "SELECT destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,idDevice,pilotLicense FROM flightplan WHERE idsapr=?";
+                ArrayList<ResponseFlightPlan> array=new ArrayList<ResponseFlightPlan>();
+		String query = "SELECT dateDeparture,idSapr,pilotLicense FROM flightplan WHERE idsapr=? group by datedeparture";
                 System.out.println(query);
 		try {
                     
@@ -223,15 +232,8 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
                                 System.out.println("Ho selezionato i flightPlan");
 				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,sapr.getIdSapr()));
                                 while(rs.next()){  
-<<<<<<< HEAD
-                                    array.add(new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense"), rs.));       
-=======
-<<<<<<< HEAD
-                                    array.add(new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense")));       
-=======
-                                    array.add(new FlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense"), rs.));       
->>>>>>> tizianoBranch
->>>>>>> master
+                                    array.add(selectFlightPlan(new FlightPlan(null,null,rs.getString("datedeparture"),null,null,rs.getInt("idsapr"),0,rs.getString("pilotLicense"),null)));
+                                    //array.add(new ResponseFlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense")));       
                                 }
                                 return array;
                         }
@@ -261,7 +263,11 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
   public static void main(String args[]) throws ParseException{
       
 		//INSERIMENTO:
-		FlightPlan flight = new FlightPlan("Roma", "Milano", "2016-08-11", "16:00:00", "23",2,1,1, "0000000002");
+                ArrayList<Device> d = new ArrayList<Device>();
+                d.add(new Device(1,"model1","Camera",500,"producer2","0000000001",null,1));
+                d.add(new Device(4,"model3","Brightness Sensor",10,"producer4","0000000001",null,1));
+                
+		FlightPlan flight = new FlightPlan("Piaggine", "Ciampino", "2016-09-11", "18:00:00", "24",2,1,"0000000002",d);
 		MySQLDbFlightPlanDAO mysqlTest = new MySQLDbFlightPlanDAO();
 		try {
 			System.out.println("Sto inserendo!");
@@ -289,7 +295,7 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 		}
                 //SELEZIONE 2) :
                 try {
-                        Sapr sapr=new Sapr(2);
+                        Sapr sapr=new Sapr(2,"model2","producer1",2000,4000,"lithium ion",60000,1500,"0000000002",null,1);
 			System.out.println("Sto selezionando i flightPlan con un determinato: idsapr");
 			System.out.println(mysqlTest.selectFlightPlan(sapr));
                       
@@ -297,9 +303,11 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 			System.out.println(e);
 			e.printStackTrace();
 		}
-                
-  
-  
+
   }   
+
+    public boolean updateFlightPlan(FlightPlan flight) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

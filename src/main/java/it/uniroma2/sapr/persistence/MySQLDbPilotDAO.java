@@ -50,7 +50,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			pt.setString(1, pilot.getPilotLicense());
 			pt.setString(2, pilot.getName());
 			pt.setString(3, pilot.getSurname());
-			pt.setDate(4, pilot.getBirthDate());
+			pt.setString(4, pilot.getBirthDate());
 			pt.setString(5, pilot.getNation());
 			pt.setString(6, pilot.getTaxCode());
 			pt.setString(7, pilot.getState());

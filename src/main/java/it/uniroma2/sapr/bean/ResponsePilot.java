@@ -10,37 +10,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="RequestManagerPilot")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ResponsePilot {
-	@XmlElement(name = "NAME_PILOT")
+	@XmlElement(name = "name")
 	private String name;
 
-	@XmlElement(name = "SURNAME_PILOTA")
+	@XmlElement(name = "surname")
 	private String surname;
 
-	@XmlElement(name = "NATION")
+	@XmlElement(name = "nation")
 	private String nation;
 	
-	@XmlElement(name = "STATE")
+	@XmlElement(name = "state")
 	private String state;
 	
-	@XmlElement(name = "LICENSE_PILOT")
+	@XmlElement(name = "pilotLicense")
 	private String pilotLicense;
 
-	@XmlElement(name = "TAX_CODE")
+	@XmlElement(name = "taxCode")
 	private String taxCode;
 	
-	@XmlElement(name = "BIRTH_DATE")
+	@XmlElement(name = "birthDay")
 	private Date birthDate;
 	
-	@XmlElement(name = "RESIDENCE")
+	@XmlElement(name = "residence")
 	private String residence;
 	
-	@XmlElement(name = "PHONE")
+	@XmlElement(name = "phone")
 	private String phone;
 	
-	@XmlElement(name = "MAIL")
+	@XmlElement(name = "mail")
 	private String mail;
 	
-	@XmlElement(name = "PASSWORD")
+	@XmlElement(name = "password")
 	private String password;
 
 	public ResponsePilot(String name, String surname, String nation, String state, String pilotLicense, String taxCode,

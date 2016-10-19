@@ -4,22 +4,21 @@
  * and open the template in the editor.
  */
 package it.uniroma2.sapr.bean;
-
+import it.uniroma2.sapr.pojo.Device;
+import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- *
+ * Classe da passare al Web Client
  * @author pierfrancescotommasino
- * Questa classe è il bean che viene ricevuto dal webService attraverso il webMethod
  */
-
-@XmlRootElement(name="RequestManagerFlightPlan")
+@XmlRootElement(name="ResponseFlightPlan")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RequestFlightPlan extends Request{
-
-	@XmlElement(name = "destinations")
+public class ResponseFlightPlan {
+    	@XmlElement(name = "destinations")
 	private String destinations;
 
 	@XmlElement(name = "departure")
@@ -40,17 +39,13 @@ public class RequestFlightPlan extends Request{
 	@XmlElement(name = "idNote")
 	private int idNote;
 	
-	@XmlElement(name = "idDevice")
-	private int idDevice;
+	@XmlElement(name = "devices")
+	private ArrayList<Device> devices;
 	
 	@XmlElement(name = "pilotLicense")
 	private String pilotLicense;
 
-    public RequestFlightPlan() {
-		super();
-		// TODO Auto-generated constructor stub
-    }
-    public RequestFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, int idDevice,Request.operation op) {
+    public ResponseFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, ArrayList<Device> devices, String pilotLicense) {
         this.destinations = destinations;
         this.departure = departure;
         this.dateDeparture = dateDeparture;
@@ -58,8 +53,12 @@ public class RequestFlightPlan extends Request{
         this.nowArriving = nowArriving;
         this.idSapr = idSapr;
         this.idNote = idNote;
-        this.idDevice = idDevice;
-        this.op=op;
+        this.devices = devices;
+        this.pilotLicense = pilotLicense;
+    }
+
+    public ResponseFlightPlan() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getDestinations() {
@@ -118,12 +117,12 @@ public class RequestFlightPlan extends Request{
         this.idNote = idNote;
     }
 
-    public int getIdDevice() {
-        return idDevice;
+    public ArrayList<Device> getDevices() {
+        return devices;
     }
 
-    public void setIdDevice(int idDevice) {
-        this.idDevice = idDevice;
+    public void setDevices(ArrayList<Device> devices) {
+        this.devices = devices;
     }
 
     public String getPilotLicense() {
@@ -136,16 +135,16 @@ public class RequestFlightPlan extends Request{
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + (this.destinations != null ? this.destinations.hashCode() : 0);
-        hash = 53 * hash + (this.departure != null ? this.departure.hashCode() : 0);
-        hash = 53 * hash + (this.dateDeparture != null ? this.dateDeparture.hashCode() : 0);
-        hash = 53 * hash + (this.timeDeparture != null ? this.timeDeparture.hashCode() : 0);
-        hash = 53 * hash + (this.nowArriving != null ? this.nowArriving.hashCode() : 0);
-        hash = 53 * hash + this.idSapr;
-        hash = 53 * hash + this.idNote;
-        hash = 53 * hash + this.idDevice;
-        hash = 53 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
+        int hash = 7;
+        hash = 73 * hash + (this.destinations != null ? this.destinations.hashCode() : 0);
+        hash = 73 * hash + (this.departure != null ? this.departure.hashCode() : 0);
+        hash = 73 * hash + (this.dateDeparture != null ? this.dateDeparture.hashCode() : 0);
+        hash = 73 * hash + (this.timeDeparture != null ? this.timeDeparture.hashCode() : 0);
+        hash = 73 * hash + (this.nowArriving != null ? this.nowArriving.hashCode() : 0);
+        hash = 73 * hash + this.idSapr;
+        hash = 73 * hash + this.idNote;
+        hash = 73 * hash + (this.devices != null ? this.devices.hashCode() : 0);
+        hash = 73 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
         return hash;
     }
 
@@ -160,14 +159,11 @@ public class RequestFlightPlan extends Request{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RequestFlightPlan other = (RequestFlightPlan) obj;
+        final ResponseFlightPlan other = (ResponseFlightPlan) obj;
         if (this.idSapr != other.idSapr) {
             return false;
         }
         if (this.idNote != other.idNote) {
-            return false;
-        }
-        if (this.idDevice != other.idDevice) {
             return false;
         }
         if ((this.destinations == null) ? (other.destinations != null) : !this.destinations.equals(other.destinations)) {
@@ -188,13 +184,17 @@ public class RequestFlightPlan extends Request{
         if ((this.pilotLicense == null) ? (other.pilotLicense != null) : !this.pilotLicense.equals(other.pilotLicense)) {
             return false;
         }
+        if (this.devices != other.devices && (this.devices == null || !this.devices.equals(other.devices))) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "RequestFlightPlan{" + "destinations=" + destinations + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", idDevice=" + idDevice + ", pilotLicense=" + pilotLicense +"op="+op+'}';
+        return "ResponseFlightPlan{" + "destinations=" + destinations + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", devices=" + devices + ", pilotLicense=" + pilotLicense + '}';
     }
-           
     
+ 
+        
 }

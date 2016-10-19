@@ -13,37 +13,37 @@ import it.uniroma2.sapr.pojo.CheckElement;
 @XmlRootElement(name="ResponseSapr")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ResponseSapr {
-    @XmlElement(name = "ID_SAPR")
+    @XmlElement(name = "idSapr")
     private int idSapr;
     
-    @XmlElement(name = "MODEL_SAPR")
+    @XmlElement(name = "model")
     private String model;
     
-    @XmlElement(name = "PRODUCER")
+    @XmlElement(name = "producer")
     private String producer;
     
-    @XmlElement(name = "WEIGHT_SAPR")
+    @XmlElement(name = "weight")
     private int weight;
     
-    @XmlElement(name = "HEAVY_WEIGHT")
+    @XmlElement(name = "heavyweight")
     private int heavyweight;
     
-    @XmlElement(name = "BATTERY")
+    @XmlElement(name = "battery")
     private String battery;
     
-    @XmlElement(name = "MAX_DISTANCE")
+    @XmlElement(name = "maxDistance")
     private int maxDistance;
     
-    @XmlElement(name = "MAX_HEIGHT")
+    @XmlElement(name = "maxHeight")
     private int maxHeight;
     
-    @XmlElement(name = "PILOTLICENSE")
+    @XmlElement(name = "pilotLicense")
     private String pilotLicense;
     
-    @XmlElement(name = "CHECKSAPR")
+    @XmlElement(name = "checkSapr")
     private ArrayList<CheckElement> checkSapr;
     
-    @XmlElement(name = "ACTIVE")
+    @XmlElement(name = "active")
     private int active;
 
 	public ResponseSapr(int idSapr, String model, String producer, int weight, int heavyweight, String battery, int maxDistance, int maxHeight, String pilotLicense, ArrayList<CheckElement> checkSapr, int active) {
