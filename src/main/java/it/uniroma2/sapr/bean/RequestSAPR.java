@@ -13,37 +13,37 @@ import it.uniroma2.sapr.pojo.CheckElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RequestSAPR extends Request {
 	
-	@XmlElement(name = "ID_SAPR",nillable = false)
+	@XmlElement(name = "idSapr",nillable = false)
 	private long idSapr;
 	
-	@XmlElement(name = "MODEL_SAPR",nillable = false)
+	@XmlElement(name = "model",nillable = false)
 	private String model;
 	
-	@XmlElement(name = "PRODUCER_SAPR",nillable = false)
+	@XmlElement(name = "producer",nillable = false)
 	private String producer;
 	
-	@XmlElement(name = "WEIGHT_SAPR",nillable = false)
+	@XmlElement(name = "weight",nillable = false)
 	private int weight;
 	
-	@XmlElement(name = "HEAVYWEIGHT_SAPR",nillable = false)
+	@XmlElement(name = "heavyweight",nillable = false)
 	private int heavyweight;
 	
-	@XmlElement(name = "BATTERY_SAPR",nillable = false)
+	@XmlElement(name = "battery",nillable = false)
 	private String battery;
 	
-	@XmlElement(name = "MAX_DISTANCE",nillable = false)
+	@XmlElement(name = "maxDistance",nillable = false)
 	private int maxDistance;
 	
-	@XmlElement(name = "MAX_HEIGHT",nillable = false)
+	@XmlElement(name = "maxHeight",nillable = false)
 	private int maxHeight;
 	
-	@XmlElement(name = "PILOT_LICENSE",nillable = false)
+	@XmlElement(name = "pilotLicense",nillable = false)
 	private String pilotLicense;
 	
-	@XmlElement(name = "CHECKSAPR",nillable = false)
+	@XmlElement(name = "checkSapr",nillable = false)
 	private ArrayList<CheckElement> checkSapr;
 	
-	@XmlElement(name = "ACTIVE",nillable = false)
+	@XmlElement(name = "active",nillable = false)
 	private int active;
 
 	public RequestSAPR() {

@@ -18,25 +18,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RequestDevice extends Request{
     
-    @XmlElement(name = "ID_DEVICE")
+    @XmlElement(name = "idDevice")
     private int idDevice;
     
-    @XmlElement(name = "MODEL_DEVICE")
+    @XmlElement(name = "model")
     private String model;
     
-    @XmlElement(name = "TYPE_DEVICE")
+    @XmlElement(name = "typer")
     private String type;
     
-    @XmlElement(name = "WEIGHT_DEVICE")
+    @XmlElement(name = "weight")
     private int weight;
     
-    @XmlElement(name = "PRODUCER")
+    @XmlElement(name = "producer")
     private String producer;
     
-    @XmlElement(name = "PILOTLICENSE")
+    @XmlElement(name = "pilotLicense")
     private String pilotLicense;
 
-    @XmlElement(name = "CHECK_DEVICE")
+    @XmlElement(name = "chekDevice")
     private ArrayList<CheckElement> checkDevice;
     
     
