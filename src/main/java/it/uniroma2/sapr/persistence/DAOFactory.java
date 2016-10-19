@@ -19,12 +19,15 @@ public abstract class DAOFactory {
 	public abstract SaprDAO getSaprDAO();
         public abstract DeviceDAO getDeviceDAO();
         public abstract NoteDAO getNoteDAO();
+
         public abstract FlightPlanDAO getFlightPlanDAO();
         private static MySQLDbDAOFactory mysqlDbFactory;
 	
          /**
 
 =======
+=======
+>>>>>>> Stashed changes
    
         private static MySQLDbDAOFactory mysqlDbFactory;
 	

@@ -3,45 +3,70 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.uniroma2.sapr.pojo;
-
+package it.uniroma2.sapr.bean;
+import it.uniroma2.sapr.pojo.Device;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Questa classe è l'oggetto che viene creato prelevando i dati dalla RequestFlightPlain.
- * Tale oggetto viene utilizzato per le operazioni CRUD sul db;
+ * Classe da passare al Web Client
  * @author pierfrancescotommasino
- * @mail tommasinofrancesco@hotmail.it
  */
-public class FlightPlan{
-    private String destination;
-    private String departure;
-    private String dateDeparture;
-    private String timeDeparture;
-    private String nowArriving;
-    private int idSapr;
-    private int idNote;
-    private String pilotLicense;
-    private ArrayList<Device> devices;
+@XmlRootElement(name="ResponseFlightPlan")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class ResponseFlightPlan {
+    	@XmlElement(name = "DESTINATIONS")
+	private String destinations;
 
-    public FlightPlan(String destination, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote,String pilotLicense, ArrayList<Device> devices) {
-        this.destination = destination;
+	@XmlElement(name = "DEPARTURE")
+	private String departure;
+
+	@XmlElement(name = "DATE_DEPARTURE")
+	private String dateDeparture;
+   
+	@XmlElement(name = "TIME_DEPARTURE")
+        private String timeDeparture;
+	
+	@XmlElement(name = "NOW_ARRIVING")
+	private String nowArriving;
+
+	@XmlElement(name = "ID_SAPR")
+	private int idSapr;
+	
+	@XmlElement(name = "ID_NOTE")
+	private int idNote;
+	
+	@XmlElement(name = "ID_DEVICE")
+	private ArrayList<Device> devices;
+	
+	@XmlElement(name = "PILOT_LICENSE")
+	private String pilotLicense;
+
+    public ResponseFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, ArrayList<Device> devices, String pilotLicense) {
+        this.destinations = destinations;
         this.departure = departure;
         this.dateDeparture = dateDeparture;
         this.timeDeparture = timeDeparture;
         this.nowArriving = nowArriving;
         this.idSapr = idSapr;
         this.idNote = idNote;
-        this.pilotLicense = pilotLicense;
         this.devices = devices;
-    } 
-
-    public String getDestination() {
-        return destination;
+        this.pilotLicense = pilotLicense;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public ResponseFlightPlan() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getDestinations() {
+        return destinations;
+    }
+
+    public void setDestinations(String destinations) {
+        this.destinations = destinations;
     }
 
     public String getDeparture() {
@@ -92,6 +117,13 @@ public class FlightPlan{
         this.idNote = idNote;
     }
 
+    public ArrayList<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(ArrayList<Device> devices) {
+        this.devices = devices;
+    }
 
     public String getPilotLicense() {
         return pilotLicense;
@@ -101,26 +133,18 @@ public class FlightPlan{
         this.pilotLicense = pilotLicense;
     }
 
-    public ArrayList<Device> getDevices() {
-        return devices;
-    }
-
-    public void setDevices(ArrayList<Device> devices) {
-        this.devices = devices;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + (this.destination != null ? this.destination.hashCode() : 0);
-        hash = 89 * hash + (this.departure != null ? this.departure.hashCode() : 0);
-        hash = 89 * hash + (this.dateDeparture != null ? this.dateDeparture.hashCode() : 0);
-        hash = 89 * hash + (this.timeDeparture != null ? this.timeDeparture.hashCode() : 0);
-        hash = 89 * hash + (this.nowArriving != null ? this.nowArriving.hashCode() : 0);
-        hash = 89 * hash + this.idSapr;
-        hash = 89 * hash + this.idNote;
-        hash = 89 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
-        hash = 89 * hash + (this.devices != null ? this.devices.hashCode() : 0);
+        hash = 73 * hash + (this.destinations != null ? this.destinations.hashCode() : 0);
+        hash = 73 * hash + (this.departure != null ? this.departure.hashCode() : 0);
+        hash = 73 * hash + (this.dateDeparture != null ? this.dateDeparture.hashCode() : 0);
+        hash = 73 * hash + (this.timeDeparture != null ? this.timeDeparture.hashCode() : 0);
+        hash = 73 * hash + (this.nowArriving != null ? this.nowArriving.hashCode() : 0);
+        hash = 73 * hash + this.idSapr;
+        hash = 73 * hash + this.idNote;
+        hash = 73 * hash + (this.devices != null ? this.devices.hashCode() : 0);
+        hash = 73 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
         return hash;
     }
 
@@ -135,14 +159,14 @@ public class FlightPlan{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final FlightPlan other = (FlightPlan) obj;
+        final ResponseFlightPlan other = (ResponseFlightPlan) obj;
         if (this.idSapr != other.idSapr) {
             return false;
         }
         if (this.idNote != other.idNote) {
             return false;
         }
-        if ((this.destination == null) ? (other.destination != null) : !this.destination.equals(other.destination)) {
+        if ((this.destinations == null) ? (other.destinations != null) : !this.destinations.equals(other.destinations)) {
             return false;
         }
         if ((this.departure == null) ? (other.departure != null) : !this.departure.equals(other.departure)) {
@@ -168,10 +192,9 @@ public class FlightPlan{
 
     @Override
     public String toString() {
-        return "FlightPlan{" + "destination=" + destination + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", pilotLicense=" + pilotLicense + ", devices=" + devices + '}';
+        return "ResponseFlightPlan{" + "destinations=" + destinations + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", devices=" + devices + ", pilotLicense=" + pilotLicense + '}';
     }
-
-
     
+ 
+        
 }
-
