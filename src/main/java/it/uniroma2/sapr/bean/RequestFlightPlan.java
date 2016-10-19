@@ -19,7 +19,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="RequestManagerFlightPlan")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RequestFlightPlan extends Request{
- @XmlElement(name = "destinations")
+	
+        @XmlElement(name = "destinations")
 	private String destinations;
 
 	@XmlElement(name = "departure")
@@ -42,7 +43,7 @@ public class RequestFlightPlan extends Request{
 	
 	@XmlElement(name = "devices")
 	private ArrayList<Device> devices;
-	
+
 	@XmlElement(name = "pilotLicense")
 	private String pilotLicense;
 
