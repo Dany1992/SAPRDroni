@@ -386,7 +386,8 @@ import it.uniroma2.sapr.pojo.Sapr;
 	
 	public boolean updateSapr(Sapr sapr) throws SQLException {
   		/**
-         * questo metodo modifica un sapr dal DB
+         * questo metodo modifica un sapr dal DB (non si possono modificare ne
+         * l'id del sapr ne la licenza del pilota)
          *
          * @param sapr è il bean contenente tutti i dati da inserire nel db
          * @throws SQLException
@@ -399,7 +400,7 @@ import it.uniroma2.sapr.pojo.Sapr;
         int sap = sapr.getIdSapr();
 
         String query = "UPDATE sapr SET model = ?, producer = ?, weight = ?, heavyweight = ?, battery = ?, maxDistance = ?, " +
-        	    " maxHeight = ?, pilotLicense = ?, active = ?  WHERE idSapr = ?";
+        	    " maxHeight = ?, active = ?  WHERE idSapr = ?";
 
         try {
             //logger per segnalare l'inizio della scrittura del metodo
@@ -415,9 +416,8 @@ import it.uniroma2.sapr.pojo.Sapr;
  			pt.setString(5, sapr.getBattery());
  			pt.setInt(6, sapr.getMaxDistance());
  			pt.setInt(7, sapr.getMaxHeight());
- 			pt.setString(8, sapr.getPilotLicense());
- 			pt.setInt(9, sapr.getActive());
- 			pt.setInt(10, sapr.getIdSapr()); 
+ 			pt.setInt(8, sapr.getActive());
+ 			pt.setInt(9, sapr.getIdSapr()); 
  			
             // eseguo la query
             if (pt.executeUpdate() == 1) {
@@ -469,7 +469,7 @@ import it.uniroma2.sapr.pojo.Sapr;
 		checkSapr.add(new CheckElement("elica"));
 		checkSapr.add(new CheckElement("serbatoio"));
 		
-  		Sapr sapr = new Sapr(300, "ciao", "chiu", 52, 90, "fvhfdibv", 220, 60, "0000000001", checkSapr, 1);
+  		Sapr sapr = new Sapr(300, "cia", "dv", 503, 930, "f", 221, 61, "0000000001", checkSapr, 1);
   		MySQLDbSaprDAO mysqlTest = new MySQLDbSaprDAO();
   		
   		try {
@@ -479,8 +479,8 @@ import it.uniroma2.sapr.pojo.Sapr;
   			
   			/*System.out.println("sto per eliminare");
   			mysqlTest.deleteSapr(sapr);*/
-  			/*
-  			System.out.println("sto per modificare");
+  			
+  			/*System.out.println("sto per modificare");
   			mysqlTest.updateSapr(sapr);*/
   			
   			/*String res;*/
