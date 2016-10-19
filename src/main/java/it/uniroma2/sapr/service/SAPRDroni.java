@@ -17,6 +17,12 @@ import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
 import it.uniroma2.sapr.persistence.DeviceDAO;
+import it.uniroma2.sapr.persistence.NoteDAO;
+import it.uniroma2.sapr.persistence.SaprDAO;
+import it.uniroma2.sapr.pojo.CheckElement;
+import it.uniroma2.sapr.pojo.Note;
+import it.uniroma2.sapr.pojo.Sapr;
+import java.util.ArrayList;
 
 /**
  * Questa classe è colei che si occupa di esporre i servizi offerti dal WS
@@ -80,7 +86,41 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 */
 	@WebMethod(operationName = "managerSAPR")
 	public Boolean requestManagerSAPR(@WebParam(name = "request")RequestSAPR request) throws Exception {
-		throw new Exception("metodo non implementato");
+            String method = "RequestManagerSAPR";
+            logger.info(String.format("Class:%s-Method:%s::START", classe,method));
+            logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
+            
+            Sapr sapr = new Sapr((int)request.getIdSapr(), request.getModel(), request.getProducer(), 
+                            request.getWeight(), request.getHeavyweight(), request.getBattery(), 
+                            request.getMaxDistance(), request.getMaxHeight(), request.getPilotLicense(), 
+                            request.getCheckSapr(), request.getActive());
+            
+            //Creo le classi per accedere al db.
+            DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+            SaprDAO saprDAO = mySQLFactory.getSaprDAO();
+            
+
+            
+            System.out.println("***********************START WS***********************");
+            System.out.println("La richiesta è: " + request.toString());
+            
+            //Controllo in base all'operazione nel bean di request quale operazione svolgere
+		Boolean result;
+		if (request.getOp().name().equalsIgnoreCase("ADD")){
+			System.out.println("inserisci");
+			result = saprDAO.insertSapr(sapr);
+		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
+			result = saprDAO.deleteSapr(sapr);
+		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
+			result = saprDAO.updateSapr(sapr);
+		}else {
+			throw new Exception("ERROR OPERATION");
+		}
+		
+		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		System.out.println("***********************END WS***********************");
+
+		return result;
 	}
 	
 	/**
@@ -132,7 +172,37 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 */
 	@WebMethod(operationName = "managerNote")
 	public Boolean requestManagerNote(@WebParam(name = "request")RequestNote request) throws Exception {
-		throw new Exception("metodo non implementato");
+            String method = "RequestManagerNote";
+            
+            logger.info(String.format("Class:%s-Method:%s::START", classe,method));
+            logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
+            
+            System.out.println("***********************START WS***********************");
+            System.out.println("Request is: " + request.toString());
+            
+            Note note = new Note(request.getTextNote(), request.getDate());
+            String textNote = new String(request.getTextNote());
+            
+            //Creo le classi per accedere al db.
+            DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+            NoteDAO noteDAO = mySQLFactory.getNoteDAO();
+            
+            Boolean result;
+		if (request.getOp().name().equalsIgnoreCase("ADD")){
+			System.out.println("inserisci");
+			result = noteDAO.insertNote(note);
+		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
+			result = noteDAO.deleteNote(note);
+		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
+			result = noteDAO.updateNote(note, textNote);
+		}else {
+			throw new Exception("ERROR OPERATION");
+		}
+                
+                logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		System.out.println("***********************END WS***********************");
+
+		return result;
 	}
 
     public Boolean requestManagerFlightPlan(RequestFlightPlan request) throws Exception {
