@@ -224,7 +224,7 @@ public class MySQLDbNoteDAO implements NoteDAO {
 
         //Inserimento nuova nota
         ArrayList<CheckElement> check = new ArrayList<CheckElement>();
-        FlightPlan fp = new FlightPlan("Ciampino", "Fiumicino", "2016-07-29", "20:00:00", "21:00:00", 1, 1, 1, "0000000001", check); 
+        FlightPlan fp = new FlightPlan("Ciampino", "Fiumicino", "2016-07-29", "20:00:00", "21:00:00", 1, 1, "0000000001",null); 
         int idNote = fp.getIdNote();
         MySQLDbNoteDAO mysqlTest = new MySQLDbNoteDAO();
         //int i;
@@ -256,4 +256,5 @@ public class MySQLDbNoteDAO implements NoteDAO {
             e.printStackTrace();
         }
     }
+
 }

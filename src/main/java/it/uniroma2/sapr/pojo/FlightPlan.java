@@ -21,11 +21,10 @@ public class FlightPlan{
     private String nowArriving;
     private int idSapr;
     private int idNote;
-    private int idDevice;
     private String pilotLicense;
-    private ArrayList<CheckElement> checkList;
+    private ArrayList<Device> devices;
 
-    public FlightPlan(String destination, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, int idDevice, String pilotLicense, ArrayList<CheckElement> checkList) {
+    public FlightPlan(String destination, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote,String pilotLicense, ArrayList<Device> devices) {
         this.destination = destination;
         this.departure = departure;
         this.dateDeparture = dateDeparture;
@@ -33,9 +32,8 @@ public class FlightPlan{
         this.nowArriving = nowArriving;
         this.idSapr = idSapr;
         this.idNote = idNote;
-        this.idDevice = idDevice;
         this.pilotLicense = pilotLicense;
-        this.checkList = checkList;
+        this.devices = devices;
     } 
 
     public String getDestination() {
@@ -94,13 +92,6 @@ public class FlightPlan{
         this.idNote = idNote;
     }
 
-    public int getIdDevice() {
-        return idDevice;
-    }
-
-    public void setIdDevice(int idDevice) {
-        this.idDevice = idDevice;
-    }
 
     public String getPilotLicense() {
         return pilotLicense;
@@ -110,27 +101,26 @@ public class FlightPlan{
         this.pilotLicense = pilotLicense;
     }
 
-    public ArrayList<CheckElement> getCheckList() {
-        return checkList;
+    public ArrayList<Device> getDevices() {
+        return devices;
     }
 
-    public void setCheckList(ArrayList<CheckElement> checkList) {
-        this.checkList = checkList;
+    public void setDevices(ArrayList<Device> devices) {
+        this.devices = devices;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 41 * hash + (this.destination != null ? this.destination.hashCode() : 0);
-        hash = 41 * hash + (this.departure != null ? this.departure.hashCode() : 0);
-        hash = 41 * hash + (this.dateDeparture != null ? this.dateDeparture.hashCode() : 0);
-        hash = 41 * hash + (this.timeDeparture != null ? this.timeDeparture.hashCode() : 0);
-        hash = 41 * hash + (this.nowArriving != null ? this.nowArriving.hashCode() : 0);
-        hash = 41 * hash + this.idSapr;
-        hash = 41 * hash + this.idNote;
-        hash = 41 * hash + this.idDevice;
-        hash = 41 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
-        hash = 41 * hash + (this.checkList != null ? this.checkList.hashCode() : 0);
+        int hash = 7;
+        hash = 89 * hash + (this.destination != null ? this.destination.hashCode() : 0);
+        hash = 89 * hash + (this.departure != null ? this.departure.hashCode() : 0);
+        hash = 89 * hash + (this.dateDeparture != null ? this.dateDeparture.hashCode() : 0);
+        hash = 89 * hash + (this.timeDeparture != null ? this.timeDeparture.hashCode() : 0);
+        hash = 89 * hash + (this.nowArriving != null ? this.nowArriving.hashCode() : 0);
+        hash = 89 * hash + this.idSapr;
+        hash = 89 * hash + this.idNote;
+        hash = 89 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
+        hash = 89 * hash + (this.devices != null ? this.devices.hashCode() : 0);
         return hash;
     }
 
@@ -152,9 +142,6 @@ public class FlightPlan{
         if (this.idNote != other.idNote) {
             return false;
         }
-        if (this.idDevice != other.idDevice) {
-            return false;
-        }
         if ((this.destination == null) ? (other.destination != null) : !this.destination.equals(other.destination)) {
             return false;
         }
@@ -173,7 +160,7 @@ public class FlightPlan{
         if ((this.pilotLicense == null) ? (other.pilotLicense != null) : !this.pilotLicense.equals(other.pilotLicense)) {
             return false;
         }
-        if (this.checkList != other.checkList && (this.checkList == null || !this.checkList.equals(other.checkList))) {
+        if (this.devices != other.devices && (this.devices == null || !this.devices.equals(other.devices))) {
             return false;
         }
         return true;
@@ -181,8 +168,10 @@ public class FlightPlan{
 
     @Override
     public String toString() {
-        return "FlightPlain{" + "destination=" + destination + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", idDevice=" + idDevice + ", pilotLicense=" + pilotLicense + ", checkList=" + checkList + '}';
-    }  
-        
+        return "FlightPlan{" + "destination=" + destination + ", departure=" + departure + ", dateDeparture=" + dateDeparture + ", timeDeparture=" + timeDeparture + ", nowArriving=" + nowArriving + ", idSapr=" + idSapr + ", idNote=" + idNote + ", pilotLicense=" + pilotLicense + ", devices=" + devices + '}';
+    }
+
+
+    
 }
 

@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by Tiziano on 28/07/16.
  */
-@XmlRootElement(name="requestManagerNote")
+@XmlRootElement(name="RequestManagerNote")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RequestNote extends Request{
-    @XmlElement(name = "ID_NOTE")
+    @XmlElement(name = "idNote")
     private int idNote;
-    @XmlElement(name = "TEXT_NOTE", nillable = false)
+    @XmlElement(name = "textNote", nillable = false)
     private String textNote;
-    @XmlElement(name = "DATE_NOTE", nillable = false)
+    @XmlElement(name = "date", nillable = false)
     private String date;
 
 
