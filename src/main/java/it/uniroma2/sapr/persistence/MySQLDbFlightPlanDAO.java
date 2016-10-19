@@ -157,7 +157,7 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 		Connection con = null;
 		PreparedStatement pt = null;
                 ResultSet rs=null;
-		String query = "SELECT destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,flightplan.idDevice,flightplan.pilotLicense,model,type,weight,producer from flightplan,device WHERE idsapr=? and flightplan.pilotLicense=? and dateDeparture=? and flightplan.iddevice=device.iddevice;";
+		String query = "SELECT destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,flightplan.idDevice,flightplan.pilotLicense,model,type,weight,producer,active from flightplan,device WHERE idsapr=? and flightplan.pilotLicense=? and dateDeparture=? and flightplan.iddevice=device.iddevice;";
                 System.out.println(query);
 		try {
                     
