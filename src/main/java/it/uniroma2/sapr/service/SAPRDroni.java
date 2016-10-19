@@ -17,12 +17,12 @@ import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
 import it.uniroma2.sapr.persistence.DeviceDAO;
+import it.uniroma2.sapr.persistence.FlightPlanDAO;
 import it.uniroma2.sapr.persistence.NoteDAO;
 import it.uniroma2.sapr.persistence.SaprDAO;
-import it.uniroma2.sapr.pojo.CheckElement;
+import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 import it.uniroma2.sapr.pojo.Sapr;
-import java.util.ArrayList;
 
 /**
  * Questa classe è colei che si occupa di esporre i servizi offerti dal WS
@@ -204,9 +204,40 @@ public class SAPRDroni implements SAPRDroniInterface{
 
 		return result;
 	}
+    @WebMethod(operationName = "managerFlightPlan")
+    public Boolean requestManagerFlightPlan(@WebParam(name = "request")RequestFlightPlan request) throws Exception {
+                String method = "RequestFlightPlan";
+		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
+		logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
+		
+		System.out.println("***********************START WS***********************");
+		System.out.println("La richiesta è: " + request.toString());
+		
+		//Trasferisco i dati dalla request al pojo
+		FlightPlan flight=new FlightPlan(request.getDestinations(),request.getDeparture(),request.getDateDeparture(),request.getTimeDeparture(),request.getNowArriving(),request.getIdSapr(),request.getIdNote(),request.getPilotLicense(),request.getDevices());
+     
+		
+		//Creo le classi per accedere al db.
+		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		FlightPlanDAO flightDAO = mySQLFactory.getFlightPlanDAO();
+		
+		//Controllo in base all'operazione nel bean di request quale operazione svolgere
+		Boolean result;
+		if (request.getOp().name().equalsIgnoreCase("ADD")){
+			System.out.println("inserisci");
+			result = flightDAO.insertFlightPlan(flight);
+		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
+			result = flightDAO.deleteFlightPlan(flight);
+		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
+			result = flightDAO.updateFlightPlan(flight);
+		}else {
+			throw new Exception("ERROR OPERATION");
+		}
+		
+		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		System.out.println("***********************END WS***********************");
 
-    public Boolean requestManagerFlightPlan(RequestFlightPlan request) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return result;
     }
 
 

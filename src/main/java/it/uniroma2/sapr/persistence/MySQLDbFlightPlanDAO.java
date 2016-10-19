@@ -118,7 +118,7 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
                        
 			
 			//esito della query
-			if(pt.executeUpdate()==1){
+			if(pt.executeUpdate()!=0){
                                 System.out.println("Ho eliminato il flightPlan");
                                 System.out.println(pt.toString());
                                 pt.close();
@@ -328,10 +328,10 @@ public boolean updateFlightPlan(FlightPlan flight) throws SQLException {
 			e.printStackTrace();
 		}
                 
-//                //CANCELLAZIONE:
+                //CANCELLAZIONE:
 //		try {
 //			System.out.println("Sto eliminando!");
-//			mysqlTest.deleteFlightPlan(2,"0000000001","2016-08-28");
+//			mysqlTest.deleteFlightPlan(new FlightPlan(null,null,"2016-09-06","07:30:00","23:50",3,0,"0000000003",null));
 //		} catch (SQLException e) {
 //			System.out.println(e);
 //			e.printStackTrace();

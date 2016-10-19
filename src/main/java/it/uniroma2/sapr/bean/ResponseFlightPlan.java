@@ -18,31 +18,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="ResponseFlightPlan")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ResponseFlightPlan {
-    	@XmlElement(name = "DESTINATIONS")
+    	@XmlElement(name = "destinations")
 	private String destinations;
 
-	@XmlElement(name = "DEPARTURE")
+	@XmlElement(name = "departure")
 	private String departure;
 
-	@XmlElement(name = "DATE_DEPARTURE")
+	@XmlElement(name = "dateDeparture")
 	private String dateDeparture;
    
-	@XmlElement(name = "TIME_DEPARTURE")
+	@XmlElement(name = "timeDeparture")
         private String timeDeparture;
 	
-	@XmlElement(name = "NOW_ARRIVING")
+	@XmlElement(name = "nowArriving")
 	private String nowArriving;
 
-	@XmlElement(name = "ID_SAPR")
+	@XmlElement(name = "idSapr")
 	private int idSapr;
 	
-	@XmlElement(name = "ID_NOTE")
+	@XmlElement(name = "idNote")
 	private int idNote;
 	
-	@XmlElement(name = "ID_DEVICE")
+	@XmlElement(name = "devices")
 	private ArrayList<Device> devices;
 	
-	@XmlElement(name = "PILOT_LICENSE")
+	@XmlElement(name = "pilotLicense")
 	private String pilotLicense;
 
     public ResponseFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, ArrayList<Device> devices, String pilotLicense) {
@@ -55,10 +55,6 @@ public class ResponseFlightPlan {
         this.idNote = idNote;
         this.devices = devices;
         this.pilotLicense = pilotLicense;
-    }
-
-    public ResponseFlightPlan() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getDestinations() {
