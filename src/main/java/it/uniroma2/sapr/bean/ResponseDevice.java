@@ -36,8 +36,11 @@ public class ResponseDevice {
 
     @XmlElement(name = "checkDevice")
     private ArrayList<CheckElement> checkDevice;
-
-    public ResponseDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<CheckElement> checkDevice) {
+    
+    @XmlElement(name = "active")
+    private int active;
+    
+    public ResponseDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<CheckElement> checkDevice, int active) {
         this.idDevice = idDevice;
         this.model = model;
         this.type = type;
@@ -45,6 +48,7 @@ public class ResponseDevice {
         this.producer = producer;
         this.pilotLicense = pilotLicense;
         this.checkDevice = checkDevice;
+        this.active = active;
     }
     
     public int getIdDevice() {
@@ -103,16 +107,25 @@ public class ResponseDevice {
         this.checkDevice = checkDevice;
     }
 
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.idDevice;
-        hash = 97 * hash + (this.model != null ? this.model.hashCode() : 0);
-        hash = 97 * hash + (this.type != null ? this.type.hashCode() : 0);
-        hash = 97 * hash + this.weight;
-        hash = 97 * hash + (this.producer != null ? this.producer.hashCode() : 0);
-        hash = 97 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
-        hash = 97 * hash + (this.checkDevice != null ? this.checkDevice.hashCode() : 0);
+        int hash = 7;
+        hash = 59 * hash + this.idDevice;
+        hash = 59 * hash + (this.model != null ? this.model.hashCode() : 0);
+        hash = 59 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 59 * hash + this.weight;
+        hash = 59 * hash + (this.producer != null ? this.producer.hashCode() : 0);
+        hash = 59 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
+        hash = 59 * hash + (this.checkDevice != null ? this.checkDevice.hashCode() : 0);
+        hash = 59 * hash + this.active;
         return hash;
     }
 
@@ -132,6 +145,9 @@ public class ResponseDevice {
             return false;
         }
         if (this.weight != other.weight) {
+            return false;
+        }
+        if (this.active != other.active) {
             return false;
         }
         if ((this.model == null) ? (other.model != null) : !this.model.equals(other.model)) {
@@ -154,7 +170,8 @@ public class ResponseDevice {
 
     @Override
     public String toString() {
-        return "ResponseDevice{" + "idDevice=" + idDevice + ", model=" + model + ", type=" + type + ", weight=" + weight + ", producer=" + producer + ", pilotLicense=" + pilotLicense + ", checkDevice=" + checkDevice + '}';
+        return "ResponseDevice{" + "idDevice=" + idDevice + ", model=" + model + ", type=" + type + ", weight=" + weight + ", producer=" + producer + ", pilotLicense=" + pilotLicense + ", checkDevice=" + checkDevice + ", active=" + active + '}';
     }
-    
+
+
 }
