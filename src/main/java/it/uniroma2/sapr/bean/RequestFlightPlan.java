@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package it.uniroma2.sapr.bean;
-
 import it.uniroma2.sapr.pojo.Device;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
