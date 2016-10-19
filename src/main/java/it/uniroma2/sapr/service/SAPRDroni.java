@@ -100,7 +100,7 @@ public class SAPRDroni implements SAPRDroniInterface{
                 
 		//Trasferisco i dati dalla request al pojo
 		Device device = new Device(request.getIdDevice(), request.getModel(), request.getModel(), request.getWeight(),
-                                        request.getProducer(), request.getPilotLicense(), request.getCheckDevice());
+                                        request.getProducer(), request.getPilotLicense(), request.getCheckDevice(),request.getActive());
                 
 		//Creo le classi per accedere al db.
 		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
