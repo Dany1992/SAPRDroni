@@ -104,11 +104,78 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         }
 
     }
+// TODO --> MODIFICARE ANCHE I CHECKELEMENT
+	public boolean updateDevice(Device device) throws SQLException {
+  	/**
+         * questo metodo modifica un device dal DB (non si puo modificare l'id)
+         * 
+         *
+         * @param device è il bean contenente tutti i dati da inserire nel db
+         * @throws SQLException
+         */
+  	
+        String method = "updateDevice";
+        Connection con = null;
+        PreparedStatement pt = null;
+        
+        int d = device.getIdDevice();
 
-    public boolean updateDevice(Device device) throws SQLException {
-    return false;
+        String query = "UPDATE device SET model = ?, type = ?, weight = ?, producer = ?, pilotLicense = ?, active = ? "
+                + "WHERE idDevice = ?";
+        try {
+            //logger per segnalare l'inizio della scrittura del metodo
+            logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, d));
+
+            con = MySQLDbDAOFactory.createConnection();
+            pt = con.prepareStatement(query);
+
+            pt.setString(1, device.getModel());
+            pt.setString(2, device.getType());
+            pt.setInt(3, device.getWeight());
+            pt.setString(4, device.getProducer());
+            pt.setString(5, device.getPilotLicense());
+            pt.setInt(6, device.getActive());
+            pt.setInt(7, device.getIdDevice());
+ 			
+            // eseguo la query
+            if (pt.executeUpdate() == 1) {
+            	
+                pt.close();
+                con.close();
+                System.out.println("update andata a buon fine");
+                logger.info(String.format("Class:%s-Method:%s::END update sapr -%s",
+                        classe, method, d));
+                return true;
+                
+            } else {
+            	
+                pt.close();
+                con.close();
+                System.out.println("male");
+                logger.info(String.format("Class:%s-Method:%s::END not update sapr -%s",
+                        classe, method, d));
+                return false;
+                
+            }
+            
+        } catch (Exception e) {
+        	
+        	logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+        	System.out.println("Si è verificato il seguente errore: " + e.toString());
+            return false;
+            
+        } finally {
+        	
+            if (pt != null) 
+                pt.close();
+            
+
+            if (con != null) 
+                con.close();
+            
+        }
     }
-    
+        
     public boolean deleteDevice(Device device) throws SQLException {
         /**
          * questo metodo elimina un dispositivo dal DB
@@ -209,6 +276,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                     int weight = rs.getInt("weight");
                     String producer = rs.getString("producer");
                     String pilotLicense = rs.getString("pilotLicense");
+                    int active = rs.getInt("active");
                     
                     // estraggo anche i checkElement dei dispositivi
                     pt1.setInt(1, id);
@@ -218,7 +286,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                         arr_check.add(ck);
                     }
                     
-                    ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense, arr_check);
+                    ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense, arr_check,active);
                     System.out.println(d.toString());
                     arr_device.add(d);
                     arr_check.clear();
@@ -288,6 +356,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                 int weight = rs.getInt("weight");
                 String producer = rs.getString("producer");
                 String pilotLicense = rs.getString("pilotLicense");
+                int active = rs.getInt("active");
                 
                 pt1.setInt(1, id);
                 ResultSet resultCheck = pt1.executeQuery();
@@ -296,7 +365,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                         arr_check.add(ck);
                     }
                 
-                ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense,arr_check);
+                ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense,arr_check,active);
 
                 System.out.println(d.toString());
                 arr_check.clear();
@@ -332,8 +401,8 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         ck.add(new CheckElement("ciao1"));
         ck.add(new CheckElement("ciao2"));
         
-        Device device = new Device(80, "A144", "tipo", 520, "Prod1", "0000000003",ck);
-        Device deviceDel = new Device(78, "A144", "tipo", 520, "Prod1", "0000000003",ck);
+        Device device = new Device(80, "A144", "tipo", 520, "Prod1", "0000000003",ck,1);
+        Device deviceDel = new Device(78, "A144", "tipo1", 520, "Prod1", "0000000003",ck,1);
 
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {
@@ -342,8 +411,10 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
             //mysqlTest.insertDevice(device);
 
             // test delete
-            mysqlTest.deleteDevice(deviceDel);
+            //mysqlTest.deleteDevice(deviceDel);
             
+            // test update
+            mysqlTest.updateDevice(deviceDel);
             // test select dando in input un pilota
             //mysqlTest.selectDevice("0000000001");
 
