@@ -256,4 +256,5 @@ public class MySQLDbNoteDAO implements NoteDAO {
             e.printStackTrace();
         }
     }
+
 }
