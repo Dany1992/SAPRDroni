@@ -13,8 +13,10 @@ import it.uniroma2.sapr.bean.RequestSAPR;
 import it.uniroma2.sapr.persistence.DAOFactory;
 import it.uniroma2.sapr.persistence.PilotDAO;
 import it.uniroma2.sapr.pojo.Pilot;
+import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
+import it.uniroma2.sapr.persistence.DeviceDAO;
 
 /**
  * Questa classe è colei che si occupa di esporre i servizi offerti dal WS
@@ -87,7 +89,40 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 */
 	@WebMethod(operationName = "managerDevice")
 	public Boolean requestManagerDevice(@WebParam(name = "request")RequestDevice request) throws Exception {
-		throw new Exception("metodo non implementato");
+		String method = "RequestManagerDevice";
+		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
+		logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
+		
+		System.out.println("***********************START WS***********************");
+		System.out.println("La richiesta è: " + request.toString());
+		
+                /* MODIFICARE REQUEST DEVICE --> CHECKELEMENT */
+                
+		//Trasferisco i dati dalla request al pojo
+		Device device = new Device(request.getIdDevice(), request.getModel(), request.getModel(), request.getWeight(),
+                                        request.getProducer(), request.getPilotLicense(), request.getCheckDevice());
+                
+		//Creo le classi per accedere al db.
+		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		DeviceDAO deviceDAO = mySQLFactory.getDeviceDAO();
+		
+		//Controllo in base all'operazione nel bean di request quale operazione svolgere
+		Boolean result;
+		if (request.getOp().name().equalsIgnoreCase("ADD")){
+			System.out.println("inserisci");
+			result = deviceDAO.insertDevice(device);
+		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
+			result = deviceDAO.deleteDevice(device);
+		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
+			result = deviceDAO.updateDevice(device);
+		}else {
+			throw new Exception("ERROR OPERATION");
+		}
+		
+		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		System.out.println("***********************END WS***********************");
+
+		return result;
 	}
 
 

@@ -1,5 +1,7 @@
 package it.uniroma2.sapr.pojo;
 
+import java.util.ArrayList;
+
 /**
  * Questa classe è l'oggetto che viene creato prelevando i dati dalla RequestSapr.
  * Tale oggetto viene utilizzazto poi per tutte le operazioni che si vogliono fare sul db
@@ -15,8 +17,10 @@ public class Sapr {
     private int maxDistance;
     private int maxHeight;
     private String pilotLicense;
+    private ArrayList<CheckElement> checkSapr = new ArrayList<CheckElement>();
+    private int active;
 
-    public Sapr(int idSapr, String model, String producer, int weight, int heavyweight, String battery, int maxDistance, int maxHeight, String pilotLicense) {
+    public Sapr(int idSapr, String model, String producer, int weight, int heavyweight, String battery, int maxDistance, int maxHeight, String pilotLicense, ArrayList<CheckElement> checkSapr, int active) {
         this.idSapr = idSapr;
         this.model = model;
         this.producer = producer;
@@ -26,6 +30,8 @@ public class Sapr {
         this.maxDistance = maxDistance;
         this.maxHeight = maxHeight;
         this.pilotLicense = pilotLicense;
+        this.checkSapr = checkSapr;
+        this.setActive(active);
     }
 
     public int getIdSapr() {
@@ -100,83 +106,95 @@ public class Sapr {
         this.pilotLicense = pilotLicense;
     }
 
-    @Override
+	public ArrayList<CheckElement> getCheckSapr() {
+		return checkSapr;
+	}
+
+	public void setCheckSapr(ArrayList<CheckElement> checkSapr) {
+		this.checkSapr = checkSapr;
+	}
+
+	public int getActive() {
+		return active;
+	}
+
+	public void setActive(int active) {
+		this.active = active;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + active;
+		result = prime * result + ((battery == null) ? 0 : battery.hashCode());
+		result = prime * result + ((checkSapr == null) ? 0 : checkSapr.hashCode());
+		result = prime * result + heavyweight;
+		result = prime * result + idSapr;
+		result = prime * result + maxDistance;
+		result = prime * result + maxHeight;
+		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + ((pilotLicense == null) ? 0 : pilotLicense.hashCode());
+		result = prime * result + ((producer == null) ? 0 : producer.hashCode());
+		result = prime * result + weight;
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		
 		if (this == obj)
 			return true;
-		
 		if (obj == null)
 			return false;
-		
 		if (getClass() != obj.getClass())
 			return false;
-		
-		 final Sapr other = (Sapr) obj;
-		
-		if (this.idSapr != other.idSapr)
+		Sapr other = (Sapr) obj;
+		if (active != other.active)
 			return false;
-		
-		if (this.model == null) {
-			if (other.model != null)
-				return false;
-		} else if (!this.model.equals(other.model))
-			return false;
-		
-		if (this.producer == null) {
-			if (other.producer != null)
-				return false;
-		} else if (!this.producer.equals(other.producer))
-			return false;
-		
-		if (this.weight != other.weight)
-			return false;
-		
-		if (this.heavyweight != other.heavyweight)
-			return false;
-		
-		if (this.battery == null) {
+		if (battery == null) {
 			if (other.battery != null)
 				return false;
-		} else if (!this.battery.equals(other.battery))
+		} else if (!battery.equals(other.battery))
 			return false;
-		
-		if (this.pilotLicense == null) {
+		if (checkSapr == null) {
+			if (other.checkSapr != null)
+				return false;
+		} else if (!checkSapr.equals(other.checkSapr))
+			return false;
+		if (heavyweight != other.heavyweight)
+			return false;
+		if (idSapr != other.idSapr)
+			return false;
+		if (maxDistance != other.maxDistance)
+			return false;
+		if (maxHeight != other.maxHeight)
+			return false;
+		if (model == null) {
+			if (other.model != null)
+				return false;
+		} else if (!model.equals(other.model))
+			return false;
+		if (pilotLicense == null) {
 			if (other.pilotLicense != null)
 				return false;
-		} else if (!this.pilotLicense.equals(other.pilotLicense))
+		} else if (!pilotLicense.equals(other.pilotLicense))
 			return false;
-		
-		if (this.maxDistance != other.maxDistance)
+		if (producer == null) {
+			if (other.producer != null)
+				return false;
+		} else if (!producer.equals(other.producer))
 			return false;
-		
-		if (this.maxHeight != other.maxHeight)
+		if (weight != other.weight)
 			return false;
-		
 		return true;
 	}
 
-    @Override
-    public int hashCode() {
-        int result = 9;
-        
-        result = 52 * result + this.idSapr;
-		result = 52 * result + ((model == null) ? 0 : model.hashCode());
-		result = 52 * result + ((producer == null) ? 0 : producer.hashCode());
-		result = 52 * result + this.weight;
-		result = 52 * result + this.heavyweight;
-		result = 52 * result + ((battery == null) ? 0 : battery.hashCode());
-		result = 52 * result + this.maxDistance;
-		result = 52 * result + this.maxHeight;
-		result = 52 * result + ((pilotLicense == null) ? 0 : pilotLicense.hashCode());
-		
-		return result;
-    }
-    
-    @Override
+	@Override
 	public String toString() {
-		return "Sapr [idSapr=" + idSapr + ", model=" + model + ", producer=" + producer + ", weight=" + weight
-				+ ", pilotLicense=" + pilotLicense + ", heavyweight=" + heavyweight + ", battery=" + battery
-				+ ", maxDistance=" + maxDistance + ", maxHeight=" + maxHeight + "]";
+		return "ResponseSapr [idSapr=" + idSapr + ", model=" + model + ", producer=" + producer + ", weight=" + weight
+				+ ", heavyweight=" + heavyweight + ", battery=" + battery + ", maxDistance=" + maxDistance
+				+ ", maxHeight=" + maxHeight + ", pilotLicense=" + pilotLicense + ", active=" + active + ", checkSapr=" + checkSapr
+				+ "]";
 	}
+	
 }

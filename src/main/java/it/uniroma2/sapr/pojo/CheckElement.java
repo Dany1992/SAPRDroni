@@ -8,6 +8,10 @@ public class CheckElement {
 		this.value = value;
 	}
 
+    public CheckElement() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 	public String getValue() {
 		return value;
 	}
