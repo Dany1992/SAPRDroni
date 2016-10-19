@@ -148,9 +148,9 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
             
             try{
                 con = MySQLDbDAOFactory.createConnection();
-                pt = con.prepareStatement(query);
                 
                 for(CheckElement e : device.getCheckDevice()){
+                    pt = con.prepareStatement(query);
                     // compilo i campi ? nella query per inserire in checkDevice
                     pt.setString(1, e.getValue());
                     pt.setInt(2, device.getIdDevice());
@@ -158,13 +158,13 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                     // l'inserimento nella relazione checkDevice non è andato a buon fine
                     if(pt.executeUpdate() != 1){
                         pt.close();
-                        System.out.println("Riscrittura del checkElement" + e.getValue() + " NON andato a buon fine");
+                        System.out.println("Riscrittura del checkElement " + e.getValue() + " NON andato a buon fine");
                         logger.info(String.format("Insert non andato a buon fine: checkElement: %s del device %s", //
                             classe, e.getValue(), device.getIdDevice()));
                         return false;
                     }
 
-                    System.out.println("Riscrittura del checkElement" + e.getValue() + " andato a buon fine");
+                    System.out.println("Riscrittura del checkElement " + e.getValue() + " andato a buon fine");
                     logger.info(String.format("Insert andato a buon fine: checkElement: %s del device %s", //
                         classe, e.getValue(), device.getIdDevice()));
                     pt.close();
@@ -189,8 +189,8 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
 	public boolean updateDevice(Device device) throws SQLException {
   	/**
          * questo metodo modifica un device dal DB (non si puo modificare l'id)
-         * 
-         *
+         * Per modificare i checkDevice richiama prima il metodo removeAllCheck che elimina tutti i chek del disp
+         * poi insertAllCheck per inserire tutti i nuovi (ma anche i vecchi) check del disp
          * @param device è il bean contenente tutti i dati da inserire nel db
          * @throws SQLException
          */
@@ -226,12 +226,14 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                 System.out.println("update su device andata a buon fine");
                 logger.info(String.format("Class:%s-Method:%s::END update device -%s",
                         classe, method, d));
+                // rimuove tutti i check e li rinserisce insieme ai nuovi
+                removeAllCheckDevice(device);
+                insertAllCheckDevice(device, device.getCheckDevice());
                 
                 con.close();
                 return true;
                 
             } else {
-            	
                 pt.close();
                 con.close();
                 System.out.println("update NON andato a buon fine");
@@ -261,7 +263,9 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         
     public boolean deleteDevice(Device device) throws SQLException {
         /**
-         * questo metodo elimina un dispositivo dal DB
+         * questo metodo setta l'attributo active a 0 (cioè dispositivo inattivo).
+         * Questo perchè l'amministratore potrebbe voler vedere i voli passati
+         * e se eliminiamo i dispositivi (analogamente anche i sapr) ci perderemo i dettagli.
          *
          * @param device è il bean contente tutti i dati da inserire nel db
          * @throws SQLException
@@ -402,7 +406,13 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
     }
 
     public ResponseDevice selectDevice(Device device) throws SQLException {
-
+        /**
+         * questo metodo prende in input un device e ci restituisce tutti
+         * i suoi dettagli
+         *
+         * @return Device, tutti i dettagli del dispositivo
+         * @throws SQLException
+         */
         String method = "selectDevice";
         Connection con = null;
         PreparedStatement pt = null;
@@ -481,27 +491,27 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         
         ArrayList<CheckElement> ck = new ArrayList<CheckElement>();
         ck.add(new CheckElement("elica"));
-        ck.add(new CheckElement("ventola"));
+        //ck.add(new CheckElement("ventosa"));
         ck.add(new CheckElement("motore"));
         
-        Device device = new Device(1, "A144", "tipo", 520, "Prod1", "0000000003",ck,1);
+        Device device = new Device(30, "A144", "tipo", 520, "Prod1", "0000000003",ck,1);
         Device deviceDel = new Device(78, "A144", "tipo1", 520, "Prod1", "0000000003",ck,1);
 
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {
             System.out.println("sto per iniziare");
             // test insert
-            //mysqlTest.insertDevice(device);
+            mysqlTest.insertDevice(device);
 
             // test delete
-            //mysqlTest.deleteDevice(deviceDel);
+            //mysqlTest.deleteDevice(device);
             
             // test update
-            //mysqlTest.updateDevice(deviceDel);
+            mysqlTest.updateDevice(device);
             
             
             /*  PROVARE I COMPONENTI SEPARATI, RIUMIRE E RITESTARE  */
-            mysqlTest.removeAllCheckDevice(device);
+            //mysqlTest.removeAllCheckDevice(device);
             //mysqlTest.insertAllCheckDevice(device, ck);
             
             
