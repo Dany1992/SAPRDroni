@@ -384,78 +384,152 @@ import it.uniroma2.sapr.pojo.Sapr;
 		}
 	}
 	
-	public boolean updateSapr(Sapr sapr) throws SQLException {
-  		/**
+	public boolean removeAllCheckSapr(Sapr sapr) throws SQLException{
+        Connection con = null;
+        PreparedStatement pt = null;
+        String query = "DELETE FROM checkSapr WHERE IdSapr = ?";
+        
+        try{
+            con = MySQLDbDAOFactory.createConnection();
+            pt = con.prepareStatement(query);
+            
+            pt.setInt(1, sapr.getIdSapr());
+            
+            if (pt.executeUpdate() != 0){
+                System.out.println("ELIMINATI TUTTI I CHECKELEMENT DEL SAPR " + sapr.getIdSapr());
+                pt.close();
+                con.close();
+                return true;
+            }
+            else{    	
+                System.out.println("ERRORE CANCELLAZIONE DEI CHECKELEMENT DEL SAPR " + sapr.getIdSapr());
+                pt.close();
+                con.close();
+                return false;
+            }         
+        }
+        catch(Exception e){	
+    	    System.out.println("Si è verificato il seguente errore: " + e.toString());
+            con.close();
+            return false;            
+        }
+        
+        finally{
+            if(con != null) con.close();
+            if(pt != null) pt.close();   
+        }
+    }
+    
+    public boolean insertAllCheckSapr(Sapr sapr, ArrayList<CheckElement> checkSapr) throws SQLException{
+        Connection con = null;
+        PreparedStatement pt = null;
+        String query = "INSERT INTO checkSapr(valueCheckElement,IdSapr) VALUES (?,?)";
+         
+         try{
+             con = MySQLDbDAOFactory.createConnection();
+             
+             for(CheckElement e : sapr.getCheckSapr()){                    
+            	 pt = con.prepareStatement(query);
+                 
+                 pt.setString(1, e.getValue());
+                 pt.setInt(2, sapr.getIdSapr());
+
+                 if(pt.executeUpdate() != 1){
+                     pt.close();
+                     System.out.println("Riscrittura del checkElement " + e.getValue() + " NON andato a buon fine");
+                     logger.info(String.format("Insert del checkElement: %s del sapr %s non andato a buon fine", //
+                         classe, e.getValue(), sapr.getIdSapr()));
+                     return false;
+                 }
+
+                 System.out.println("Riscrittura del checkElement " + e.getValue() + " andato a buon fine");
+                 logger.info(String.format("Insert del checkElement: %s del sapr %s andato a buon fine", //
+                     classe, e.getValue(), sapr.getIdSapr()));
+                 pt.close();
+                
+            }
+            con.close();
+            return true;
+        }
+        catch(Exception e){
+            pt.close();
+            con.close();
+            System.out.println("Si è verificato il seguente errore: " + e.toString());
+            return false;
+        }
+        finally{
+            if(con != null) con.close();
+            if(pt != null) pt.close();
+        }
+        
+    } 
+    
+    public boolean updateSapr(Sapr sapr) throws SQLException {
+   	 
+    	 /**
          * questo metodo modifica un sapr dal DB (non si possono modificare ne
          * l'id del sapr ne la licenza del pilota)
          *
          * @param sapr è il bean contenente tutti i dati da inserire nel db
          * @throws SQLException
          */
-  		
-        String method = "updateSapr";
-        Connection con = null;
-        PreparedStatement pt = null;
-        
-        int sap = sapr.getIdSapr();
-
-        String query = "UPDATE sapr SET model = ?, producer = ?, weight = ?, heavyweight = ?, battery = ?, maxDistance = ?, " +
-        	    " maxHeight = ?, active = ?  WHERE idSapr = ?";
-
-        try {
-            //logger per segnalare l'inizio della scrittura del metodo
-            logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, sap));
-
-            con = MySQLDbDAOFactory.createConnection();
-            pt = con.prepareStatement(query);
-
- 			pt.setString(1, sapr.getModel());
- 			pt.setString(2, sapr.getProducer());
- 			pt.setInt(3, sapr.getWeight());
- 			pt.setInt(4, sapr.getHeavyweight());
- 			pt.setString(5, sapr.getBattery());
- 			pt.setInt(6, sapr.getMaxDistance());
- 			pt.setInt(7, sapr.getMaxHeight());
- 			pt.setInt(8, sapr.getActive());
- 			pt.setInt(9, sapr.getIdSapr()); 
- 			
-            // eseguo la query
-            if (pt.executeUpdate() == 1) {
-            	
-                pt.close();
-                con.close();
-                System.out.println("update andata a buon fine");
-                logger.info(String.format("Class:%s-Method:%s::END update sapr -%s",
-                        classe, method, sap));
-                return true;
-                
-            } else {
-            	
-                pt.close();
-                con.close();
-                System.out.println("male");
-                logger.info(String.format("Class:%s-Method:%s::END not update sapr -%s",
-                        classe, method, sap));
-                return false;
-                
+   	 
+         String method = "updateSapr";
+         Connection con = null;
+         PreparedStatement pt = null;
+ 
+         String query = "UPDATE sapr SET model = ?, producer = ?, weight = ?, heavyweight = ?, battery = ?, maxDistance = ?, " +
+         	    " maxHeight = ?, active = ?  WHERE idSapr = ?";
+         
+         try {
+        	 //logger per segnalare l'inizio della scrittura del metodo
+             logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, sapr.getIdSapr()));
+ 
+             con = MySQLDbDAOFactory.createConnection();
+             pt = con.prepareStatement(query);
+ 
+             pt.setString(1, sapr.getModel());
+  			 pt.setString(2, sapr.getProducer());
+  			 pt.setInt(3, sapr.getWeight());
+  			 pt.setInt(4, sapr.getHeavyweight());
+  			 pt.setString(5, sapr.getBattery());
+  			 pt.setInt(6, sapr.getMaxDistance());
+  			 pt.setInt(7, sapr.getMaxHeight());
+  			 pt.setInt(8, sapr.getActive());
+  			 pt.setInt(9, sapr.getIdSapr()); 
+  			
+             // eseguo la query
+             if (pt.executeUpdate() == 1) {
+            	 pt.close();
+	             System.out.println("update andata a buon fine");
+	             logger.info(String.format("Class:%s-Method:%s::END update sapr -%s",
+	                     classe, method, sapr.getIdSapr()));
+	               
+	             removeAllCheckSapr(sapr);
+	             insertAllCheckSapr(sapr, sapr.getCheckSapr());
+	               
+	             con.close();
+	             return true;                 
+            } else {       	   
+                 pt.close();
+                 con.close();
+                 System.out.println("update andato male");
+                 logger.info(String.format("Class:%s-Method:%s::END not update sapr -%s",
+                          classe, method, sapr.getIdSapr()));
+                 return false;              
             }
-            
-        } catch (Exception e) {
-        	
+             
+        } catch (Exception e) {   	
         	logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
-        	System.out.println("Si è verificato il seguente errore: " + e.toString());
-            return false;
-            
-        } finally {
-        	
+            System.out.println("Si è verificato il seguente errore: " + e.toString());
+            return false;        
+        } finally {  	
             if (pt != null) 
                 pt.close();
-            
-
+             
             if (con != null) 
-                con.close();
-            
-        }
+                con.close();   
+         }
     }
 		
 			
