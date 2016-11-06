@@ -45,6 +45,7 @@ public class ResponseFlightPlan {
 	@XmlElement(name = "pilotLicense")
 	private String pilotLicense;
 
+	
     public ResponseFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, ArrayList<Device> devices, String pilotLicense) {
         this.destinations = destinations;
         this.departure = departure;
@@ -55,6 +56,10 @@ public class ResponseFlightPlan {
         this.idNote = idNote;
         this.devices = devices;
         this.pilotLicense = pilotLicense;
+    }
+    
+    public ResponseFlightPlan(){
+    	
     }
 
     public String getDestinations() {

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class Request {
 	
-	@XmlElement(name = "OPERAZIONE")
+	@XmlElement(name = "operation")
 	protected operation op;
 	
 	public enum operation{

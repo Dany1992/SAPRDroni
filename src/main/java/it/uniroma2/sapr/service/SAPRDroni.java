@@ -75,6 +75,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 		}
 		
 		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		System.out.println("Result: "+result);
 		System.out.println("***********************END WS***********************");
 
 		return result;
