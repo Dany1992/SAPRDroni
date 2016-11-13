@@ -33,7 +33,7 @@ import it.uniroma2.sapr.pojo.Sapr;
  *
  */
 
-@WebService
+@WebService(endpointInterface="it.uniroma2.sapr.service.SAPRDroniInterface")
 @BindingType("http://schemas.xmlsoap.org/wsdl/soap/http")
 public class SAPRDroni implements SAPRDroniInterface{
 	String classe = "MySQLDbPilotDAO";
@@ -42,7 +42,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 * Il webMethod che si occupa di aggiungere o eliminare un pilota. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequestPilot
 	 */
-	@WebMethod(operationName = "managerPilot")
+	
 	public Boolean requestManagerPilot(@WebParam(name = "request")RequestPilot request) throws Exception {
 		String method = "RequestManaerPilot";
 		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
@@ -85,7 +85,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 * Il webMethod che si occupa di aggiungere o eliminare un drone. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequetSAPR
 	 */
-	@WebMethod(operationName = "managerSAPR")
+	
 	public Boolean requestManagerSAPR(@WebParam(name = "request")RequestSAPR request) throws Exception {
             String method = "RequestManagerSAPR";
             logger.info(String.format("Class:%s-Method:%s::START", classe,method));
@@ -128,7 +128,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 * Il webMethod che si occupa di aggiungere o eliminare un Device. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequetSAPR
 	 */
-	@WebMethod(operationName = "managerDevice")
+	
 	public Boolean requestManagerDevice(@WebParam(name = "request")RequestDevice request) throws Exception {
 		String method = "RequestManagerDevice";
 		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
@@ -205,7 +205,8 @@ public class SAPRDroni implements SAPRDroniInterface{
 
 		return result;
 	}
-    @WebMethod(operationName = "managerFlightPlan")
+    
+	
     public Boolean requestManagerFlightPlan(@WebParam(name = "request")RequestFlightPlan request) throws Exception {
                 String method = "RequestFlightPlan";
 		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
