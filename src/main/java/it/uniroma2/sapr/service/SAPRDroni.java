@@ -45,11 +45,16 @@ public class SAPRDroni implements SAPRDroniInterface{
 	
 	public Boolean requestManagerPilot(@WebParam(name = "request")RequestPilot request) throws Exception {
 		String method = "RequestManaerPilot";
+		if (request == null){
+			return false;
+		}
 		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
 		logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
 		
 		System.out.println("***********************START WS***********************");
 		System.out.println("La richiesta è: " + request.toString());
+		
+		
 		
 		//Trasferisco i dati dalla request al pojo
 		Pilot pilot = new Pilot(request.getName(), request.getSurname(), request.getNation(), 
