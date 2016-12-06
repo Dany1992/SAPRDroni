@@ -1,5 +1,6 @@
 package it.uniroma2.sapr.service;
 
+import it.uniroma2.sapr.bean.RequestCheckElement;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -23,6 +24,7 @@ import it.uniroma2.sapr.persistence.SaprDAO;
 import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 import it.uniroma2.sapr.pojo.Sapr;
+import it.uniroma2.sapr.pojo.CheckElement;
 
 /**
  * Questa classe è colei che si occupa di esporre i servizi offerti dal WS
@@ -176,7 +178,6 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 * Il webMethod che si occupa di aggiungere o eliminare una Nota. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequetNote
 	 */
-	@WebMethod(operationName = "managerNote")
 	public Boolean requestManagerNote(@WebParam(name = "request")RequestNote request) throws Exception {
             String method = "RequestManagerNote";
             
@@ -246,6 +247,12 @@ public class SAPRDroni implements SAPRDroniInterface{
 
 		return result;
     }
+
+    public Boolean requestManagerCheckElement(@WebParam(name = "request")RequestCheckElement request) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 
 
 }
