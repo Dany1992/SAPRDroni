@@ -1,6 +1,7 @@
 package it.uniroma2.sapr.persistence;
 
 import it.uniroma2.sapr.pojo.CheckElement;
+import it.uniroma2.sapr.pojo.Device;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -121,7 +122,7 @@ public class MySQLDbNoteDAO implements NoteDAO {
         Connection con = null;
         PreparedStatement pt = null;
         int idNote = note.getIdNote();
-        String query = "UPDATE Note SET textNote = ?, date = now() WHERE idNote = 1";
+        String query = "UPDATE Note SET textNote = ?, date = now() WHERE idNote = ?";
         try{
             //Logger per notificare l'inserimento di un oggetto
             logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,idNote));
@@ -133,6 +134,7 @@ public class MySQLDbNoteDAO implements NoteDAO {
             //Compilo i campi nella query
             String text = note.getTextNote() + " in: " + note.getDate() + " - " + textNote;
             pt.setString(1, text);
+            pt.setInt(2, note.getIdNote());
             System.out.println(text);
             //eseguo la query
             if(pt.executeUpdate() == 1){
@@ -223,8 +225,8 @@ public class MySQLDbNoteDAO implements NoteDAO {
     public static void main(String args[]) throws ParseException{
 
         //Inserimento nuova nota
-        ArrayList<CheckElement> check = new ArrayList<CheckElement>();
-        FlightPlan fp = new FlightPlan("Ciampino", "Fiumicino", "2016-07-29", "20:00:00", "21:00:00", 1, 1, "0000000001",null); 
+        ArrayList<Device> check = new ArrayList<Device>();
+        FlightPlan fp = new FlightPlan("Ciampino", "Fiumicino", "2016-07-29", "20:00:00", "21:00:00", 1, 1, "0000000001", null); 
         int idNote = fp.getIdNote();
         MySQLDbNoteDAO mysqlTest = new MySQLDbNoteDAO();
         //int i;
@@ -250,7 +252,7 @@ public class MySQLDbNoteDAO implements NoteDAO {
             //mysqlTest.deleteNote(5);
             Note noteResult = mysqlTest.selectNote(fp).get(0);
             System.out.println("NOTA: " + noteResult.toString());
-            mysqlTest.updateNote(noteResult, "Il drone e' atterrato");
+            mysqlTest.updateNote(noteResult, "Vado a casa");
         } catch (SQLException e) {
             System.out.println(e);
             e.printStackTrace();

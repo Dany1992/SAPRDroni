@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 public interface FlightPlanDAO {
     	public boolean insertFlightPlan(FlightPlan flight) throws SQLException;
+        //modificare la data di partenza datedeparture,timedeparture,nowarriving, non modificare(idsapr,licensepilot,idnote,device)
         public boolean updateFlightPlan(FlightPlan flight) throws SQLException;
 	public boolean deleteFlightPlan(FlightPlan flight) throws SQLException;
         // ti chiedo un piano di volo e mi da il preciso piano di volo

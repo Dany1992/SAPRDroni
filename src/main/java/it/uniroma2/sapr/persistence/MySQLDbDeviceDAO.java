@@ -165,6 +165,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                     }
 
                     System.out.println("Riscrittura del checkElement " + e.getValue() + " andato a buon fine");
+
                     logger.info(String.format("Insert andato a buon fine: checkElement: %s del device %s", //
                         classe, e.getValue(), device.getIdDevice()));
                     pt.close();
@@ -229,6 +230,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                 // rimuove tutti i check e li rinserisce insieme ai nuovi
                 removeAllCheckDevice(device);
                 insertAllCheckDevice(device, device.getCheckDevice());
+
                 
                 con.close();
                 return true;
@@ -491,10 +493,11 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         
         ArrayList<CheckElement> ck = new ArrayList<CheckElement>();
         ck.add(new CheckElement("elica"));
-        //ck.add(new CheckElement("ventosa"));
+        ck.add(new CheckElement("ventola"));
         ck.add(new CheckElement("motore"));
         
-        Device device = new Device(30, "A144", "tipo", 520, "Prod1", "0000000003",ck,1);
+        Device device = new Device(1, "A144", "tipo", 520, "Prod1", "0000000003",ck,1);
+
         Device deviceDel = new Device(78, "A144", "tipo1", 520, "Prod1", "0000000003",ck,1);
 
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();

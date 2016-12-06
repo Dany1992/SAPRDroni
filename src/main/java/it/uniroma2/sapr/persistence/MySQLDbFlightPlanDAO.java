@@ -12,7 +12,6 @@ import java.text.ParseException;
 
 import org.apache.log4j.Logger;
 
-import it.uniroma2.sapr.bean.RequestFlightPlan;
 import it.uniroma2.sapr.bean.ResponseFlightPlan;
 import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.pojo.FlightPlan;
@@ -119,7 +118,7 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
                        
 			
 			//esito della query
-			if(pt.executeUpdate()==1){
+			if(pt.executeUpdate()!=0){
                                 System.out.println("Ho eliminato il flightPlan");
                                 System.out.println(pt.toString());
                                 pt.close();
@@ -258,6 +257,58 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
                                 }
                         }
    };
+    
+    
+public boolean updateFlightPlan(FlightPlan flight) throws SQLException {
+        String method = "updateFlightPlan";
+        Connection con = null;
+        PreparedStatement pt = null;
+        
+        String query = "UPDATE FlightPlan SET nowarriving = ? WHERE dateDeparture = ? AND timeDeparture=? AND idSapr=? AND pilotLicense=?";
+        try{
+            //Logger per notificare l'aggiornamento di un oggetto
+            logger.info(String.format("Class:%s-Method:%s::START with idSapr %s", classe,method,flight.getIdSapr()));
+
+            //Apro la connessione e preparo la query
+            con = MySQLDbDAOFactory.createConnection();
+            pt = con.prepareStatement(query);
+
+            //Compilo i campi nella query
+            pt.setString(1,flight.getNowArriving());
+            pt.setString(2,flight.getDateDeparture());
+            pt.setString(3,flight.getTimeDeparture());
+            pt.setInt(4,flight.getIdSapr());
+            pt.setString(5,flight.getPilotLicense());
+            //eseguo la query
+            if(pt.executeUpdate() != 0){
+                pt.close();
+                con.close();
+                System.out.println(query);
+                System.out.println("Query OK");
+                logger.info(String.format("Class:%s-Method:%s::END update flightplan with id-Sapr:%s", //
+                        classe,method,flight.getIdSapr()));
+                return true;
+            }else {
+                pt.close();
+                con.close();
+                System.out.println("Query Aborted");
+                logger.info(String.format("Class:%s-Method:%s::END don't update flightplan with id-Sapr%s", //
+                        classe,method,flight.getIdSapr()));
+                return false;
+            }
+        }catch (Exception e){
+            logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+            return false;
+        } finally {
+            if (pt != null) {
+                pt.close();
+            }
+
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
                 
                 
   public static void main(String args[]) throws ParseException{
@@ -277,10 +328,10 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 			e.printStackTrace();
 		}
                 
-//                //CANCELLAZIONE:
+                //CANCELLAZIONE:
 //		try {
 //			System.out.println("Sto eliminando!");
-//			mysqlTest.deleteFlightPlan(2,"0000000001","2016-08-28");
+//			mysqlTest.deleteFlightPlan(new FlightPlan(null,null,"2016-09-06","07:30:00","23:50",3,0,"0000000003",null));
 //		} catch (SQLException e) {
 //			System.out.println(e);
 //			e.printStackTrace();
@@ -303,11 +354,16 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 			System.out.println(e);
 			e.printStackTrace();
 		}
+                //UPDATE :
+                try {
+			System.out.println("Sto aggiornando!");
+			mysqlTest.updateFlightPlan(new FlightPlan(null,null,"2016-09-06","07:30:00","23:50",3,0,"0000000003",null));
+		} catch (SQLException e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
 
   }   
-
-    public boolean updateFlightPlan(FlightPlan flight) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
     
 }

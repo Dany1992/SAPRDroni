@@ -5,7 +5,7 @@
   <groupId>it.uniroma2</groupId>
   <artifactId>SAPR</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>SAPR</name>
   <url>http://maven.apache.org</url>
@@ -55,4 +55,3 @@
 	</dependency>
 </dependencies>
 </project>
->>>>>>> origin/master
