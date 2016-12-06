@@ -26,27 +26,19 @@ class MySQLDbCheckDeviceDAO implements CheckDeviceDAO {
 	Connection con = null;
 	PreparedStatement pt = null;
         try {
+            con = MySQLDbDAOFactory.createConnection();
             for(int i=0;i<cd.getValue().size();i++){
                 String query = "INSERT INTO checkDevice(IdDevice, valueCheckElement) VALUES(?,?)";
                 System.out.println(query);
                 //logger per segnalare l'inizio della scrittura del metodo
 		logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,cd.toString()));
-                con = MySQLDbDAOFactory.createConnection();
 		pt = con.prepareStatement(query);
                 
                 pt.setInt(1, cd.getIdDevice());
                 pt.setString(2, cd.getValue().get(i));
                 
                 //esito della query
-                if(pt.executeUpdate() == 1){
-                    System.out.println("Ho inserito il checkDevice");	
-                        System.out.println(pt.toString());
-                        pt.close();
-                        con.close();
-
-                        logger.info(String.format("Class:%s-Method:%s::END add checkDevice with value-%s", //
-                                        classe,method,cd.getValue().get(i)));
-                } else {
+                if(pt.executeUpdate() != 1){
                     pt.close();
                     con.close();
                     System.out.println("Non ho inserito il checkDevice");
@@ -55,8 +47,14 @@ class MySQLDbCheckDeviceDAO implements CheckDeviceDAO {
                     return false;
                 }
                 
-            }
-            return true;
+                 System.out.println("Ho inserito il checkDevice");	
+                        System.out.println(pt.toString());
+                        pt.close();
+                        logger.info(String.format("Class:%s-Method:%s::END add checkDevice with value-%s", //
+                                        classe,method,cd.getValue().get(i)));
+                }
+            con.close();
+            return true;    
         }
         catch (Exception e) {
             logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
