@@ -4,6 +4,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
+import java.sql.Date;
 
 import org.apache.log4j.Logger;
 
@@ -171,45 +172,49 @@ public class SAPRDroni implements SAPRDroniInterface{
 		return result;
 	}
 
-
-	/**
-	 * Il webMethod che si occupa di aggiungere o eliminare una Nota. Questa operazione viene effettuata
-	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequetNote
-	 */
-	@WebMethod(operationName = "managerNote")
-	public Boolean requestManagerNote(@WebParam(name = "request")RequestNote request) throws Exception {
-            String method = "RequestManagerNote";
-            
-            logger.info(String.format("Class:%s-Method:%s::START", classe,method));
-            logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
-            
-            System.out.println("***********************START WS***********************");
-            System.out.println("Request is: " + request.toString());
-            
-            Note note = new Note(request.getTextNote(), request.getDate());
-            String textNote = new String(request.getTextNote());
-            
-            //Creo le classi per accedere al db.
-            DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-            NoteDAO noteDAO = mySQLFactory.getNoteDAO();
-            
-            Boolean result;
+        
+        public Boolean requestManagerNote(@WebParam(name = "request")RequestNote request) throws Exception {
+		String method = "RequestManaerNote";
+		if (request == null){
+			return false;
+		}
+		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
+		logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
+		
+		System.out.println("***********************START WS***********************");
+		System.out.println("La richiesta è: " + request.toString());
+		
+		
+		
+		//Trasferisco i dati dalla request al pojo
+		Note note = new Note(request.getIdNote(), request.getTextNote(), request.getDate());
+		
+		//Creo le classi per accedere al db.
+		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		NoteDAO noteDAO = mySQLFactory.getNoteDAO();
+		
+		//Controllo in base all'operazione nel bean di request quale operazione svolgere
+		Boolean result;
 		if (request.getOp().name().equalsIgnoreCase("ADD")){
 			System.out.println("inserisci");
 			result = noteDAO.insertNote(note);
 		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
 			result = noteDAO.deleteNote(note);
 		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
-			result = noteDAO.updateNote(note, textNote);
+			result = noteDAO.updateNote(note);
 		}else {
 			throw new Exception("ERROR OPERATION");
 		}
-                
-                logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		
+		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		System.out.println("Result: "+result);
 		System.out.println("***********************END WS***********************");
 
 		return result;
 	}
+        
+        
+	
     
 	
     public Boolean requestManagerFlightPlan(@WebParam(name = "request")RequestFlightPlan request) throws Exception {

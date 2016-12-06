@@ -8,10 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-
+import java.sql.Date;
 import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -75,7 +74,7 @@ public class MySQLDbNoteDAO implements NoteDAO {
         Connection con = null;
         PreparedStatement pt = null;
         int idNote = note.getIdNote();
-        String query = "DELETE FROM note WHERE idNote >= ?";
+        String query = "DELETE FROM note WHERE idNote = ?";
         try{
             //Logger per notificare l'inserimento di un oggetto
             logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,idNote));
@@ -257,6 +256,10 @@ public class MySQLDbNoteDAO implements NoteDAO {
             System.out.println(e);
             e.printStackTrace();
         }
+    }
+
+    public Boolean updateNote(Note note) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

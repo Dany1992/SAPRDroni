@@ -3,6 +3,8 @@ package it.uniroma2.sapr.pojo;
 /**
  * Created by Tiziano on 28/07/16.
  */
+import java.sql.Date;
+
 public class Note {
     private int idNote;
     private String textNote;
@@ -17,10 +19,6 @@ public class Note {
     public Note(String textNote, String date){
         this.textNote = textNote;
         this.date = date;
-    }
-
-    public Note() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getIdNote() {

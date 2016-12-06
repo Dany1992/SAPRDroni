@@ -14,4 +14,6 @@ public interface NoteDAO {
     public boolean deleteNote(Note note) throws SQLException;
     public boolean updateNote(Note note, String textNote) throws SQLException;
     public ArrayList<Note> selectNote(FlightPlan fp) throws SQLException;
+
+    public Boolean updateNote(Note note);
 }
