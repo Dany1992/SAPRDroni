@@ -27,5 +27,4 @@ public interface SAPRDroniInterface {
 	
     @WebMethod(operationName = "managerNote")
 	public Boolean requestManagerNote(@WebParam(name="request")RequestNote request) throws Exception;
-
 }

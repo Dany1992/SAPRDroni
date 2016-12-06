@@ -43,7 +43,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequestPilot
 	 */
 	
-	public Boolean requestManagerPilot(@WebParam(name = "request")RequestPilot request) throws Exception {
+	public Boolean requestManagerPilot(@WebParam(name = "request")RequestPilot request)throws Exception{
 		String method = "RequestManaerPilot";
 		if (request == null){
 			return false;

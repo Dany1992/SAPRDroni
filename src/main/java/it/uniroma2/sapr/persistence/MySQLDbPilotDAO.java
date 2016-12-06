@@ -99,7 +99,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		String method = "deletePilot";
 		Connection con = null;
 		PreparedStatement pt = null;
-		String query = "DELETE * FROM pilot WHERE pilotLicense = ? ";
+		String query = "DELETE FROM pilot WHERE pilotLicense = ? ";
 		
 		try {
 			//logger per segnalare l'inizio della scrittura del metodo
@@ -112,11 +112,10 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			//compilo i campi ? nella query
 			pt.setString(1, pilot.getPilotLicense());
 			
-			//eseguo la query
+			System.out.println(String.format("Class:%s-Method:%s::execute query[%s]", classe,method,query));
 			if(pt.executeUpdate() == 1){
 				pt.close();
 				con.close();
-				System.out.println("a buon fine");
 				logger.info(String.format("Class:%s-Method:%s::END cancel pilot with license code-%s", //
 						classe,method,pilot.getPilotLicense()));
 				return true;
