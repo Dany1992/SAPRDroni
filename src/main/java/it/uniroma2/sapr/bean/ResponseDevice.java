@@ -50,6 +50,10 @@ public class ResponseDevice {
         this.checkDevice = checkDevice;
         this.active = active;
     }
+
+    public ResponseDevice() {
+        super();
+    }
     
     public int getIdDevice() {
         return idDevice;
