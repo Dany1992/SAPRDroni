@@ -61,4 +61,8 @@ public class MySQLDbDAOFactory extends DAOFactory {
              return new MySQLDbFlightPlanDAO();
         }
 
+        public CheckDeviceDAO getCheckDeviceDAO() {
+            return new MySQLDbCheckDeviceDAO();
+        }
+        
 }

@@ -19,7 +19,7 @@ public abstract class DAOFactory {
 	public abstract SaprDAO getSaprDAO();
         public abstract DeviceDAO getDeviceDAO();
         public abstract NoteDAO getNoteDAO();
-
+        public abstract CheckDeviceDAO getCheckDeviceDAO();
         public abstract FlightPlanDAO getFlightPlanDAO();
         private static MySQLDbDAOFactory mysqlDbFactory;
 	

@@ -9,7 +9,7 @@ import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
-import it.uniroma2.sapr.bean.RequestCheckElement;
+import it.uniroma2.sapr.bean.RequestCheckDevice;
 
 @WebService
 public interface SAPRDroniInterface {
@@ -28,8 +28,8 @@ public interface SAPRDroniInterface {
 	
     @WebMethod(operationName = "managerNote")
 	public Boolean requestManagerNote(@WebParam(name="request")RequestNote request) throws Exception;
-    
-    @WebMethod(operationName = "managerCheckElement")
-	public Boolean requestManagerCheckElement(@WebParam(name="request")RequestCheckElement request) throws Exception;
+
+    @WebMethod(operationName = "managerCheckDevice")
+	public Boolean requestManagerCheckDevice(@WebParam(name="request")RequestCheckDevice request) throws Exception;
 
 }
