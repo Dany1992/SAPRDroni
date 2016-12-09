@@ -163,7 +163,6 @@ public class SAPRDroni implements SAPRDroniInterface{
 		//Creo le classi per accedere al db.
 		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 		DeviceDAO deviceDAO = mySQLFactory.getDeviceDAO();
-		System.out.println("Cominciamo i confronti per fare l'update");
 		//Controllo in base all'operazione nel bean di request quale operazione svolgere
 		Boolean result;
 		if (request.getOp().name().equalsIgnoreCase("ADD")){
