@@ -1,6 +1,8 @@
 
 package it.uniroma2.sapr.pojo;
 
+import it.uniroma2.sapr.bean.RequestCheckElement;
+import it.uniroma2.sapr.bean.ResponseCheckElement;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +21,13 @@ public class Device {
     private ArrayList<CheckElement> checkDevice;
     private int active;
 
+    public Device(){
+        super();
+    }
+    
+    
     public Device(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<CheckElement> checkDevice, int active) {
+        super();
         this.idDevice = idDevice;
         this.model = model;
         this.type = type;

@@ -1,6 +1,6 @@
 package it.uniroma2.sapr.service;
 
-import it.uniroma2.sapr.bean.RequestCheckDevice;
+import it.uniroma2.sapr.bean.RequestCheckElement;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -21,11 +21,11 @@ import it.uniroma2.sapr.persistence.DeviceDAO;
 import it.uniroma2.sapr.persistence.FlightPlanDAO;
 import it.uniroma2.sapr.persistence.NoteDAO;
 import it.uniroma2.sapr.persistence.SaprDAO;
+import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 import it.uniroma2.sapr.pojo.Sapr;
-import it.uniroma2.sapr.pojo.CheckDevice;
-import it.uniroma2.sapr.persistence.CheckDeviceDAO;
+import java.util.ArrayList;
 
 /**
  * Questa classe è colei che si occupa di esporre i servizi offerti dal WS
@@ -148,21 +148,28 @@ public class SAPRDroni implements SAPRDroniInterface{
                 /* MODIFICARE REQUEST DEVICE --> CHECKELEMENT */
                 
 		//Trasferisco i dati dalla request al pojo
-		Device device = new Device(request.getIdDevice(), request.getModel(), request.getModel(), request.getWeight(),
-                                        request.getProducer(), request.getPilotLicense(), request.getCheckDevice(),request.getActive());
+                ArrayList<CheckElement> checkElements = new ArrayList<CheckElement>();
+                for (int i = 0; i < request.getCheckDevice().size(); i++) {
+                    CheckElement check = new CheckElement(request.getCheckDevice().get(i).getValue());
+                    checkElements.add(check);
+                }
+                
+                
+		Device device = new Device(request.getIdDevice(), request.getModel(), request.getType(), request.getWeight(),
+                                        request.getProducer(), request.getPilotLicense(), checkElements,request.getActive());
                 
 		//Creo le classi per accedere al db.
 		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 		DeviceDAO deviceDAO = mySQLFactory.getDeviceDAO();
-		
+		System.out.println("Cominciamo i confronti per fare l'update");
 		//Controllo in base all'operazione nel bean di request quale operazione svolgere
 		Boolean result;
 		if (request.getOp().name().equalsIgnoreCase("ADD")){
-			System.out.println("inserisci");
 			result = deviceDAO.insertDevice(device);
 		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
 			result = deviceDAO.deleteDevice(device);
 		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
+                    System.out.println("Cominciamo l'update");
 			result = deviceDAO.updateDevice(device);
 		}else {
 			throw new Exception("ERROR OPERATION");
@@ -248,39 +255,6 @@ public class SAPRDroni implements SAPRDroniInterface{
 
 		return result;
     }
-
-    public Boolean requestManagerCheckDevice(RequestCheckDevice request) throws Exception {
-                String method = "RequestCheckDevice";
-		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
-		logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
-		
-		System.out.println("***********************START WS***********************");
-		System.out.println("La richiesta è: " + request.toString());
-                
-                CheckDevice cd = new CheckDevice(request.getIdDevice(),request.getValue());
-
-                //Creo le classi per accedere al db.
-                DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-                CheckDeviceDAO cdDAO = mySQLFactory.getCheckDeviceDAO();
-
-                Boolean result;
-                    if (request.getOp().name().equalsIgnoreCase("ADD")){
-                            System.out.println("inserisci");
-                            result = cdDAO.insertCheckDevice(cd);
-                    }else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
-                            result = cdDAO.deleteCheckDevice(cd);
-                    }else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
-                            result = cdDAO.updateCheckDevice(cd);
-                    }else {
-                            throw new Exception("ERROR OPERATION");
-                    }
-
-                    logger.info(String.format("Class:%s-Method:%s::END", classe,method));
-                    System.out.println("***********************END WS***********************");
-
-                    return result;
-    }
-
 
 
 }
