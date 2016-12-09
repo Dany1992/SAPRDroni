@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="RequestManagerCheckElement")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RequestCheckElement extends Request{
+public class RequestCheckElement{
     @XmlElement(name = "values", nillable = false)
     private String value;
 

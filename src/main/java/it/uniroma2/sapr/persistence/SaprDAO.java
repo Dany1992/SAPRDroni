@@ -13,4 +13,5 @@ public interface SaprDAO {
 	public ArrayList<ResponseSapr> selectSapr(String owner) throws SQLException;
 	public ResponseSapr selectSapr(Sapr sapr) throws SQLException;
 	public boolean updateSapr(Sapr sapr) throws SQLException;
+	public boolean enableSapr(Sapr sapr) throws SQLException;
 }

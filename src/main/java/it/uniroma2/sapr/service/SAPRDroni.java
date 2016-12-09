@@ -15,6 +15,7 @@ import it.uniroma2.sapr.persistence.DAOFactory;
 import it.uniroma2.sapr.persistence.PilotDAO;
 import it.uniroma2.sapr.pojo.Pilot;
 import it.uniroma2.sapr.pojo.Device;
+import it.uniroma2.sapr.bean.RequestCheckElement;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
 import it.uniroma2.sapr.persistence.DeviceDAO;
@@ -100,11 +101,17 @@ public class SAPRDroni implements SAPRDroniInterface{
             String method = "RequestManagerSAPR";
             logger.info(String.format("Class:%s-Method:%s::START", classe,method));
             logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
+            ArrayList<CheckElement> checkList = new ArrayList<CheckElement>();
+            
+            for(RequestCheckElement e : request.getCheckSapr()){
+            	CheckElement a = new CheckElement(e.getValue());
+            	checkList.add(a);
+            }
             
             Sapr sapr = new Sapr((int)request.getIdSapr(), request.getModel(), request.getProducer(), 
                             request.getWeight(), request.getHeavyweight(), request.getBattery(), 
                             request.getMaxDistance(), request.getMaxHeight(), request.getPilotLicense(), 
-                            request.getCheckSapr(), request.getActive());
+                            checkList, 0);
             
             //Creo le classi per accedere al db.
             DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
@@ -124,6 +131,8 @@ public class SAPRDroni implements SAPRDroniInterface{
 			result = saprDAO.deleteSapr(sapr);
 		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
 			result = saprDAO.updateSapr(sapr);
+		}else if (request.getOp().name().equalsIgnoreCase("ENABLE")) {
+			result = saprDAO.enableSapr(sapr);
 		}else {
 			throw new Exception("ERROR OPERATION");
 		}
