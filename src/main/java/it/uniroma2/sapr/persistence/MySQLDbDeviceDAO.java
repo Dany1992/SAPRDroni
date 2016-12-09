@@ -1,6 +1,7 @@
 package it.uniroma2.sapr.persistence;
 
 import it.uniroma2.sapr.bean.ResponseDevice;
+import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.Device;
 import java.sql.Connection;
@@ -57,10 +58,10 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                 pt.close();
                 //compilo i campi ? nella query1
                 for(CheckElement e : device.getCheckDevice()){
-                    // compilo i campi ? nella query per inserire in checkDevice
+                    
                     pt1.setString(1, e.getValue());
                     pt1.setInt(2, device.getIdDevice());
-                                      
+
                     // l'inserimento nella relazione checkDevice non è andato a buon fine
                     if(pt1.executeUpdate() != 1){
                         pt1.close();
@@ -69,11 +70,12 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                             classe, method, device.getIdDevice(), device.getPilotLicense()));
                         return false;
                     }
+                        System.out.println("inserimento andato a buon fine");
+                        logger.info(String.format("Class:%s-Method:%s::END add device -%s of pilot %s", //
+                                classe, method, device.getIdDevice(), device.getPilotLicense()));
 
-                    System.out.println("inserimento andato a buon fine");
-                    logger.info(String.format("Class:%s-Method:%s::END add device -%s of pilot %s", //
-                            classe, method, device.getIdDevice(), device.getPilotLicense()));
                 }
+                    
             }
             // la prima non è andata a buon fine
             else{
@@ -228,7 +230,9 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                 logger.info(String.format("Class:%s-Method:%s::END update device -%s",
                         classe, method, d));
                 // rimuove tutti i check e li rinserisce insieme ai nuovi
+                System.out.println("remove all");
                 removeAllCheckDevice(device);
+                System.out.println("insert all");
                 insertAllCheckDevice(device, device.getCheckDevice());
 
                 
@@ -320,6 +324,63 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         }
     }
 
+    public boolean enableDevice(Device device) throws SQLException {
+        /**
+         * questo metodo setta l'attributo active a 0 (cioè dispositivo inattivo).
+         * Questo perchè l'amministratore potrebbe voler vedere i voli passati
+         * e se eliminiamo i dispositivi (analogamente anche i sapr) ci perderemo i dettagli.
+         *
+         * @param device è il bean contente tutti i dati da inserire nel db
+         * @throws SQLException
+         */
+        String method = "deleteDevice";
+        Connection con = null;
+        PreparedStatement pt = null;
+        
+        int dev = device.getIdDevice();
+
+        String query = "UPDATE device SET active = 1 WHERE idDevice = ?";
+
+        try {
+            //logger per segnalare l'inizio della scrittura del metodo
+            logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, dev));
+
+            con = MySQLDbDAOFactory.createConnection();
+            pt = con.prepareStatement(query);
+
+            //compilo il campo ? nella query
+            pt.setInt(1, dev);
+
+            // eseguo la query
+            if (pt.executeUpdate() == 1) {
+                pt.close();
+                con.close();
+                System.out.println("cancellazione andata a buon fine");
+                logger.info(String.format("Class:%s-Method:%s::END delete device -%s",
+                        classe, method, dev));
+                return true;
+            } else {
+                pt.close();
+                con.close();
+                logger.info(String.format("Class:%s-Method:%s::END not delete device -%s",
+                        classe, method, dev));
+                return false;
+            }
+        } catch (Exception e) {
+            logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
+            System.out.println(e);
+            return false;
+        } finally {
+            if (pt != null) {
+                pt.close();
+            }
+
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
     public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException {
         /**
          * questo metodo prende in input l'id del pilota e ci restituisce tutti
@@ -334,7 +395,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         PreparedStatement pt = null;
         PreparedStatement pt1 = null;
         ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
-        ArrayList<CheckElement> arr_check = new ArrayList<CheckElement>();
+        ArrayList<ResponseCheckElement> arr_check = new ArrayList<ResponseCheckElement>();
         
         String query = "SELECT idDevice, model, type, weight, producer, pilotLicense"
                 + " FROM device WHERE pilotLicense = ?";
@@ -371,7 +432,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                     pt1.setInt(1, id);
                     ResultSet resultCheck = pt1.executeQuery();
                     while(resultCheck.next()){
-                        CheckElement ck = new CheckElement(resultCheck.getString("valueCheckElement"));
+                        ResponseCheckElement ck = new ResponseCheckElement(resultCheck.getString("valueCheckElement"));
                         arr_check.add(ck);
                     }
                     
@@ -420,7 +481,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         PreparedStatement pt = null;
         PreparedStatement pt1 = null;
         int idDevice = device.getIdDevice();
-        ArrayList<CheckElement> arr_check = new ArrayList<CheckElement>();
+        ArrayList<ResponseCheckElement> arr_check = new ArrayList<ResponseCheckElement>();
         
         String query = "SELECT idDevice, model, type, weight, producer, pilotLicense"
                 + " FROM device WHERE idDevice = ?";
@@ -456,7 +517,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
                 pt1.setInt(1, id);
                 ResultSet resultCheck = pt1.executeQuery();
                     while(resultCheck.next()){
-                        CheckElement ck = new CheckElement(resultCheck.getString("valueCheckElement"));
+                        ResponseCheckElement ck = new ResponseCheckElement(resultCheck.getString("valueCheckElement"));
                         arr_check.add(ck);
                     }
                 
@@ -490,15 +551,16 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
     }
 
     public static void main(String args[]) throws ParseException {
-        
+        CheckElement a = new CheckElement();
         ArrayList<CheckElement> ck = new ArrayList<CheckElement>();
-        ck.add(new CheckElement("elica"));
-        ck.add(new CheckElement("ventola"));
-        ck.add(new CheckElement("motore"));
+        a.setValue("elica");ck.add(a);
+        a.setValue("ventole");ck.add(a);
+        a.setValue("motore");ck.add(a);
         
         Device device = new Device(1, "A144", "tipo", 520, "Prod1", "0000000003",ck,1);
+        //Device device1 = new Device(1, "A144", "tipo", 520, "Prod1", "0000000003",ck,1);
 
-        Device deviceDel = new Device(78, "A144", "tipo1", 520, "Prod1", "0000000003",ck,1);
+        //Device deviceDel = new Device(78, "A144", "tipo1", 520, "Prod1", "0000000003",ck,1);
 
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {

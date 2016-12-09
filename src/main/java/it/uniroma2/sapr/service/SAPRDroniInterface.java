@@ -7,8 +7,10 @@ import javax.jws.WebService;
 import it.uniroma2.sapr.bean.RequestNote;
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
+import it.uniroma2.sapr.bean.ResponseListPilots;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
+import it.uniroma2.sapr.bean.RequestCheckElement;
 
 @WebService
 public interface SAPRDroniInterface {
@@ -27,5 +29,8 @@ public interface SAPRDroniInterface {
 	
     @WebMethod(operationName = "managerNote")
 	public Boolean requestManagerNote(@WebParam(name="request")RequestNote request) throws Exception;
-
+    
+    @WebMethod(operationName = "getPilots")
+    public ResponseListPilots getPilots() throws Exception;
+    
 }

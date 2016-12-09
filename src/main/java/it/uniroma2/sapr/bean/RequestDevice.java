@@ -1,7 +1,6 @@
 
 package it.uniroma2.sapr.bean;
 
-import it.uniroma2.sapr.pojo.CheckElement;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -37,7 +36,7 @@ public class RequestDevice extends Request{
     private String pilotLicense;
 
     @XmlElement(name = "chekDevice")
-    private ArrayList<CheckElement> checkDevice;
+    private ArrayList<RequestCheckElement> checkDevice;
     
     @XmlElement(name = "active")
     private int active;
@@ -47,7 +46,7 @@ public class RequestDevice extends Request{
 		// TODO Auto-generated constructor stub
 	}
 
-    public RequestDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<CheckElement> checkDevice, int active, operation op) {
+    public RequestDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<RequestCheckElement> checkDevice, int active) {
         this.idDevice = idDevice;
         this.model = model;
         this.type = type;
@@ -55,10 +54,9 @@ public class RequestDevice extends Request{
         this.producer = producer;
         this.pilotLicense = pilotLicense;
         this.checkDevice = checkDevice;
-        this.op = op;
         this.active = active;
     }
-    
+
     public int getIdDevice() {
         return idDevice;
     }
@@ -107,11 +105,11 @@ public class RequestDevice extends Request{
         this.pilotLicense = pilotLicense;
     }
 
-    public ArrayList<CheckElement> getCheckDevice() {
+    public ArrayList<RequestCheckElement> getCheckDevice() {
         return checkDevice;
     }
 
-    public void setCheckDevice(ArrayList<CheckElement> checkDevice) {
+    public void setCheckDevice(ArrayList<RequestCheckElement> checkDevice) {
         this.checkDevice = checkDevice;
     }
 
@@ -125,15 +123,15 @@ public class RequestDevice extends Request{
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + this.idDevice;
-        hash = 97 * hash + (this.model != null ? this.model.hashCode() : 0);
-        hash = 97 * hash + (this.type != null ? this.type.hashCode() : 0);
-        hash = 97 * hash + this.weight;
-        hash = 97 * hash + (this.producer != null ? this.producer.hashCode() : 0);
-        hash = 97 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
-        hash = 97 * hash + (this.checkDevice != null ? this.checkDevice.hashCode() : 0);
-        hash = 97 * hash + this.active;
+        int hash = 7;
+        hash = 13 * hash + this.idDevice;
+        hash = 13 * hash + (this.model != null ? this.model.hashCode() : 0);
+        hash = 13 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 13 * hash + this.weight;
+        hash = 13 * hash + (this.producer != null ? this.producer.hashCode() : 0);
+        hash = 13 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
+        hash = 13 * hash + (this.checkDevice != null ? this.checkDevice.hashCode() : 0);
+        hash = 13 * hash + this.active;
         return hash;
     }
 
