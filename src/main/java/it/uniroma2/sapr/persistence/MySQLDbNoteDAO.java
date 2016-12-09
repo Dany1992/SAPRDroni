@@ -124,12 +124,15 @@ public class MySQLDbNoteDAO implements NoteDAO {
             //Apro la connessione e preparo la query
             con = MySQLDbDAOFactory.createConnection();
             pt = con.prepareStatement(query);
+
             System.out.println(pt);
 
             //Compilo i campi nella query
             pt.setString(1, ", " + note.getTextNote());
             pt.setInt(2, note.getIdNote());
-            System.out.println(note.getTextNote());
+            
+            System.out.println(pt);
+            
             //eseguo la query
             if(pt.executeUpdate() == 1){
                 pt.close();

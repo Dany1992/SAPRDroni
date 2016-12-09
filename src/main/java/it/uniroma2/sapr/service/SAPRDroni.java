@@ -197,8 +197,7 @@ public class SAPRDroni implements SAPRDroniInterface{
             System.out.println("***********************START WS***********************");
             System.out.println("Request is: " + request.toString());
             
-            Note note = new Note(request.getTextNote(), request.getDate());
-            String textNote = new String(request.getTextNote());
+            Note note = new Note(request.getIdNote(), request.getTextNote(), request.getDate());
             
             //Creo le classi per accedere al db.
             DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
