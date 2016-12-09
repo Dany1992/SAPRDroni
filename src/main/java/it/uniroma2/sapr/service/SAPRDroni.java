@@ -1,11 +1,9 @@
 package it.uniroma2.sapr.service;
 
 
-import it.uniroma2.sapr.bean.RequestCheckElement;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
-import javax.jws.WebMethod;
 import org.apache.log4j.Logger;
 
 import it.uniroma2.sapr.bean.RequestNote;
@@ -185,6 +183,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 		return result;
 	}
 
+
 	/**
 	 * Il webMethod che si occupa di aggiungere o eliminare una Nota. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequetNote
@@ -198,8 +197,7 @@ public class SAPRDroni implements SAPRDroniInterface{
             System.out.println("***********************START WS***********************");
             System.out.println("Request is: " + request.toString());
             
-            Note note = new Note(request.getTextNote(), request.getDate());
-            String textNote = new String(request.getTextNote());
+            Note note = new Note(request.getIdNote(), request.getTextNote(), request.getDate());
             
             //Creo le classi per accedere al db.
             DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
