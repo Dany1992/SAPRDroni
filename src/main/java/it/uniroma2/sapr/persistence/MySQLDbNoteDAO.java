@@ -1,14 +1,10 @@
 package it.uniroma2.sapr.persistence;
 
-import it.uniroma2.sapr.pojo.CheckElement;
-import it.uniroma2.sapr.pojo.Device;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.sql.Date;
 import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 import org.apache.log4j.Logger;
@@ -116,25 +112,24 @@ public class MySQLDbNoteDAO implements NoteDAO {
         }
     }
     
-    public boolean updateNote(Note note, String textNote) throws SQLException {
+    public boolean updateNote(Note note) throws SQLException {
         String method = "updateNote";
         Connection con = null;
         PreparedStatement pt = null;
-        int idNote = note.getIdNote();
-        String query = "UPDATE Note SET textNote = ?, date = now() WHERE idNote = ?";
+        String query = "UPDATE Note SET textNote = CONCAT(textNote, ?) where idNote = ?";
         try{
             //Logger per notificare l'inserimento di un oggetto
-            logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,idNote));
+            logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,note.getIdNote()));
 
             //Apro la connessione e preparo la query
             con = MySQLDbDAOFactory.createConnection();
             pt = con.prepareStatement(query);
+            System.out.println(pt);
 
             //Compilo i campi nella query
-            String text = note.getTextNote() + " in: " + note.getDate() + " - " + textNote;
-            pt.setString(1, text);
+            pt.setString(1, ", " + note.getTextNote());
             pt.setInt(2, note.getIdNote());
-            System.out.println(text);
+            System.out.println(note.getTextNote());
             //eseguo la query
             if(pt.executeUpdate() == 1){
                 pt.close();
@@ -142,14 +137,14 @@ public class MySQLDbNoteDAO implements NoteDAO {
                 System.out.println(query);
                 System.out.println("Query OK");
                 logger.info(String.format("Class:%s-Method:%s::END delete note with id-%s", //
-                        classe,method,idNote));
+                        classe,method,note.getIdNote()));
                 return true;
             }else {
                 pt.close();
                 con.close();
                 System.out.println("Query Aborted");
                 logger.info(String.format("Class:%s-Method:%s::END don't update note with id-%s", //
-                        classe,method,idNote));
+                        classe,method,note.getIdNote()));
                 return false;
             }
         }catch (Exception e){
@@ -219,47 +214,6 @@ public class MySQLDbNoteDAO implements NoteDAO {
             }
         }
 
-    }
-
-    public static void main(String args[]) throws ParseException{
-
-        //Inserimento nuova nota
-        ArrayList<Device> check = new ArrayList<Device>();
-        FlightPlan fp = new FlightPlan("Ciampino", "Fiumicino", "2016-07-29", "20:00:00", "21:00:00", 1, 1, "0000000001", null); 
-        int idNote = fp.getIdNote();
-        MySQLDbNoteDAO mysqlTest = new MySQLDbNoteDAO();
-        //int i;
-        try {
-            System.out.println("Starting Operation.....");
-            /*
-            Note noteResult = mysqlTest.selectNote(fp).get(0);
-            System.out.println("NOTA: " + noteResult.toString());
-            String textNote = noteResult.getTextNote();
-            System.out.println("TESTO NOTA: " + textNote);
-            int noteId = noteResult.getIdNote();
-            System.out.println("ID NOTA: " + noteId);
-            Note note = new Note(noteId, textNote +  ", " + "Il drone e' atterrato", "2016-07-28");
-            System.out.println("NOTA: " + note.toString());
-            //mysqlTest.deleteNote(noteResult);
-            //mysqlTest.insertNote(note);
-            //fp.getCheckList().add(new CheckElement("Ciao"));
-            ArrayList<Note> printed = mysqlTest.selectNote(fp);
-            for(i = 0; i < printed.size(); i++) {
-                System.out.print(printed.get(i));
-            }
-            */
-            //mysqlTest.deleteNote(5);
-            Note noteResult = mysqlTest.selectNote(fp).get(0);
-            System.out.println("NOTA: " + noteResult.toString());
-            mysqlTest.updateNote(noteResult, "Vado a casa");
-        } catch (SQLException e) {
-            System.out.println(e);
-            e.printStackTrace();
-        }
-    }
-
-    public Boolean updateNote(Note note) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

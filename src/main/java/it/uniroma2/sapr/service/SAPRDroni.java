@@ -189,6 +189,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 		//Trasferisco i dati dalla request al pojo
 		Note note = new Note(request.getIdNote(), request.getTextNote(), request.getDate());
 		
+                
 		//Creo le classi per accedere al db.
 		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 		NoteDAO noteDAO = mySQLFactory.getNoteDAO();
