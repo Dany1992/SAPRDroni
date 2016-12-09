@@ -1,20 +1,21 @@
 package it.uniroma2.sapr.service;
 
-import it.uniroma2.sapr.bean.RequestCheckElement;
-import javax.jws.WebMethod;
+
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
-
 import org.apache.log4j.Logger;
 
 import it.uniroma2.sapr.bean.RequestNote;
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
+import it.uniroma2.sapr.bean.ResponseListPilots;
+import it.uniroma2.sapr.bean.ResponsePilot;
 import it.uniroma2.sapr.persistence.DAOFactory;
 import it.uniroma2.sapr.persistence.PilotDAO;
 import it.uniroma2.sapr.pojo.Pilot;
 import it.uniroma2.sapr.pojo.Device;
+import it.uniroma2.sapr.bean.RequestCheckElement;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
 import it.uniroma2.sapr.persistence.DeviceDAO;
@@ -45,12 +46,14 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 * Il webMethod che si occupa di aggiungere o eliminare un pilota. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequestPilot
 	 */
-	
-	public Boolean requestManagerPilot(@WebParam(name = "request")RequestPilot request) throws Exception {
+	public Boolean requestManagerPilot(RequestPilot request)throws Exception{
 		String method = "RequestManaerPilot";
+		
 		if (request == null){
+			System.out.println("Request null");
 			return false;
 		}
+		
 		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
 		logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
 		
@@ -98,11 +101,17 @@ public class SAPRDroni implements SAPRDroniInterface{
             String method = "RequestManagerSAPR";
             logger.info(String.format("Class:%s-Method:%s::START", classe,method));
             logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
+            ArrayList<CheckElement> checkList = new ArrayList<CheckElement>();
+            
+            for(RequestCheckElement e : request.getCheckSapr()){
+            	CheckElement a = new CheckElement(e.getValue());
+            	checkList.add(a);
+            }
             
             Sapr sapr = new Sapr((int)request.getIdSapr(), request.getModel(), request.getProducer(), 
                             request.getWeight(), request.getHeavyweight(), request.getBattery(), 
                             request.getMaxDistance(), request.getMaxHeight(), request.getPilotLicense(), 
-                            request.getCheckSapr(), request.getActive());
+                            checkList, 0);
             
             //Creo le classi per accedere al db.
             DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
@@ -122,6 +131,8 @@ public class SAPRDroni implements SAPRDroniInterface{
 			result = saprDAO.deleteSapr(sapr);
 		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
 			result = saprDAO.updateSapr(sapr);
+		}else if (request.getOp().name().equalsIgnoreCase("ENABLE")) {
+			result = saprDAO.enableSapr(sapr);
 		}else {
 			throw new Exception("ERROR OPERATION");
 		}
@@ -156,22 +167,23 @@ public class SAPRDroni implements SAPRDroniInterface{
                 
                 
 		Device device = new Device(request.getIdDevice(), request.getModel(), request.getType(), request.getWeight(),
-                                        request.getProducer(), request.getPilotLicense(), checkElements,request.getActive());
+                                        request.getProducer(), request.getPilotLicense(), checkElements,0);
                 
 		//Creo le classi per accedere al db.
 		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 		DeviceDAO deviceDAO = mySQLFactory.getDeviceDAO();
-		System.out.println("Cominciamo i confronti per fare l'update");
 		//Controllo in base all'operazione nel bean di request quale operazione svolgere
 		Boolean result;
 		if (request.getOp().name().equalsIgnoreCase("ADD")){
-			result = deviceDAO.insertDevice(device);
+                    result = deviceDAO.insertDevice(device);
 		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
-			result = deviceDAO.deleteDevice(device);
+                    result = deviceDAO.deleteDevice(device);
 		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
-                    System.out.println("Cominciamo l'update");
-			result = deviceDAO.updateDevice(device);
-		}else {
+                    result = deviceDAO.updateDevice(device);
+		}else if (request.getOp().name().equalsIgnoreCase("ENABLE")){
+                    result = deviceDAO.enableDevice(device);
+                    
+                }else {
 			throw new Exception("ERROR OPERATION");
 		}
 		
@@ -195,34 +207,35 @@ public class SAPRDroni implements SAPRDroniInterface{
             System.out.println("***********************START WS***********************");
             System.out.println("Request is: " + request.toString());
             
-            Note note = new Note(request.getTextNote(), request.getDate());
-            String textNote = new String(request.getTextNote());
+            Note note = new Note(request.getIdNote(), request.getTextNote(), request.getDate());
             
             //Creo le classi per accedere al db.
             DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
             NoteDAO noteDAO = mySQLFactory.getNoteDAO();
             
             Boolean result;
+
 		if (request.getOp().name().equalsIgnoreCase("ADD")){
 			System.out.println("inserisci");
 			result = noteDAO.insertNote(note);
 		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
 			result = noteDAO.deleteNote(note);
 		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
-			result = noteDAO.updateNote(note, textNote);
+			result = noteDAO.updateNote(note);
 		}else {
 			throw new Exception("ERROR OPERATION");
 		}
-                
-                logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		
+		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		System.out.println("Result: "+result);
 		System.out.println("***********************END WS***********************");
 
 		return result;
 	}
-    
-	
+        
+
     public Boolean requestManagerFlightPlan(@WebParam(name = "request")RequestFlightPlan request) throws Exception {
-                String method = "RequestFlightPlan";
+        String method = "RequestFlightPlan";
 		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
 		logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
 		
@@ -255,6 +268,30 @@ public class SAPRDroni implements SAPRDroniInterface{
 
 		return result;
     }
+
+	public ResponseListPilots getPilots() throws Exception {
+		String method = "getPilots";
+		logger.info(String.format("Class:%s-Method:%s::START", classe,method ));
+		
+		ResponseListPilots response = new ResponseListPilots();
+		
+		//Factory per il db
+		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		PilotDAO pilotDAO = mysqlFactory.getPilotDAO();
+		
+		ArrayList<ResponsePilot> listPilots = pilotDAO.selectAllPilot();
+		if(listPilots != null){
+			response.setErrorCode(0);
+			response.setErrorMessage("SUCCESS");
+			response.setPilots(listPilots);
+		}else{
+			response.setErrorCode(-1);
+			response.setErrorMessage("ERROR GET PILOTS");
+		}
+		
+		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		return response;
+	}
 
 
 }

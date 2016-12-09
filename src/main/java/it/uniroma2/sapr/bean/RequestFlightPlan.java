@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RequestFlightPlan extends Request{
 	
-        @XmlElement(name = "destinations")
+       @XmlElement(name = "destinations")
 	private String destinations;
 
 	@XmlElement(name = "departure")

@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -99,7 +101,7 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		String method = "deletePilot";
 		Connection con = null;
 		PreparedStatement pt = null;
-		String query = "DELETE * FROM pilot WHERE pilotLicense = ? ";
+		String query = "DELETE FROM pilot WHERE pilotLicense = ? ";
 		
 		try {
 			//logger per segnalare l'inizio della scrittura del metodo
@@ -112,11 +114,10 @@ public class MySQLDbPilotDAO implements PilotDAO {
 			//compilo i campi ? nella query
 			pt.setString(1, pilot.getPilotLicense());
 			
-			//eseguo la query
+			System.out.println(String.format("Class:%s-Method:%s::execute query[%s]", classe,method,query));
 			if(pt.executeUpdate() == 1){
 				pt.close();
 				con.close();
-				System.out.println("a buon fine");
 				logger.info(String.format("Class:%s-Method:%s::END cancel pilot with license code-%s", //
 						classe,method,pilot.getPilotLicense()));
 				return true;
@@ -149,62 +150,61 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		return false;
 	}
 
-	public ResponsePilot selectPilot(String pilotLicense) throws SQLException {
+	
+	public ArrayList<ResponsePilot> selectAllPilot() throws SQLException {
 		String method = "selectPilot";
 		Connection con = null;
 		PreparedStatement pt = null;
-		ResponsePilot rispPilot = new ResponsePilot();
-		String query = " SELECT(pilotLicense, name," +
-		"surname,birthDate,nation,taxCode,state,residence,phone,mail,password) "
-		+ "FROM pilot "
-		+ "WHERE pilotLicense = ?";
+		ArrayList<ResponsePilot> listPilots = new ArrayList<ResponsePilot>();
+		String query = " SELECT pilotLicense, name," +
+		"surname,birthDate,nation,taxCode,state,residence,phone,mail,password "
+		+ "FROM pilot ";
+		logger.info(String.format("Class:%s-Method:%s::START", classe,method));
 		
 		try {
 			//logger per segnalare l'inizio della scrittura del metodo
-			logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilotLicense));
-			System.out.println(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilotLicense));
 
 			con = MySQLDbDAOFactory.createConnection();
 			pt = con.prepareStatement(query);
-			
-			//compilo i campi ? nella query
-			pt.setString(1, pilotLicense);
 			
 			//eseguo la query
 			ResultSet rs = pt.executeQuery();
 			
 			if(rs != null){
-				pt.close();
-				con.close();
-				System.out.println("a buon fine");
-				logger.info(String.format("Class:%s-Method:%s::END add pilot with license code-%s", //
-						classe,method,pilotLicense));
-				System.out.println(String.format("Class:%s-Method:%s::START with dates %s", classe,method,pilotLicense));
-				/****************************************************************************
-				 * Qui va parsata la response della query e popolato il bean di risposta    *
-				 ****************************************************************************/
 				while (rs.next()) {
-					//recupero la licenza dalla query 
+					ResponsePilot rispPilot = new ResponsePilot();
                     String license = rs.getString("pilotLicense");
-                    //aggiungo la licenza al bean di risposta
                     rispPilot.setPilotLicense(license);
                     String name = rs.getString("name");
                     rispPilot.setName(name);
                     String surname = rs.getString("surname");
                     rispPilot.setSurname(surname);
-                    
-                    //Vanno aggiunti gli altri campi
+                    String birthDate = rs.getString("birthDate");
+                    rispPilot.setSurname(birthDate);
+                    String nation = rs.getString("nation");
+                    rispPilot.setSurname(nation);
+					String taxCode = rs.getString("taxCode");
+					rispPilot.setSurname(taxCode);
+					String state = rs.getString("state");
+					rispPilot.setSurname(state);
+					String residence = rs.getString("residence");
+					rispPilot.setSurname(residence);
+					String phone = rs.getString("phone");
+					rispPilot.setSurname(phone);
+					String mail = rs.getString("mail");
+					rispPilot.setSurname(mail);
+					
+                    listPilots.add(rispPilot);
                 }
 				
-				
-				return rispPilot;
+				return listPilots;
 			}else {
 				pt.close();
 				con.close();
 				System.out.println("male");
-				logger.info(String.format("Class:%s-Method:%s::END dont add pilot with license code-%s", //
-						classe,method,pilotLicense));
-				return rispPilot;
+				logger.info(String.format("Class:%s-Method:%s::END", //
+						classe,method));
+				return listPilots;
 			}
 			
 		} catch (Exception e) {
@@ -222,20 +222,20 @@ public class MySQLDbPilotDAO implements PilotDAO {
 		}
 	}
 
-    
-    public static void main(String args[]) throws ParseException{
-		/*
-		Pilot pilot = new Pilot("Danilo", "Butrico", "Italiana", "Italia", "11l23kk",
-				"00132", "22-06-1992", "Roma", "3272871227", "dbutricod@gmail.com", "123");
-		MySQLDbPilotDAO mysqlTest = new MySQLDbPilotDAO();
-		try {
-			System.out.println("sto per iniserire");
-			mysqlTest.insertPilot(pilot);
-		} catch (SQLException e) {
-			System.out.println(e);
-			e.printStackTrace();
-		}
-		*/
+//    
+//    public static void main(String args[]) throws ParseException{
+//		MySQLDbPilotDAO tt = new MySQLDbPilotDAO();
+//    	try {
+//			ArrayList<ResponsePilot> risp = tt.selectAllPilot();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//    	
+//	}
+
+	public ResponsePilot selectPilot(String pilotLicense) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.bean.ResponseSapr;
 import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.Sapr;
@@ -170,6 +172,63 @@ import it.uniroma2.sapr.pojo.Sapr;
             
         }
     }
+  	
+  	public boolean enableSapr(Sapr sapr) throws SQLException {
+        /**
+         * questo metodo setta l'attributo active a 0 (cioè dispositivo inattivo).
+         * Questo perchè l'amministratore potrebbe voler vedere i voli passati
+         * e se eliminiamo i dispositivi (analogamente anche i sapr) ci perderemo i dettagli.
+         *
+         * @param device è il bean contente tutti i dati da inserire nel db
+         * @throws SQLException
+         */
+        String method = "enableSapr";
+        Connection con = null;
+        PreparedStatement pt = null;
+        
+        int idSapr = sapr.getIdSapr();
+
+        String query = "UPDATE sapr SET active = 1 WHERE idSapr = ?";
+
+        try {
+            //logger per segnalare l'inizio della scrittura del metodo
+            logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, idSapr));
+
+            con = MySQLDbDAOFactory.createConnection();
+            pt = con.prepareStatement(query);
+
+            //compilo il campo ? nella query
+            pt.setInt(1, idSapr);
+
+            // eseguo la query
+            if (pt.executeUpdate() == 1) {
+                pt.close();
+                con.close();
+                System.out.println("enable Sapr andato a buon fine");
+                logger.info(String.format("Class:%s-Method:%s::END enable sapr -%s",
+                        classe, method, idSapr));
+                return true;
+            } else {
+                pt.close();
+                con.close();
+                logger.info(String.format("Class:%s-Method:%s::END not enabled sapr -%s",
+                        classe, method, idSapr));
+                return false;
+            }
+        } catch (Exception e) {
+            logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
+            System.out.println(e);
+            return false;
+        } finally {
+            if (pt != null) {
+                pt.close();
+            }
+
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 	
 	/*seleziona tutti i sapr appartenenti al pilota specificato*/
 	
@@ -213,7 +272,7 @@ import it.uniroma2.sapr.pojo.Sapr;
 	
 	            while (rs.next()) {
 	            	ResponseSapr rispSapr = new ResponseSapr();
-	            	ArrayList<CheckElement> checkSapr = new ArrayList<CheckElement>();
+	            	ArrayList<ResponseCheckElement> checkSapr = new ArrayList<ResponseCheckElement>();
 	            	
 	            	//recupero la licenza dalla query 
 					int idS = rs.getInt("idSapr");
@@ -242,7 +301,7 @@ import it.uniroma2.sapr.pojo.Sapr;
 	                
 	                while(rs1.next()){	
 	                	String valore = rs1.getString("valueCheckElement");
-	                	checkSapr.add(new CheckElement(valore));
+	                	checkSapr.add(new ResponseCheckElement(valore));
 	                }
 	                
 	                rispSapr.setCheckSapr(checkSapr);      
@@ -310,7 +369,7 @@ import it.uniroma2.sapr.pojo.Sapr;
 			//eseguo la query
 			ResultSet rs = pt.executeQuery();
 			ResultSet rs1 = pt1.executeQuery();
-			ArrayList<CheckElement> checkSapr = new ArrayList<CheckElement>();
+			ArrayList<ResponseCheckElement> checkSapr = new ArrayList<ResponseCheckElement>();
 			
 			if(rs != null && rs1 != null){
 				rs.next();
@@ -346,7 +405,7 @@ import it.uniroma2.sapr.pojo.Sapr;
                 
                 while(rs1.next()){
                 	valore = rs1.getString("valueCheckElement");
-                	checkSapr.add(new CheckElement(valore));
+                	checkSapr.add(new ResponseCheckElement(valore));
                 }
                     
                 rispSapr.setCheckSapr(checkSapr);

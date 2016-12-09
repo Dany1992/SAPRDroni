@@ -60,5 +60,5 @@ public class MySQLDbDAOFactory extends DAOFactory {
         public FlightPlanDAO getFlightPlanDAO(){
              return new MySQLDbFlightPlanDAO();
         }
-        
+
 }

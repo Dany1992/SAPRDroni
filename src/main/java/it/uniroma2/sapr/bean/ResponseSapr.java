@@ -7,9 +7,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import it.uniroma2.sapr.pojo.CheckElement;
-
-
 @XmlRootElement(name="ResponseSapr")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ResponseSapr {
@@ -41,12 +38,12 @@ public class ResponseSapr {
     private String pilotLicense;
     
     @XmlElement(name = "checkSapr")
-    private ArrayList<CheckElement> checkSapr;
+    private ArrayList<ResponseCheckElement> checkSapr;
     
     @XmlElement(name = "active")
     private int active;
 
-	public ResponseSapr(int idSapr, String model, String producer, int weight, int heavyweight, String battery, int maxDistance, int maxHeight, String pilotLicense, ArrayList<CheckElement> checkSapr, int active) {
+	public ResponseSapr(int idSapr, String model, String producer, int weight, int heavyweight, String battery, int maxDistance, int maxHeight, String pilotLicense, ArrayList<ResponseCheckElement> checkSapr, int active) {
         this.idSapr = idSapr;
         this.model = model;
         this.producer = producer;
@@ -70,11 +67,11 @@ public class ResponseSapr {
 		return idSapr;
 	}
 
-	public ArrayList<CheckElement> getCheckSapr() {
+	public ArrayList<ResponseCheckElement> getCheckSapr() {
 		return checkSapr;
 	}
 
-	public void setCheckSapr(ArrayList<CheckElement> checkSapr) {
+	public void setCheckSapr(ArrayList<ResponseCheckElement> checkSapr) {
 		this.checkSapr = checkSapr;
 	}
 
@@ -228,6 +225,5 @@ public class ResponseSapr {
 				+ ", maxHeight=" + maxHeight + ", pilotLicense=" + pilotLicense + ", active=" + active + ", checkSapr=" + checkSapr
 				+ "]";
 	}
-
     
 }

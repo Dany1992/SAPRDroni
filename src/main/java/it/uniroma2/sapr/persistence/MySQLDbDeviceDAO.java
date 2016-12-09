@@ -333,7 +333,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
          * @param device è il bean contente tutti i dati da inserire nel db
          * @throws SQLException
          */
-        String method = "deleteDevice";
+        String method = "enableDevice";
         Connection con = null;
         PreparedStatement pt = null;
         
@@ -355,7 +355,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
             if (pt.executeUpdate() == 1) {
                 pt.close();
                 con.close();
-                System.out.println("cancellazione andata a buon fine");
+                System.out.println("enable Device andato a buon fine");
                 logger.info(String.format("Class:%s-Method:%s::END delete device -%s",
                         classe, method, dev));
                 return true;

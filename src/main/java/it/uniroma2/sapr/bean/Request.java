@@ -11,7 +11,7 @@ public abstract class Request {
 	protected operation op;
 	
 	public enum operation{
-		ADD,DELETE,UPDATE
+		ADD,DELETE,UPDATE,ENABLE
 	}
 
 	public operation getOp() {

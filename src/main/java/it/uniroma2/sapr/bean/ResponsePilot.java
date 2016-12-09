@@ -1,13 +1,12 @@
 package it.uniroma2.sapr.bean;
 
-import java.sql.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="RequestManagerPilot")
+@XmlRootElement(name="ResponsePilot")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ResponsePilot {
 	@XmlElement(name = "name")
@@ -29,7 +28,7 @@ public class ResponsePilot {
 	private String taxCode;
 	
 	@XmlElement(name = "birthDay")
-	private Date birthDate;
+	private String birthDate;
 	
 	@XmlElement(name = "residence")
 	private String residence;
@@ -44,7 +43,7 @@ public class ResponsePilot {
 	private String password;
 
 	public ResponsePilot(String name, String surname, String nation, String state, String pilotLicense, String taxCode,
-			Date birthDate, String residence, String phone, String mail, String password) {
+			String birthDate, String residence, String phone, String mail, String password) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -112,11 +111,11 @@ public class ResponsePilot {
 		this.taxCode = taxCode;
 	}
 
-	public Date getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 

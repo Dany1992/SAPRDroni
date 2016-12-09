@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import it.uniroma2.sapr.pojo.CheckElement;
 
 @XmlRootElement(name="RequestManagerSAPR")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -41,10 +40,8 @@ public class RequestSAPR extends Request {
 	private String pilotLicense;
 	
 	@XmlElement(name = "checkSapr",nillable = false)
-	private ArrayList<CheckElement> checkSapr;
+	private ArrayList<RequestCheckElement> checkSapr;
 	
-	@XmlElement(name = "active",nillable = false)
-	private int active;
 
 	public RequestSAPR() {
 		super();
@@ -52,7 +49,7 @@ public class RequestSAPR extends Request {
 	}
 
 	public RequestSAPR(long idSapr, String model, String producer, int weight, int heavyweight, String battery,
-			int maxDistance, int maxHeight, String pilotLicense, ArrayList<CheckElement> checkSapr, int active, operation op) {
+			int maxDistance, int maxHeight, String pilotLicense, ArrayList<RequestCheckElement> checkSapr, int active, operation op) {
 		super();
 		this.idSapr = idSapr;
 		this.model = model;
@@ -64,7 +61,6 @@ public class RequestSAPR extends Request {
 		this.maxHeight = maxHeight;
 		this.pilotLicense = pilotLicense;
 		this.checkSapr = checkSapr;
-		this.active = active;
 		this.op = op;
 	}
 
@@ -140,27 +136,18 @@ public class RequestSAPR extends Request {
 		this.pilotLicense = pilotLicense;
 	}
 	
-	public ArrayList<CheckElement> getCheckSapr() {
+	public ArrayList<RequestCheckElement> getCheckSapr() {
 		return checkSapr;
 	}
 
-	public void setCheckSapr(ArrayList<CheckElement> checkSapr) {
+	public void setCheckSapr(ArrayList<RequestCheckElement> checkSapr) {
 		this.checkSapr = checkSapr;
-	}
-
-	public int getActive() {
-		return active;
-	}
-
-	public void setActive(int active) {
-		this.active = active;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + active;
 		result = prime * result + ((battery == null) ? 0 : battery.hashCode());
 		result = prime * result + ((checkSapr == null) ? 0 : checkSapr.hashCode());
 		result = prime * result + heavyweight;
@@ -183,8 +170,6 @@ public class RequestSAPR extends Request {
 		if (getClass() != obj.getClass())
 			return false;
 		RequestSAPR other = (RequestSAPR) obj;
-		if (active != other.active)
-			return false;
 		if (battery == null) {
 			if (other.battery != null)
 				return false;
@@ -227,7 +212,7 @@ public class RequestSAPR extends Request {
 	public String toString() {
 		return "RequestSapr [idSapr=" + idSapr + ", model=" + model + ", producer=" + producer + ", weight=" + weight
 				+ ", heavyweight=" + heavyweight + ", battery=" + battery + ", maxDistance=" + maxDistance
-				+ ", maxHeight=" + maxHeight + ", pilotLicense=" + pilotLicense + ", active=" + active + ", checkSapr=" + checkSapr
+				+ ", maxHeight=" + maxHeight + ", pilotLicense=" + pilotLicense + ", checkSapr=" + checkSapr
 				+ "]";
 	}
 	
