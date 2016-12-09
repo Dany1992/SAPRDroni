@@ -1,5 +1,6 @@
 package it.uniroma2.sapr.persistence;
 
+import it.uniroma2.sapr.bean.RequestFlightPlan;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -164,37 +165,37 @@ public class MySQLDbNoteDAO implements NoteDAO {
         }
     }
 
-    public ArrayList<Note> selectNote(FlightPlan fp) throws SQLException {
+    public Note selectNote(int idNote) throws SQLException {
         String method = "selectNote";
         Connection con = null;
         PreparedStatement pt = null;
         ResultSet rs = null;
-        ArrayList<Note> result = new ArrayList<Note>();
-        String query = "SELECT idNote, textNote, date FROM note WHERE idNote = ?";
+        Note result = new Note();
+        String query = "SELECT idNote, textNote, date FROM Note WHERE idNote = ?";
 
 
         try{
             //Logger per notificare l'inserimento di un oggetto
             //logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,fp.getIdNote()));
-
+            System.out.println("query1");
             //Apro la connessione e preparo la query
             con = MySQLDbDAOFactory.createConnection();
             pt = con.prepareStatement(query);
-
+            System.out.println("query2");
             //Compilo i campi nella query
-            pt.setInt(1, fp.getIdNote());
-
+            pt.setInt(1, idNote);
+            System.out.println("query3");
             //eseguo la query
             rs = pt.executeQuery();
+            
+            System.out.println("query4");
             if(rs != null){
-                while (rs.next()) {
-                    int idNote = rs.getInt("idNote");
-                    String textNote = rs.getString("textNote");
-                    String date = rs.getString("date");
-                    Note noteSupport = new Note(idNote, textNote, date);
-                    result.add(noteSupport);
-                }
+                result.setIdNote(rs.getInt("idNote"));
+                result.setTextNote(rs.getString("textNote"));
+                result.setDate(rs.getString("date"));
+                
                 System.out.println("Query OK");
+                
                 return result;
                 //ADD LOG
             }else {

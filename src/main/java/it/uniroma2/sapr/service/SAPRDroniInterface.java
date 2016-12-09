@@ -11,6 +11,9 @@ import it.uniroma2.sapr.bean.ResponseListPilots;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
 import it.uniroma2.sapr.bean.RequestCheckElement;
+import it.uniroma2.sapr.bean.ResponseFlightPlan;
+import it.uniroma2.sapr.bean.ResponseNote;
+import it.uniroma2.sapr.pojo.FlightPlan;
 
 @WebService
 public interface SAPRDroniInterface {
@@ -32,5 +35,8 @@ public interface SAPRDroniInterface {
     
     @WebMethod(operationName = "getPilots")
     public ResponseListPilots getPilots() throws Exception;
+    
+    @WebMethod(operationName = "getNote")
+    public ResponseNote getNote(int idNote) throws Exception;
     
 }
