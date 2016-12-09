@@ -23,7 +23,7 @@ public class RequestNote extends Request{
 
 
     public RequestNote() {
-		super();
+            super();
 	}
 
 	public RequestNote(int idNote, String textNote, String date, operation op) {
