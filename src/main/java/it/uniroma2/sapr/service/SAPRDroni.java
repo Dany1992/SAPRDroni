@@ -158,7 +158,7 @@ public class SAPRDroni implements SAPRDroniInterface{
                 
                 
 		Device device = new Device(request.getIdDevice(), request.getModel(), request.getType(), request.getWeight(),
-                                        request.getProducer(), request.getPilotLicense(), checkElements,request.getActive());
+                                        request.getProducer(), request.getPilotLicense(), checkElements,0);
                 
 		//Creo le classi per accedere al db.
 		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
@@ -167,13 +167,15 @@ public class SAPRDroni implements SAPRDroniInterface{
 		//Controllo in base all'operazione nel bean di request quale operazione svolgere
 		Boolean result;
 		if (request.getOp().name().equalsIgnoreCase("ADD")){
-			result = deviceDAO.insertDevice(device);
+                    result = deviceDAO.insertDevice(device);
 		}else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
-			result = deviceDAO.deleteDevice(device);
+                    result = deviceDAO.deleteDevice(device);
 		}else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
-                    System.out.println("Cominciamo l'update");
-			result = deviceDAO.updateDevice(device);
-		}else {
+                    result = deviceDAO.updateDevice(device);
+		}else if (request.getOp().name().equalsIgnoreCase("ENABLE")){
+                    result = deviceDAO.enableDevice(device);
+                    
+                }else {
 			throw new Exception("ERROR OPERATION");
 		}
 		

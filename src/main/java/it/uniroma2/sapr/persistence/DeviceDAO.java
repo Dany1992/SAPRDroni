@@ -16,4 +16,5 @@ public interface DeviceDAO {
     public boolean updateDevice(Device device) throws SQLException;
     public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException;
     public ResponseDevice selectDevice(Device device) throws SQLException;
+    public boolean enableDevice(Device device) throws SQLException;
 }
