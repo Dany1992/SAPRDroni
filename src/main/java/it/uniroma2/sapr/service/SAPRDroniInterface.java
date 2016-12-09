@@ -10,6 +10,7 @@ import it.uniroma2.sapr.bean.RequestSAPR;
 import it.uniroma2.sapr.bean.ResponseListPilots;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
+import it.uniroma2.sapr.bean.RequestCheckElement;
 
 @WebService
 public interface SAPRDroniInterface {

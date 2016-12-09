@@ -1,7 +1,6 @@
 
 package it.uniroma2.sapr.bean;
 
-import it.uniroma2.sapr.pojo.CheckElement;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -35,12 +34,12 @@ public class ResponseDevice {
     private String pilotLicense;
 
     @XmlElement(name = "checkDevice")
-    private ArrayList<CheckElement> checkDevice;
+    private ArrayList<ResponseCheckElement> checkDevice;
     
     @XmlElement(name = "active")
     private int active;
     
-    public ResponseDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<CheckElement> checkDevice, int active) {
+    public ResponseDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<ResponseCheckElement> checkDevice, int active) {
         this.idDevice = idDevice;
         this.model = model;
         this.type = type;
@@ -49,6 +48,10 @@ public class ResponseDevice {
         this.pilotLicense = pilotLicense;
         this.checkDevice = checkDevice;
         this.active = active;
+    }
+
+    public ResponseDevice() {
+        super();
     }
     
     public int getIdDevice() {
@@ -99,11 +102,11 @@ public class ResponseDevice {
         this.pilotLicense = pilotLicense;
     }
 
-    public ArrayList<CheckElement> getCheckDevice() {
+    public ArrayList<ResponseCheckElement> getCheckDevice() {
         return checkDevice;
     }
 
-    public void setCheckDevice(ArrayList<CheckElement> checkDevice) {
+    public void setCheckDevice(ArrayList<ResponseCheckElement> checkDevice) {
         this.checkDevice = checkDevice;
     }
 
