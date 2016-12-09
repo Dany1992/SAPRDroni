@@ -14,9 +14,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RequestNote extends Request{
     @XmlElement(name = "idNote")
     private int idNote;
-    @XmlElement(name = "textNote", nillable = false)
+    @XmlElement(name = "textNote")
     private String textNote;
-    @XmlElement(name = "date", nillable = false)
+    @XmlElement(name = "date")
     private String date;
 
 
