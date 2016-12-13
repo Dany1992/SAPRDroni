@@ -1,7 +1,5 @@
 package it.uniroma2.sapr.bean;
 
-import java.sql.Date;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,9 +9,9 @@ public abstract class Request {
 	
 	@XmlElement(name = "operation")
 	protected operation op;
-	
+
 	public enum operation{
-		ADD,DELETE,UPDATE
+		ADD,DELETE,UPDATE,ENABLE
 	}
 
 	public operation getOp() {

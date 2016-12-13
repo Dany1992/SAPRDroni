@@ -38,15 +38,12 @@ public class RequestDevice extends Request{
     @XmlElement(name = "chekDevice")
     private ArrayList<RequestCheckElement> checkDevice;
     
-    @XmlElement(name = "active")
-    private int active;
-    
     public RequestDevice() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-    public RequestDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<RequestCheckElement> checkDevice, int active) {
+    public RequestDevice(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<RequestCheckElement> checkDevice) {
         this.idDevice = idDevice;
         this.model = model;
         this.type = type;
@@ -54,7 +51,6 @@ public class RequestDevice extends Request{
         this.producer = producer;
         this.pilotLicense = pilotLicense;
         this.checkDevice = checkDevice;
-        this.active = active;
     }
 
     public int getIdDevice() {
@@ -113,14 +109,6 @@ public class RequestDevice extends Request{
         this.checkDevice = checkDevice;
     }
 
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -131,7 +119,6 @@ public class RequestDevice extends Request{
         hash = 13 * hash + (this.producer != null ? this.producer.hashCode() : 0);
         hash = 13 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
         hash = 13 * hash + (this.checkDevice != null ? this.checkDevice.hashCode() : 0);
-        hash = 13 * hash + this.active;
         return hash;
     }
 
@@ -151,9 +138,6 @@ public class RequestDevice extends Request{
             return false;
         }
         if (this.weight != other.weight) {
-            return false;
-        }
-        if (this.active != other.active) {
             return false;
         }
         if ((this.model == null) ? (other.model != null) : !this.model.equals(other.model)) {
@@ -176,7 +160,7 @@ public class RequestDevice extends Request{
 
     @Override
     public String toString() {
-        return "RequestDevice{" + "idDevice=" + idDevice + ", model=" + model + ", type=" + type + ", weight=" + weight + ", producer=" + producer + ", pilotLicense=" + pilotLicense + ", checkDevice=" + checkDevice + ", active=" + active + '}';
+        return "RequestDevice{" + "idDevice=" + idDevice + ", model=" + model + ", type=" + type + ", weight=" + weight + ", producer=" + producer + ", pilotLicense=" + pilotLicense + ", checkDevice=" + checkDevice + ", active=" + '}';
     }
 
 
