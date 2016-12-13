@@ -1,7 +1,5 @@
 package it.uniroma2.sapr.service;
 
-
-import it.uniroma2.sapr.bean.Request;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
@@ -14,7 +12,6 @@ import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.bean.ResponseListPilots;
 import it.uniroma2.sapr.bean.ResponsePilot;
 import it.uniroma2.sapr.bean.ResponseSapr;
-import it.uniroma2.sapr.bean.Request.opzione;
 import it.uniroma2.sapr.persistence.DAOFactory;
 import it.uniroma2.sapr.persistence.PilotDAO;
 import it.uniroma2.sapr.pojo.Pilot;
@@ -22,19 +19,18 @@ import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.bean.RequestCheckElement;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
-import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.persistence.DeviceDAO;
 import it.uniroma2.sapr.persistence.FlightPlanDAO;
 import it.uniroma2.sapr.persistence.MySQLDbDAOFactory;
-import it.uniroma2.sapr.persistence.MySQLDbDeviceDAO;
-
 import it.uniroma2.sapr.persistence.NoteDAO;
 import it.uniroma2.sapr.persistence.SaprDAO;
 import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 import it.uniroma2.sapr.pojo.Sapr;
+import it.uniroma2.sapr.utility.Opzione;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -272,9 +268,10 @@ public class SAPRDroni implements SAPRDroniInterface{
 	}
 	
 
-  	public ArrayList<ResponseSapr> selectSaprOfPilotWithState(opzione opzione, String pilotLicense) throws SQLException{
+  	public ArrayList<ResponseSapr> selectSaprOfPilotWithState(Opzione opzione, String pilotLicense) throws SQLException{
   		/**
-	     * questo metodo prende in input un'opzione:
+	     * questo metodo prende in input un'op
+	     * zione:
 	     * - unable, tutti i sapr abilitati del pilota (active = 1)
 	     * - disable, tutti i sapr disabilitati del pilota (active = 0)
 	     * - all, tutti i sapr del pilota
@@ -702,7 +699,7 @@ public class SAPRDroni implements SAPRDroniInterface{
             }
         }
 
-        public ArrayList<ResponseDevice> selectEnableDevice(Request.opzione op, String owner) throws SQLException {
+        public ArrayList<ResponseDevice> selectEnableDevice(Opzione op, String owner) throws SQLException {
             /**
              * questo metodo prende in input l'id del pilota e l'opzione che ci identifica cosa vogliamo
              * ENABLED/DISABLED/ALL sono i soli valori che puo' assumere opzione
@@ -833,6 +830,5 @@ public class SAPRDroni implements SAPRDroniInterface{
 
                     return result;
         }
-
 
 }

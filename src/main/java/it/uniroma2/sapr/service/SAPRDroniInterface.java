@@ -1,7 +1,5 @@
 package it.uniroma2.sapr.service;
 
-
-import it.uniroma2.sapr.bean.Request;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -11,10 +9,9 @@ import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
 import it.uniroma2.sapr.bean.ResponseListPilots;
 import it.uniroma2.sapr.bean.ResponseSapr;
+import it.uniroma2.sapr.utility.Opzione;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
-
-import it.uniroma2.sapr.bean.Request.opzione;
 import it.uniroma2.sapr.bean.ResponseDevice;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,7 +39,7 @@ public interface SAPRDroniInterface {
     
 
     @WebMethod(operationName = "selectSaprOfPilotWithState")
-    public ArrayList<ResponseSapr> selectSaprOfPilotWithState(opzione opzione, String pilotLicense) throws Exception;
+    public ArrayList<ResponseSapr> selectSaprOfPilotWithState(Opzione opzione, String pilotLicense) throws Exception;
     
     @WebMethod(operationName = "selectSaprOfPilot")
     public ArrayList<ResponseSapr> selectSaprOfPilot(String pilotLicense) throws Exception;
@@ -57,7 +54,7 @@ public interface SAPRDroniInterface {
     public ResponseDevice selectADevice(int idDevice) throws SQLException;
  
     @WebMethod(operationName = "selectEnableDevice")
-    public ArrayList<ResponseDevice> selectEnableDevice(Request.opzione op, String owner) throws SQLException;
+    public ArrayList<ResponseDevice> selectEnableDevice(Opzione op, String owner) throws SQLException;
     
 }
 
