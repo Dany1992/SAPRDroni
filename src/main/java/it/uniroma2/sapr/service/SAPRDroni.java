@@ -27,28 +27,18 @@ import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.persistence.DeviceDAO;
 import it.uniroma2.sapr.persistence.FlightPlanDAO;
 import it.uniroma2.sapr.persistence.MySQLDbDAOFactory;
-<<<<<<< HEAD
-=======
 import it.uniroma2.sapr.persistence.MySQLDbDeviceDAO;
->>>>>>> darioBranch
+
 import it.uniroma2.sapr.persistence.NoteDAO;
 import it.uniroma2.sapr.persistence.SaprDAO;
 import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 import it.uniroma2.sapr.pojo.Sapr;
-<<<<<<< HEAD
-
-=======
->>>>>>> darioBranch
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
-=======
-import java.text.ParseException;
->>>>>>> darioBranch
 import java.util.ArrayList;
 
 /**
@@ -257,15 +247,6 @@ public class SAPRDroni implements SAPRDroniInterface{
 	}
         
 
-        public Boolean requestManagerFlightPlan(@WebParam(name = "request")RequestFlightPlan request) throws Exception {
-            String method = "RequestFlightPlan";
-                    logger.info(String.format("Class:%s-Method:%s::START", classe,method));
-                    logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
-
-                    System.out.println("***********************START WS***********************");
-                    System.out.println("La richiesta è: " + request.toString());
-
-<<<<<<< HEAD
 	public ResponseListPilots getPilots() throws Exception {
 		String method = "getPilots";
 		logger.info(String.format("Class:%s-Method:%s::START", classe,method ));
@@ -638,145 +619,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 			}
 		}
 	}
-=======
-                    //Trasferisco i dati dalla request al pojo
-                    FlightPlan flight=new FlightPlan(request.getDestinations(),request.getDeparture(),request.getDateDeparture(),request.getTimeDeparture(),request.getNowArriving(),request.getIdSapr(),request.getIdNote(),request.getPilotLicense(),request.getDevices());
 
-
-                    //Creo le classi per accedere al db.
-                    DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-                    FlightPlanDAO flightDAO = mySQLFactory.getFlightPlanDAO();
-
-                    //Controllo in base all'operazione nel bean di request quale operazione svolgere
-                    Boolean result;
-                    if (request.getOp().name().equalsIgnoreCase("ADD")){
-                            System.out.println("inserisci");
-                            result = flightDAO.insertFlightPlan(flight);
-                    }else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
-                            result = flightDAO.deleteFlightPlan(flight);
-                    }else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
-                            result = flightDAO.updateFlightPlan(flight);
-                    }else {
-                            throw new Exception("ERROR OPERATION");
-                    }
-
-                    logger.info(String.format("Class:%s-Method:%s::END", classe,method));
-                    System.out.println("***********************END WS***********************");
-
-                    return result;
-        }
-
-            public ResponseListPilots getPilots() throws Exception {
-                    String method = "getPilots";
-                    logger.info(String.format("Class:%s-Method:%s::START", classe,method ));
-
-                    ResponseListPilots response = new ResponseListPilots();
-
-                    //Factory per il db
-                    DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-                    PilotDAO pilotDAO = mysqlFactory.getPilotDAO();
-
-                    ArrayList<ResponsePilot> listPilots = pilotDAO.selectAllPilot();
-                    if(listPilots != null){
-                            response.setErrorCode(0);
-                            response.setErrorMessage("SUCCESS");
-                            response.setPilots(listPilots);
-                    }else{
-                            response.setErrorCode(-1);
-                            response.setErrorMessage("ERROR GET PILOTS");
-                    }
-
-                    logger.info(String.format("Class:%s-Method:%s::END", classe,method));
-                    return response;
-            }
-
-        public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException {
-            /**
-             * questo metodo prende in input l'id del pilota e ci restituisce tutti
-             * i suoi dispositivi
-             *
-             * @param device è il bean contente tutti i dati da inserire nel db
-             * @return ArrayList<Device> array di dispositivi
-             * @throws SQLException
-             */
-            String method = "selectDevice";
-            Connection con = null;
-            PreparedStatement pt = null;
-            PreparedStatement pt1 = null;
-            ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
-            ArrayList<ResponseCheckElement> arr_check = new ArrayList<ResponseCheckElement>();
-
-            String query = "SELECT idDevice, model, type, weight, producer, pilotLicense"
-                    + " FROM device WHERE pilotLicense = ?";
-            String query1 = "SELECT valueCheckElement,IdDevice FROM checkDevice WHERE IdDevice = ?";
-            try {
-                //logger per segnalare l'inizio della scrittura del metodo
-                logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, owner));
-
-                con = MySQLDbDAOFactory.createConnection();
-                pt = con.prepareStatement(query);
-                pt1 = con.prepareStatement(query1);
-
-                //compilo il campo ? nella query
-                pt.setString(1, owner);
-
-                // eseguo la query
-                ResultSet rs = pt.executeQuery();
-                if (rs != null) {
-
-                    System.out.println("select andata a buon fine");
-                    logger.info(String.format("Class:%s-Method:%s::END select all device of pilot %s",
-                            classe, method, owner));
-
-                    while (rs.next()) {
-                        int id = rs.getInt("idDevice");
-                        String md = rs.getString("model");
-                        String type = rs.getString("type");
-                        int weight = rs.getInt("weight");
-                        String producer = rs.getString("producer");
-                        String pilotLicense = rs.getString("pilotLicense");
-                        int active = rs.getInt("active");
-
-                        // estraggo anche i checkElement dei dispositivi
-                        pt1.setInt(1, id);
-                        ResultSet resultCheck = pt1.executeQuery();
-                        while(resultCheck.next()){
-                            ResponseCheckElement ck = new ResponseCheckElement(resultCheck.getString("valueCheckElement"));
-                            arr_check.add(ck);
-                        }
-
-                        ResponseDevice d = new ResponseDevice(id, md, type, weight, producer, pilotLicense, arr_check,active);
-                        System.out.println(d.toString());
-                        arr_device.add(d);
-                        arr_check.clear();
-                    }
-
-                    return arr_device;
-                } else {
-                    pt.close();
-                    con.close();
-                    System.out.println("select non andata a buon fine");
-                    logger.info(String.format("Class:%s-Method:%s::END select no one device of pilot %s",
-                            classe, method, owner));
-                    return arr_device;
-                }
-
-            } catch (Exception e) {
-                logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
-                System.out.println(e);
-                return arr_device;
-            } finally {
-                if (pt != null) {
-                    pt.close();
-                }
-
-                if (con != null) {
-                    con.close();
-                }
-            }
-
-        }
-        
             
         public ResponseDevice selectADevice(int idDevice) throws SQLException {
             /**
@@ -954,8 +797,42 @@ public class SAPRDroni implements SAPRDroniInterface{
                     con.close();
                 }
             }
->>>>>>> darioBranch
 
         }
+
+    public Boolean requestManagerFlightPlan(@WebParam(name = "request")RequestFlightPlan request) throws Exception {
+            String method = "RequestFlightPlan";
+                    logger.info(String.format("Class:%s-Method:%s::START", classe,method));
+                    logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
+
+                    System.out.println("***********************START WS***********************");
+                    System.out.println("La richiesta è: " + request.toString());
+                    //Trasferisco i dati dalla request al pojo
+                    FlightPlan flight=new FlightPlan(request.getDestinations(),request.getDeparture(),request.getDateDeparture(),request.getTimeDeparture(),request.getNowArriving(),request.getIdSapr(),request.getIdNote(),request.getPilotLicense(),request.getDevices());
+
+
+                    //Creo le classi per accedere al db.
+                    DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+                    FlightPlanDAO flightDAO = mySQLFactory.getFlightPlanDAO();
+
+                    //Controllo in base all'operazione nel bean di request quale operazione svolgere
+                    Boolean result;
+                    if (request.getOp().name().equalsIgnoreCase("ADD")){
+                            System.out.println("inserisci");
+                            result = flightDAO.insertFlightPlan(flight);
+                    }else if (request.getOp().name().equalsIgnoreCase("DELETE")) {
+                            result = flightDAO.deleteFlightPlan(flight);
+                    }else if (request.getOp().name().equalsIgnoreCase("UPDATE")) {
+                            result = flightDAO.updateFlightPlan(flight);
+                    }else {
+                            throw new Exception("ERROR OPERATION");
+                    }
+
+                    logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+                    System.out.println("***********************END WS***********************");
+
+                    return result;
+        }
+
 
 }
