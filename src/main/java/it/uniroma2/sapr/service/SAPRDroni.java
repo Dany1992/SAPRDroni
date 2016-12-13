@@ -4,7 +4,6 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
 import org.apache.log4j.Logger;
-
 import it.uniroma2.sapr.bean.RequestNote;
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
@@ -19,6 +18,7 @@ import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.bean.RequestCheckElement;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
+import it.uniroma2.sapr.bean.ResponseNote;
 import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.persistence.DeviceDAO;
 import it.uniroma2.sapr.persistence.FlightPlanDAO;
@@ -30,7 +30,6 @@ import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 import it.uniroma2.sapr.pojo.Sapr;
 import it.uniroma2.sapr.utility.Opzione;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -265,7 +264,41 @@ public class SAPRDroni implements SAPRDroniInterface{
 		
 		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
 		return response;
-	}
+	}        
+        
+        public ResponseNote getNote(@WebParam(name = "request")int idNote) throws Exception {
+            String method = "getNote";
+            logger.info(String.format("Class:%s-Method:%s::START", classe,method ));
+            
+            System.out.println("Passo1" + idNote);
+            
+            //Factory per il db
+            DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+            NoteDAO noteDAO = mysqlFactory.getNoteDAO();
+            
+            System.out.println("Passo2");
+            
+            ResponseNote responseNote = new ResponseNote();
+            
+            System.out.println("Passo3");
+            
+            Note nota = noteDAO.selectNote(idNote);
+            
+            System.out.println("ALL: " + nota.toString());
+
+            responseNote.setIdNote(nota.getIdNote());
+            
+            System.out.println("ID note: " + nota.getIdNote());
+            
+            responseNote.setTextNote(nota.getTextNote());
+            responseNote.setDate(nota.getDate());  
+            
+            System.out.println("Passo5");
+            System.out.println(responseNote.toString());
+            
+            logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+            return responseNote;
+        }
 	
 
   	public ArrayList<ResponseSapr> selectSaprOfPilotWithState(Opzione opzione, String pilotLicense) throws SQLException{
