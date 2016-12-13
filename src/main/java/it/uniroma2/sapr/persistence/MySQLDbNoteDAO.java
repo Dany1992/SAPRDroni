@@ -1,13 +1,11 @@
 package it.uniroma2.sapr.persistence;
 
-import it.uniroma2.sapr.bean.RequestFlightPlan;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
+import java.text.ParseException;
 import org.apache.log4j.Logger;
 
 /**
@@ -164,60 +162,55 @@ public class MySQLDbNoteDAO implements NoteDAO {
             }
         }
     }
-
-    public Note selectNote(int idNote) throws SQLException {
+    
+    public Note selectNote(int idNote) throws SQLException{
         String method = "selectNote";
         Connection con = null;
         PreparedStatement pt = null;
-        ResultSet rs = null;
-        Note result = new Note();
-        String query = "SELECT idNote, textNote, date FROM Note WHERE idNote = ?";
-
-
-        try{
-            //Logger per notificare l'inserimento di un oggetto
-            //logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,fp.getIdNote()));
-            System.out.println("query1");
-            //Apro la connessione e preparo la query
+	Note note = new Note();
+	String query = "SELECT idNote, textNote, date FROM Note WHERE idNote = ?";
+	System.out.println("Query iniziale" + query);
+        logger.info(String.format("Class:%s-Method:%s::START", classe,method));	
+	try {
+            //logger per segnalare l'inizio della scrittura del metodo
             con = MySQLDbDAOFactory.createConnection();
             pt = con.prepareStatement(query);
-            System.out.println("query2");
-            //Compilo i campi nella query
             pt.setInt(1, idNote);
-            System.out.println("query3");
             //eseguo la query
-            rs = pt.executeQuery();
-            
-            System.out.println("query4");
-            if(rs != null){
-                result.setIdNote(rs.getInt("idNote"));
-                result.setTextNote(rs.getString("textNote"));
-                result.setDate(rs.getString("date"));
-                
-                System.out.println("Query OK");
-                
-                return result;
-                //ADD LOG
-            }else {
-                pt.close();
-                con.close();
-                System.out.println("Query Aborted");
-                //ADD LOG
-                return null;
-            }
-        }catch (Exception e){
-            logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
-            return null;
-        } finally {
-            if (pt != null) {
-                pt.close();
-            }
-
-            if (con != null) {
-                con.close();
-            }
-        }
-
+            System.out.println("Prepare statement: " + pt);
+            ResultSet rs = pt.executeQuery();
+            System.out.println("DIO CANE: " + rs.toString());		
+                if(rs != null){            
+                    while (rs.next()) {
+                        System.out.println("RS è diverso da NULL");
+                        note.setIdNote(rs.getInt("idNote"));
+                        note.setTextNote(rs.getString("textNote"));
+                        note.setDate(rs.getString("date"));
+                    }
+                } else {
+			System.out.println("RS è NULL");
+                        pt.close();
+                        con.close();
+			System.out.println("male");
+			logger.info(String.format("Class:%s-Method:%s::END", //
+						classe,method));
+			return note;
+			}
+			
+		} catch (Exception e) {
+			logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+			System.out.println("Si è verificato il seguente errore: " + e.toString());
+			return null;
+		
+		}
+        return note;
+}
+    
+    
+    public static void main(String args[]) throws SQLException {
+        MySQLDbNoteDAO test = new MySQLDbNoteDAO();
+        Note testNote = test.selectNote(2);
+        //testNote.toString();
     }
 
 }
