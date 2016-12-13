@@ -9,7 +9,21 @@ public abstract class Request {
 	
 	@XmlElement(name = "operation")
 	protected operation op;
-	
+        @XmlElement(name = "opzione")
+        protected opzione opz;
+        
+	public enum opzione{
+		ENABLED,DISABLED,ALL
+	}
+
+	public opzione getOpz() {
+		return opz;
+	}
+        
+	public void setOpz(opzione opz) {
+		this.opz = opz;
+	}
+        
 	public enum operation{
 		ADD,DELETE,UPDATE,ENABLE
 	}
