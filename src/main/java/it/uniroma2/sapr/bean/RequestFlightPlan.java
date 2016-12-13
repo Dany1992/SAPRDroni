@@ -46,6 +46,11 @@ public class RequestFlightPlan extends Request{
 
 	@XmlElement(name = "pilotLicense")
 	private String pilotLicense;
+        
+   public RequestFlightPlan(){
+       super();
+	// TODO Auto-generated constructor stub
+   }
 
     public RequestFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, ArrayList<Device> devices, String pilotLicense,operation op) {
         this.destinations = destinations;
@@ -58,10 +63,6 @@ public class RequestFlightPlan extends Request{
         this.devices = devices;
         this.pilotLicense = pilotLicense;
         this.op=op;
-    }
-    
-    public RequestFlightPlan(){
-    	
     }
 
     public String getDestinations() {

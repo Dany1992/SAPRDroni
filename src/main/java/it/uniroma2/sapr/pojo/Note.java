@@ -21,6 +21,11 @@ public class Note {
         this.date = date;
     }
 
+
+    public Note() {
+        
+    }
+
     public int getIdNote() {
         return idNote;
     }

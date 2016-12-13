@@ -25,9 +25,10 @@ public class ResponseNote {
     @XmlElement(name = "textNote")
     private String textNote;
     @XmlElement(name = "date")
-    private Date date;
 
-    public ResponseNote(int idNote, String textNote, Date date) {
+    private String date;
+
+    public ResponseNote(int idNote, String textNote, String date) {
         this.idNote = idNote;
         this.textNote = textNote;
         this.date = date;
@@ -53,11 +54,11 @@ public class ResponseNote {
         this.textNote = textNote;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

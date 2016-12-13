@@ -2,11 +2,11 @@ package it.uniroma2.sapr.service;
 
 
 import it.uniroma2.sapr.bean.Request;
+
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
 import org.apache.log4j.Logger;
-
 import it.uniroma2.sapr.bean.RequestNote;
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
@@ -14,7 +14,6 @@ import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.bean.ResponseListPilots;
 import it.uniroma2.sapr.bean.ResponsePilot;
 import it.uniroma2.sapr.bean.ResponseSapr;
-import it.uniroma2.sapr.bean.Request.opzione;
 import it.uniroma2.sapr.persistence.DAOFactory;
 import it.uniroma2.sapr.persistence.PilotDAO;
 import it.uniroma2.sapr.pojo.Pilot;
@@ -22,19 +21,21 @@ import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.bean.RequestCheckElement;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
+
+import it.uniroma2.sapr.bean.ResponseNote;
 import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.bean.ResponseDevice;
+import it.uniroma2.sapr.bean.ResponseFlightPlan;
 import it.uniroma2.sapr.persistence.DeviceDAO;
 import it.uniroma2.sapr.persistence.FlightPlanDAO;
 import it.uniroma2.sapr.persistence.MySQLDbDAOFactory;
-import it.uniroma2.sapr.persistence.MySQLDbDeviceDAO;
-
 import it.uniroma2.sapr.persistence.NoteDAO;
 import it.uniroma2.sapr.persistence.SaprDAO;
 import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 import it.uniroma2.sapr.pojo.Sapr;
+import it.uniroma2.sapr.utility.Opzione;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,6 +60,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 * Il webMethod che si occupa di aggiungere o eliminare un pilota. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequestPilot
 	 */
+
 	public Boolean requestManagerPilot(RequestPilot request)throws Exception{
 		String method = "RequestManaerPilot";
 		
@@ -269,12 +271,47 @@ public class SAPRDroni implements SAPRDroniInterface{
 		
 		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
 		return response;
-	}
+	}        
+        
+        public ResponseNote getNote(@WebParam(name = "request")int idNote) throws Exception {
+            String method = "getNote";
+            logger.info(String.format("Class:%s-Method:%s::START", classe,method ));
+            
+            System.out.println("Passo1" + idNote);
+            
+            //Factory per il db
+            DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+            NoteDAO noteDAO = mysqlFactory.getNoteDAO();
+            
+            System.out.println("Passo2");
+            
+            ResponseNote responseNote = new ResponseNote();
+            
+            System.out.println("Passo3");
+            
+            Note nota = noteDAO.selectNote(idNote);
+            
+            System.out.println("ALL: " + nota.toString());
+
+            responseNote.setIdNote(nota.getIdNote());
+            
+            System.out.println("ID note: " + nota.getIdNote());
+            
+            responseNote.setTextNote(nota.getTextNote());
+            responseNote.setDate(nota.getDate());  
+            
+            System.out.println("Passo5");
+            System.out.println(responseNote.toString());
+            
+            logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+            return responseNote;
+        }
 	
 
-  	public ArrayList<ResponseSapr> selectSaprOfPilotWithState(opzione opzione, String pilotLicense) throws SQLException{
+  	public ArrayList<ResponseSapr> selectSaprOfPilotWithState(Opzione opzione, String pilotLicense) throws SQLException{
   		/**
-	     * questo metodo prende in input un'opzione:
+	     * questo metodo prende in input un'op
+	     * zione:
 	     * - unable, tutti i sapr abilitati del pilota (active = 1)
 	     * - disable, tutti i sapr disabilitati del pilota (active = 0)
 	     * - all, tutti i sapr del pilota
@@ -719,7 +756,11 @@ public class SAPRDroni implements SAPRDroniInterface{
         }
 
 
+<<<<<<< HEAD
   	public ArrayList<ResponseDevice> selectEnableDevice(opzione opzione, String pilotLicense) throws SQLException{
+=======
+        public ArrayList<ResponseDevice> selectEnableDevice(Opzione op, String owner) throws SQLException {
+>>>>>>> master
             /**
              * questo metodo prende in input l'id del pilota e l'opzione che ci identifica cosa vogliamo
              * ENABLED/DISABLED/ALL sono i soli valori che puo' assumere opzione
@@ -861,5 +902,113 @@ public class SAPRDroni implements SAPRDroniInterface{
                     return result;
         }
 
+    public ResponseFlightPlan selectFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException{
+                System.out.println("funzione selectFlightPlanByFlightPlan(int idSapr,String pilotLicense,String dateDeparture)");
+		String method = "selectFlightPlan";
+                ArrayList<Device> array=new ArrayList<Device>();
+		Connection con = null;
+		PreparedStatement pt = null;
+                ResultSet rs=null;
+		String query = "SELECT destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,flightplan.idDevice,flightplan.pilotLicense,model,type,weight,producer,active from flightplan,device WHERE idsapr=? and flightplan.pilotLicense=? and dateDeparture=? and flightplan.iddevice=device.iddevice;";
+                System.out.println(query);
+		try {
+                    
+			//logger per segnalare l'inizio della scrittura del metodo
+			logger.info(String.format("Class:%s-Method:%s::START with dates idSapr=%s,pilotLicense=%s,dateDeparture=%s", classe,method,idSapr,pilotLicense,dateDeparture));
+			
+			con = MySQLDbDAOFactory.createConnection();
+			pt = con.prepareStatement(query);
+			pt.setInt(1,idSapr);
+			pt.setString(2,pilotLicense);
+			pt.setString(3,dateDeparture);
+                        System.out.println(pt.toString());
+                        rs = pt.executeQuery();
+			//esito della query
+			if(rs!=null){
+                                //da completare la query es:select  destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,flightplan.idDevice,flightplan.pilotLicense,model,type,weight,producer from flightplan,device where idsapr=2 and flightplan.pilotlicense="0000000002" and datedeparture="2016-09-11"and flightplan.iddevice=device.iddevice;
+                                //deve creare prima glio oggetti Device e poi creare un oggetto di tipo ResponseFlightPlan altrimenti non potri passare un arrayList di Device
+                                System.out.println("Ho selezionato il flightPlan");
+				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,idSapr));
+        
+                                while(rs.next()){ 
+                                    array.add(new Device(rs.getInt("iddevice"),rs.getString("model"),rs.getString("type"),rs.getInt("weight"),rs.getString("producer"),rs.getString("pilotlicense"),null, rs.getInt("active")));
+                                }
+                                rs.first(); 
+                                ResponseFlightPlan flight1 = new ResponseFlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),array,rs.getString("pilotLicense"));
+                                return flight1;
+                        }
+                        else {
+				pt.close();
+				con.close();
+				System.out.println("Non ho selezionato il flightPlan");
+				logger.info(String.format("Class:%s-Method:%s::END dont select flight plan with idSapr code-%s",classe,method,idSapr));
+				return null;
+			}
+			
+                        } catch (Exception e) {
+                                logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+                                return null;
+                        } finally {
+                                if (pt != null) {
+                                        pt.close();
+                                }
+
+                                if (con != null) {
+                                        con.close();
+                                }
+                        }
+    
+    }
+    
+    public ArrayList<ResponseFlightPlan> selectFlightPlanBySapr(int idSapr) throws SQLException{
+                System.out.println("funzione selectFlightPlanBySapr(int idSapr)");
+		String method = "selectFlightPlan";
+		Connection con = null;
+		PreparedStatement pt = null;
+                ResultSet rs=null;
+                ArrayList<ResponseFlightPlan> array=new ArrayList<ResponseFlightPlan>();
+		String query = "SELECT dateDeparture,idSapr,pilotLicense FROM flightplan WHERE idsapr=? group by datedeparture";
+                System.out.println(query);
+		try {
+                    
+			//logger per segnalare l'inizio della scrittura del metodo
+			logger.info(String.format("Class:%s-Method:%s::START with dates idSapr=%s", classe,method,idSapr));
+			
+			con = MySQLDbDAOFactory.createConnection();
+			pt = con.prepareStatement(query);
+			pt.setInt(1,idSapr);
+                        System.out.println(pt.toString());
+                        rs = pt.executeQuery();
+			//esito della query
+			if(rs!=null){
+                                System.out.println("Ho selezionato i flightPlan");
+				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,idSapr));
+                                while(rs.next()){  
+                                    array.add(selectFlightPlanByFlight(rs.getInt("idsapr"),rs.getString("pilotLicense"),rs.getString("datedeparture")));
+                                    //array.add(new ResponseFlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense")));       
+                                }
+                                return array;
+                        }
+                        else {
+				pt.close();
+				con.close();
+				System.out.println("Non ho selezionato i flightPlan");
+				logger.info(String.format("Class:%s-Method:%s::END dont select flight plan with idSapr code-%s",classe,method,idSapr));
+				return null;
+			}
+			
+                        } catch (Exception e) {
+                                logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+                                return null;
+                        } finally {
+                                if (pt != null) {
+                                        pt.close();
+                                }
+
+                                if (con != null) {
+                                        con.close();
+                                }
+                        }
+    }
 
 }
