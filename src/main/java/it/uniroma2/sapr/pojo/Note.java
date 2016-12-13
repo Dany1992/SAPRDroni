@@ -21,10 +21,13 @@ public class Note {
         this.date = date;
     }
 
+<<<<<<< HEAD
     public Note() {
         
     }
 
+=======
+>>>>>>> dindiBranch
     public int getIdNote() {
         return idNote;
     }

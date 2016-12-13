@@ -56,9 +56,17 @@ public class MySQLDbDAOFactory extends DAOFactory {
         public NoteDAO getNoteDAO(){
             return new MySQLDbNoteDAO();
         }
+<<<<<<< HEAD
 
         public FlightPlanDAO getFlightPlanDAO(){
              return new MySQLDbFlightPlanDAO();
         }
 
 }
+=======
+
+        public FlightPlanDAO getFlightPlanDAO(){
+             return new MySQLDbFlightPlanDAO();
+        }
+}
+>>>>>>> dindiBranch
