@@ -756,11 +756,7 @@ public class SAPRDroni implements SAPRDroniInterface{
         }
 
 
-<<<<<<< HEAD
-  	public ArrayList<ResponseDevice> selectEnableDevice(opzione opzione, String pilotLicense) throws SQLException{
-=======
-        public ArrayList<ResponseDevice> selectEnableDevice(Opzione op, String owner) throws SQLException {
->>>>>>> master
+        public ArrayList<ResponseDevice> selectEnableDevice(Opzione op, String pilotLicense) throws SQLException {
             /**
              * questo metodo prende in input l'id del pilota e l'opzione che ci identifica cosa vogliamo
              * ENABLED/DISABLED/ALL sono i soli valori che puo' assumere opzione
@@ -777,13 +773,13 @@ public class SAPRDroni implements SAPRDroniInterface{
 	    ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
             
 	    String query = "SELECT idDevice, model, type, weight, producer, pilotLicense, active FROM device WHERE pilotLicense = ?";
-            if (opzione.name().equalsIgnoreCase("ENABLED")){
+            if (op.name().equalsIgnoreCase("ENABLED")){
                 method = "selectDeviceEnabled";
                 query += " AND active = 1";
-            }else if (opzione.name().equalsIgnoreCase("DISABLED")) {
+            }else if (op.name().equalsIgnoreCase("DISABLED")) {
                 method = "selectDeviceDisabled";
                 query += " AND active = 0";
-            }else if (opzione.name().equalsIgnoreCase("ALL")) {
+            }else if (op.name().equalsIgnoreCase("ALL")) {
                     
             }
 	    
@@ -803,15 +799,15 @@ public class SAPRDroni implements SAPRDroniInterface{
 	        // eseguo la query
 	        ResultSet rs = pt.executeQuery();
 	        if (rs != null) {
-                    if(opzione.name().equalsIgnoreCase("ENABLED"))
+                    if(op.name().equalsIgnoreCase("ENABLED"))
                         logger.info(String.format("Class:%s-Method:%s::END select enabled device of pilot %s",
                         classe, method, pilotLicense));
 
-                    if(opzione.name().equalsIgnoreCase("DISABLED"))
+                    if(op.name().equalsIgnoreCase("DISABLED"))
                         logger.info(String.format("Class:%s-Method:%s::END select disabled device of pilot %s",
                         classe, method, pilotLicense));
 
-                    if(opzione.name().equalsIgnoreCase("ALL"))
+                    if(op.name().equalsIgnoreCase("ALL"))
                         logger.info(String.format("Class:%s-Method:%s::END select all device of pilot %s",
                         classe, method, pilotLicense));
 

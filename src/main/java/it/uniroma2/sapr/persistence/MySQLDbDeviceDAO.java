@@ -1,5 +1,5 @@
 package it.uniroma2.sapr.persistence;
-
+import it.uniroma2.sapr.utility.Opzione;
 import it.uniroma2.sapr.bean.Request;
 import it.uniroma2.sapr.bean.Request.opzione;
 import it.uniroma2.sapr.bean.Response;
@@ -419,7 +419,7 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
             
             // test select dando in input un pilota
             ArrayList<ResponseDevice> ar = new ArrayList<ResponseDevice>();
-            ar = sd.selectEnableDevice(opzione.ALL,"0000000001");
+            ar = sd.selectEnableDevice(Opzione.ALL,"0000000001");
             System.out.println(ar);
             
 
