@@ -1,5 +1,9 @@
 package it.uniroma2.sapr.persistence;
 
+import it.uniroma2.sapr.bean.Request;
+import it.uniroma2.sapr.bean.Request.opzione;
+import it.uniroma2.sapr.bean.Response;
+import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.Device;
 import java.sql.Connection;
@@ -10,6 +14,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
+import it.uniroma2.sapr.service.SAPRDroni;
 /**
  *
  * @author dario
@@ -393,18 +398,18 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
         //Device device1 = new Device(1, "A144", "tipo", 520, "Prod1", "0000000003",ck,1);
 
         //Device deviceDel = new Device(78, "A144", "tipo1", 520, "Prod1", "0000000003",ck,1);
-
+        SAPRDroni sd = new SAPRDroni();
         MySQLDbDeviceDAO mysqlTest = new MySQLDbDeviceDAO();
         try {
             System.out.println("sto per iniziare");
             // test insert
-            mysqlTest.insertDevice(device);
+            //mysqlTest.insertDevice(device);
 
             // test delete
             //mysqlTest.deleteDevice(device);
             
             // test update
-            mysqlTest.updateDevice(device);
+            //mysqlTest.updateDevice(device);
             
             
             /*  PROVARE I COMPONENTI SEPARATI, RIUMIRE E RITESTARE  */
@@ -413,7 +418,10 @@ public class MySQLDbDeviceDAO implements DeviceDAO {
             
             
             // test select dando in input un pilota
-            //mysqlTest.selectDevice("0000000001");
+            ArrayList<ResponseDevice> ar = new ArrayList<ResponseDevice>();
+            ar = sd.selectEnableDevice(opzione.ALL,"0000000001");
+            System.out.println(ar);
+            
 
             // test select dando in input un device
             //mysqlTest.selectDevice(device);
