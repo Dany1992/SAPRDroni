@@ -4,14 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
 import it.uniroma2.sapr.pojo.Note;
-import java.text.ParseException;
-=======
-import java.util.ArrayList;
-import it.uniroma2.sapr.pojo.FlightPlan;
-import it.uniroma2.sapr.pojo.Note;
->>>>>>> dindiBranch
+
 import org.apache.log4j.Logger;
 
 /**
@@ -168,7 +162,6 @@ public class MySQLDbNoteDAO implements NoteDAO {
             }
         }
     }
-<<<<<<< HEAD
     
     public Note selectNote(int idNote) throws SQLException{
         String method = "selectNote";
@@ -218,62 +211,6 @@ public class MySQLDbNoteDAO implements NoteDAO {
         MySQLDbNoteDAO test = new MySQLDbNoteDAO();
         Note testNote = test.selectNote(2);
         //testNote.toString();
-=======
-
-    public ArrayList<Note> selectNote(FlightPlan fp) throws SQLException {
-        String method = "selectNote";
-        Connection con = null;
-        PreparedStatement pt = null;
-        ResultSet rs = null;
-        ArrayList<Note> result = new ArrayList<Note>();
-        String query = "SELECT idNote, textNote, date FROM note WHERE idNote = ?";
-
-
-        try{
-            //Logger per notificare l'inserimento di un oggetto
-            //logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,fp.getIdNote()));
-
-            //Apro la connessione e preparo la query
-            con = MySQLDbDAOFactory.createConnection();
-            pt = con.prepareStatement(query);
-
-            //Compilo i campi nella query
-            pt.setInt(1, fp.getIdNote());
-
-            //eseguo la query
-            rs = pt.executeQuery();
-            if(rs != null){
-                while (rs.next()) {
-                    int idNote = rs.getInt("idNote");
-                    String textNote = rs.getString("textNote");
-                    String date = rs.getString("date");
-                    Note noteSupport = new Note(idNote, textNote, date);
-                    result.add(noteSupport);
-                }
-                System.out.println("Query OK");
-                return result;
-                //ADD LOG
-            }else {
-                pt.close();
-                con.close();
-                System.out.println("Query Aborted");
-                //ADD LOG
-                return null;
-            }
-        }catch (Exception e){
-            logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
-            return null;
-        } finally {
-            if (pt != null) {
-                pt.close();
-            }
-
-            if (con != null) {
-                con.close();
-            }
-        }
-
->>>>>>> dindiBranch
     }
 
 }

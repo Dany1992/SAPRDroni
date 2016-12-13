@@ -1,18 +1,12 @@
 package it.uniroma2.sapr.service;
 
-<<<<<<< HEAD
-=======
 
 import it.uniroma2.sapr.bean.Request;
->>>>>>> dindiBranch
+
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
 import org.apache.log4j.Logger;
-<<<<<<< HEAD
-=======
-
->>>>>>> dindiBranch
 import it.uniroma2.sapr.bean.RequestNote;
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
@@ -20,10 +14,6 @@ import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.bean.ResponseListPilots;
 import it.uniroma2.sapr.bean.ResponsePilot;
 import it.uniroma2.sapr.bean.ResponseSapr;
-<<<<<<< HEAD
-=======
-import it.uniroma2.sapr.bean.Request.opzione;
->>>>>>> dindiBranch
 import it.uniroma2.sapr.persistence.DAOFactory;
 import it.uniroma2.sapr.persistence.PilotDAO;
 import it.uniroma2.sapr.pojo.Pilot;
@@ -31,32 +21,21 @@ import it.uniroma2.sapr.pojo.Device;
 import it.uniroma2.sapr.bean.RequestCheckElement;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
-<<<<<<< HEAD
+
 import it.uniroma2.sapr.bean.ResponseNote;
-import it.uniroma2.sapr.bean.ResponseDevice;
-import it.uniroma2.sapr.persistence.DeviceDAO;
-import it.uniroma2.sapr.persistence.FlightPlanDAO;
-import it.uniroma2.sapr.persistence.MySQLDbDAOFactory;
-=======
 import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.bean.ResponseFlightPlan;
 import it.uniroma2.sapr.persistence.DeviceDAO;
 import it.uniroma2.sapr.persistence.FlightPlanDAO;
 import it.uniroma2.sapr.persistence.MySQLDbDAOFactory;
-import it.uniroma2.sapr.persistence.MySQLDbDeviceDAO;
-
->>>>>>> dindiBranch
 import it.uniroma2.sapr.persistence.NoteDAO;
 import it.uniroma2.sapr.persistence.SaprDAO;
 import it.uniroma2.sapr.pojo.CheckElement;
 import it.uniroma2.sapr.pojo.FlightPlan;
 import it.uniroma2.sapr.pojo.Note;
 import it.uniroma2.sapr.pojo.Sapr;
-<<<<<<< HEAD
 import it.uniroma2.sapr.utility.Opzione;
-=======
->>>>>>> dindiBranch
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -81,10 +60,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	 * Il webMethod che si occupa di aggiungere o eliminare un pilota. Questa operazione viene effettuata
 	 * leggendo il campo OPERATION che viene passato dal web nell'oggetto RequestPilot
 	 */
-<<<<<<< HEAD
-=======
 
->>>>>>> dindiBranch
 	public Boolean requestManagerPilot(RequestPilot request)throws Exception{
 		String method = "RequestManaerPilot";
 		
@@ -295,7 +271,6 @@ public class SAPRDroni implements SAPRDroniInterface{
 		
 		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
 		return response;
-<<<<<<< HEAD
 	}        
         
         public ResponseNote getNote(@WebParam(name = "request")int idNote) throws Exception {
@@ -337,14 +312,6 @@ public class SAPRDroni implements SAPRDroniInterface{
   		/**
 	     * questo metodo prende in input un'op
 	     * zione:
-=======
-	}
-	
-
-  	public ArrayList<ResponseSapr> selectSaprOfPilotWithState(opzione opzione, String pilotLicense) throws SQLException{
-  		/**
-	     * questo metodo prende in input un'opzione:
->>>>>>> dindiBranch
 	     * - unable, tutti i sapr abilitati del pilota (active = 1)
 	     * - disable, tutti i sapr disabilitati del pilota (active = 0)
 	     * - all, tutti i sapr del pilota
@@ -772,11 +739,8 @@ public class SAPRDroni implements SAPRDroniInterface{
             }
         }
 
-<<<<<<< HEAD
+
         public ArrayList<ResponseDevice> selectEnableDevice(Opzione op, String owner) throws SQLException {
-=======
-        public ArrayList<ResponseDevice> selectEnableDevice(Request.opzione op, String owner) throws SQLException {
->>>>>>> dindiBranch
             /**
              * questo metodo prende in input l'id del pilota e l'opzione che ci identifica cosa vogliamo
              * ENABLED/DISABLED/ALL sono i soli valori che puo' assumere opzione
@@ -907,9 +871,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 
                     return result;
         }
-<<<<<<< HEAD
-=======
-    
+
     public ResponseFlightPlan selectFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException{
                 System.out.println("funzione selectFlightPlanByFlightPlan(int idSapr,String pilotLicense,String dateDeparture)");
 		String method = "selectFlightPlan";
@@ -1018,8 +980,5 @@ public class SAPRDroni implements SAPRDroniInterface{
                                 }
                         }
     }
-    
-    
->>>>>>> dindiBranch
 
 }

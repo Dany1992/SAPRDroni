@@ -12,8 +12,6 @@ public abstract class Request {
 
 	public enum operation{
 		ADD,DELETE,UPDATE,ENABLE
-<<<<<<< HEAD
-=======
 	}
 	
 	@XmlElement(name = "opzione")
@@ -29,7 +27,6 @@ public abstract class Request {
 
 	public void setOpz(operation opz) {
 		this.opz = opz;
->>>>>>> dindiBranch
 	}
 
 	public operation getOp() {
