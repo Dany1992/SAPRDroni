@@ -24,6 +24,7 @@ import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
 import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.bean.ResponseDevice;
+import it.uniroma2.sapr.bean.ResponseFlightPlan;
 import it.uniroma2.sapr.persistence.DeviceDAO;
 import it.uniroma2.sapr.persistence.FlightPlanDAO;
 import it.uniroma2.sapr.persistence.MySQLDbDAOFactory;
@@ -834,6 +835,116 @@ public class SAPRDroni implements SAPRDroniInterface{
 
                     return result;
         }
+    
+    public ResponseFlightPlan selectFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException{
+                System.out.println("funzione selectFlightPlanByFlightPlan(int idSapr,String pilotLicense,String dateDeparture)");
+		String method = "selectFlightPlan";
+                ArrayList<Device> array=new ArrayList<Device>();
+		Connection con = null;
+		PreparedStatement pt = null;
+                ResultSet rs=null;
+		String query = "SELECT destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,flightplan.idDevice,flightplan.pilotLicense,model,type,weight,producer,active from flightplan,device WHERE idsapr=? and flightplan.pilotLicense=? and dateDeparture=? and flightplan.iddevice=device.iddevice;";
+                System.out.println(query);
+		try {
+                    
+			//logger per segnalare l'inizio della scrittura del metodo
+			logger.info(String.format("Class:%s-Method:%s::START with dates idSapr=%s,pilotLicense=%s,dateDeparture=%s", classe,method,idSapr,pilotLicense,dateDeparture));
+			
+			con = MySQLDbDAOFactory.createConnection();
+			pt = con.prepareStatement(query);
+			pt.setInt(1,idSapr);
+			pt.setString(2,pilotLicense);
+			pt.setString(3,dateDeparture);
+                        System.out.println(pt.toString());
+                        rs = pt.executeQuery();
+			//esito della query
+			if(rs!=null){
+                                //da completare la query es:select  destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,flightplan.idDevice,flightplan.pilotLicense,model,type,weight,producer from flightplan,device where idsapr=2 and flightplan.pilotlicense="0000000002" and datedeparture="2016-09-11"and flightplan.iddevice=device.iddevice;
+                                //deve creare prima glio oggetti Device e poi creare un oggetto di tipo ResponseFlightPlan altrimenti non potri passare un arrayList di Device
+                                System.out.println("Ho selezionato il flightPlan");
+				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,idSapr));
+        
+                                while(rs.next()){ 
+                                    array.add(new Device(rs.getInt("iddevice"),rs.getString("model"),rs.getString("type"),rs.getInt("weight"),rs.getString("producer"),rs.getString("pilotlicense"),null, rs.getInt("active")));
+                                }
+                                rs.first(); 
+                                ResponseFlightPlan flight1 = new ResponseFlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),array,rs.getString("pilotLicense"));
+                                return flight1;
+                        }
+                        else {
+				pt.close();
+				con.close();
+				System.out.println("Non ho selezionato il flightPlan");
+				logger.info(String.format("Class:%s-Method:%s::END dont select flight plan with idSapr code-%s",classe,method,idSapr));
+				return null;
+			}
+			
+                        } catch (Exception e) {
+                                logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+                                return null;
+                        } finally {
+                                if (pt != null) {
+                                        pt.close();
+                                }
 
+                                if (con != null) {
+                                        con.close();
+                                }
+                        }
+    
+    }
+    
+    public ArrayList<ResponseFlightPlan> selectFlightPlanBySapr(int idSapr) throws SQLException{
+                System.out.println("funzione selectFlightPlanBySapr(int idSapr)");
+		String method = "selectFlightPlan";
+		Connection con = null;
+		PreparedStatement pt = null;
+                ResultSet rs=null;
+                ArrayList<ResponseFlightPlan> array=new ArrayList<ResponseFlightPlan>();
+		String query = "SELECT dateDeparture,idSapr,pilotLicense FROM flightplan WHERE idsapr=? group by datedeparture";
+                System.out.println(query);
+		try {
+                    
+			//logger per segnalare l'inizio della scrittura del metodo
+			logger.info(String.format("Class:%s-Method:%s::START with dates idSapr=%s", classe,method,idSapr));
+			
+			con = MySQLDbDAOFactory.createConnection();
+			pt = con.prepareStatement(query);
+			pt.setInt(1,idSapr);
+                        System.out.println(pt.toString());
+                        rs = pt.executeQuery();
+			//esito della query
+			if(rs!=null){
+                                System.out.println("Ho selezionato i flightPlan");
+				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,idSapr));
+                                while(rs.next()){  
+                                    array.add(selectFlightPlanByFlight(rs.getInt("idsapr"),rs.getString("pilotLicense"),rs.getString("datedeparture")));
+                                    //array.add(new ResponseFlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense")));       
+                                }
+                                return array;
+                        }
+                        else {
+				pt.close();
+				con.close();
+				System.out.println("Non ho selezionato i flightPlan");
+				logger.info(String.format("Class:%s-Method:%s::END dont select flight plan with idSapr code-%s",classe,method,idSapr));
+				return null;
+			}
+			
+                        } catch (Exception e) {
+                                logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+                                return null;
+                        } finally {
+                                if (pt != null) {
+                                        pt.close();
+                                }
+
+                                if (con != null) {
+                                        con.close();
+                                }
+                        }
+    }
+    
+    
 
 }

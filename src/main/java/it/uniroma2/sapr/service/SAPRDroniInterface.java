@@ -16,6 +16,7 @@ import it.uniroma2.sapr.bean.RequestFlightPlan;
 
 import it.uniroma2.sapr.bean.Request.opzione;
 import it.uniroma2.sapr.bean.ResponseDevice;
+import it.uniroma2.sapr.bean.ResponseFlightPlan;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -59,5 +60,12 @@ public interface SAPRDroniInterface {
     @WebMethod(operationName = "selectEnableDevice")
     public ArrayList<ResponseDevice> selectEnableDevice(Request.opzione op, String owner) throws SQLException;
     
+    @WebMethod(operationName = "selectFlightPlanByFlight")
+    public ResponseFlightPlan selectFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException;
+    
+    @WebMethod(operationName = "selectFlightPlanBySapr")
+    public ArrayList<ResponseFlightPlan> selectFlightPlanBySapr(int idSapr) throws SQLException;
 }
+
+
 
