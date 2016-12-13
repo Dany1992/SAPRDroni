@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
 /target/
 
 src/main/java/it/uniroma2/sapr/persistence/MySQLDbDAOFactory.java
+>>>>>>> tizianoBranch
+
+.DS_Store

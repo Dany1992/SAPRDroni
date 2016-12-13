@@ -1,7 +1,5 @@
 package it.uniroma2.sapr.pojo;
 
-import java.sql.Date;
-
 /**
  * Questa classe è l'oggetto che viene creato prelevando i dati dalla RequestPilot.
  * Tale oggetto viene utilizzazto poi per tutte le operazioni che si vogliono fare sul db

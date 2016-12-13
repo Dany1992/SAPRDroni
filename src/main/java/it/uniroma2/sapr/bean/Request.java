@@ -7,11 +7,26 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class Request {
 	
-	@XmlElement(name = "OPERAZIONE")
+	@XmlElement(name = "operation")
 	protected operation op;
-	
+
 	public enum operation{
-		ADD,DELETE
+		ADD,DELETE,UPDATE,ENABLE
+	}
+	
+	@XmlElement(name = "opzione")
+	protected operation opz;
+	
+	public enum opzione{
+		ENABLED,DISABLED,ALL
+	}
+	
+	public operation getOpz() {
+		return opz;
+	}
+
+	public void setOpz(operation opz) {
+		this.opz = opz;
 	}
 
 	public operation getOp() {
@@ -27,6 +42,7 @@ public abstract class Request {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((op == null) ? 0 : op.hashCode());
+		result = prime * result + ((opz == null) ? 0 : opz.hashCode());
 		return result;
 	}
 
@@ -41,12 +57,14 @@ public abstract class Request {
 		Request other = (Request) obj;
 		if (op != other.op)
 			return false;
+		if (opz != other.opz)
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Request [op=" + op + "]";
+		return "Request [op=" + op + "opz=" + opz +  "]";
 	}
 
 }

@@ -2,13 +2,12 @@ package it.uniroma2.sapr.persistence;
 
 
 import java.sql.SQLException;
-
-import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.pojo.Sapr;
 
+
 public interface SaprDAO {
-	public boolean insertPilot(Sapr sapr) throws SQLException;
-	public boolean deletePilot(Sapr sapr) throws SQLException;
-	public boolean updatePilot(Sapr sapr) throws SQLException;
-	public RequestPilot selectPilot(String idSapr) throws SQLException;
+	public boolean insertSapr(Sapr sapr) throws SQLException;
+	public boolean deleteSapr(Sapr sapr) throws SQLException;
+	public boolean updateSapr(Sapr sapr) throws SQLException;
+	public boolean enableSapr(Sapr sapr) throws SQLException;
 }

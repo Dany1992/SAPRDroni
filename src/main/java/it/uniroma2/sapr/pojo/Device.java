@@ -1,12 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package it.uniroma2.sapr.pojo;
 
+import it.uniroma2.sapr.bean.RequestCheckElement;
+import it.uniroma2.sapr.bean.ResponseCheckElement;
+import java.util.ArrayList;
+
 /**
- *
+ * Questa classe è l'oggetto che viene creato prelevando i dati dalla RequestDevice.
+ * Questo oggetto serve per le operazioni che faremo nel DB
+ * 
  * @author dario
  */
 public class Device {
@@ -16,14 +18,24 @@ public class Device {
     private int weight;
     private String producer;
     private String pilotLicense;
+    private ArrayList<CheckElement> checkDevice;
+    private int active;
 
-    public Device(int idDevice, String model, String type, int weight, String producer, String pilotLicense) {
+    public Device(){
+        super();
+    }
+    
+    
+    public Device(int idDevice, String model, String type, int weight, String producer, String pilotLicense, ArrayList<CheckElement> checkDevice, int active) {
+        super();
         this.idDevice = idDevice;
         this.model = model;
         this.type = type;
         this.weight = weight;
         this.producer = producer;
         this.pilotLicense = pilotLicense;
+        this.checkDevice = checkDevice;
+        this.active = active;
     }
 
     public int getIdDevice() {
@@ -73,16 +85,34 @@ public class Device {
     public void setPilotLicense(String pilotLicense) {
         this.pilotLicense = pilotLicense;
     }
-    
+
+    public ArrayList<CheckElement> getCheckDevice() {
+        return checkDevice;
+    }
+
+    public void setCheckDevice(ArrayList<CheckElement> checkDevice) {
+        this.checkDevice = checkDevice;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + this.idDevice;
-        hash = 17 * hash + (this.model != null ? this.model.hashCode() : 0);
-        hash = 17 * hash + (this.type != null ? this.type.hashCode() : 0);
-        hash = 17 * hash + this.weight;
-        hash = 17 * hash + (this.producer != null ? this.producer.hashCode() : 0);
-        hash = 17 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
+        int hash = 7;
+        hash = 67 * hash + this.idDevice;
+        hash = 67 * hash + (this.model != null ? this.model.hashCode() : 0);
+        hash = 67 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 67 * hash + this.weight;
+        hash = 67 * hash + (this.producer != null ? this.producer.hashCode() : 0);
+        hash = 67 * hash + (this.pilotLicense != null ? this.pilotLicense.hashCode() : 0);
+        hash = 67 * hash + (this.checkDevice != null ? this.checkDevice.hashCode() : 0);
+        hash = 67 * hash + this.active;
         return hash;
     }
 
@@ -104,6 +134,9 @@ public class Device {
         if (this.weight != other.weight) {
             return false;
         }
+        if (this.active != other.active) {
+            return false;
+        }
         if ((this.model == null) ? (other.model != null) : !this.model.equals(other.model)) {
             return false;
         }
@@ -116,13 +149,16 @@ public class Device {
         if ((this.pilotLicense == null) ? (other.pilotLicense != null) : !this.pilotLicense.equals(other.pilotLicense)) {
             return false;
         }
+        if (this.checkDevice != other.checkDevice && (this.checkDevice == null || !this.checkDevice.equals(other.checkDevice))) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Device{" + "idDevice=" + idDevice + ", model=" + model + ", type=" + type + ", weight=" + weight + ", producer=" + producer + ", pilotLicense=" + pilotLicense + '}';
+        return "Device{" + "idDevice=" + idDevice + ", model=" + model + ", type=" + type + ", weight=" + weight + ", producer=" + producer + ", pilotLicense=" + pilotLicense + ", checkDevice=" + checkDevice + ", active=" + active + '}';
     }
 
     
-}
+ }
