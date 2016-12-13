@@ -36,13 +36,13 @@ public interface SAPRDroniInterface {
     @WebMethod(operationName = "getPilots")
     public ResponseListPilots getPilots() throws Exception;
     
-    @WebMethod(operationName = "getSaprOfPilotWithState")
+    @WebMethod(operationName = "selectSaprOfPilotWithState")
     public ArrayList<ResponseSapr> selectSaprOfPilotWithState(opzione opzione, String pilotLicense) throws Exception;
     
-    @WebMethod(operationName = "getSaprOfPilot")
+    @WebMethod(operationName = "selectSaprOfPilot")
     public ArrayList<ResponseSapr> selectSaprOfPilot(String pilotLicense) throws Exception;
     
-    @WebMethod(operationName = "getSapr")
+    @WebMethod(operationName = "selectSapr")
     public ResponseSapr selectSapr(int idSapr) throws Exception;
     
 }
