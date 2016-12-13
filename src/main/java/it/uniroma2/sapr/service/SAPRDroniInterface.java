@@ -1,7 +1,6 @@
 package it.uniroma2.sapr.service;
 
 
-import it.uniroma2.sapr.bean.Request;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -14,16 +13,11 @@ import it.uniroma2.sapr.bean.ResponseSapr;
 import it.uniroma2.sapr.utility.Opzione;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
-import it.uniroma2.sapr.bean.RequestCheckElement;
 import it.uniroma2.sapr.bean.ResponseFlightPlan;
 import it.uniroma2.sapr.bean.ResponseNote;
-import it.uniroma2.sapr.pojo.FlightPlan;
+import it.uniroma2.sapr.bean.ResponsePilot;
 import it.uniroma2.sapr.bean.ResponseDevice;
 
-import it.uniroma2.sapr.bean.RequestDevice;
-import it.uniroma2.sapr.bean.RequestFlightPlan;
-import it.uniroma2.sapr.bean.ResponseDevice;
-import it.uniroma2.sapr.bean.ResponseFlightPlan;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,6 +42,9 @@ public interface SAPRDroniInterface {
     
     @WebMethod(operationName = "getPilots")
     public ResponseListPilots getPilots() throws Exception;
+    
+    @WebMethod(operationName = "getPilot")
+    public ResponsePilot getPilot(String licensePilots) throws Exception;
     
     @WebMethod(operationName = "getNote")
     public ResponseNote getNote(int idNote) throws Exception;

@@ -1,7 +1,6 @@
 package it.uniroma2.sapr.service;
 
 
-import it.uniroma2.sapr.bean.Request;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -23,7 +22,6 @@ import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
 
 import it.uniroma2.sapr.bean.ResponseNote;
-import it.uniroma2.sapr.bean.ResponseCheckElement;
 import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.bean.ResponseFlightPlan;
 import it.uniroma2.sapr.persistence.DeviceDAO;
@@ -1006,5 +1004,10 @@ public class SAPRDroni implements SAPRDroniInterface{
                                 }
                         }
     }
+
+	public ResponsePilot getPilot(String licensePilots) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
