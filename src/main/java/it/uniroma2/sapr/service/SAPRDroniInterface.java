@@ -1,5 +1,7 @@
 package it.uniroma2.sapr.service;
 
+import java.util.ArrayList;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -8,9 +10,10 @@ import it.uniroma2.sapr.bean.RequestNote;
 import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
 import it.uniroma2.sapr.bean.ResponseListPilots;
+import it.uniroma2.sapr.bean.ResponseSapr;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
-import it.uniroma2.sapr.bean.RequestCheckElement;
+import it.uniroma2.sapr.bean.Request.opzione;
 
 @WebService
 public interface SAPRDroniInterface {
@@ -32,5 +35,14 @@ public interface SAPRDroniInterface {
     
     @WebMethod(operationName = "getPilots")
     public ResponseListPilots getPilots() throws Exception;
+    
+    @WebMethod(operationName = "getSaprOfPilotWithState")
+    public ArrayList<ResponseSapr> selectSaprOfPilotWithState(opzione opzione, String pilotLicense) throws Exception;
+    
+    @WebMethod(operationName = "getSaprOfPilot")
+    public ArrayList<ResponseSapr> selectSaprOfPilot(String pilotLicense) throws Exception;
+    
+    @WebMethod(operationName = "getSapr")
+    public ResponseSapr selectSapr(int idSapr) throws Exception;
     
 }
