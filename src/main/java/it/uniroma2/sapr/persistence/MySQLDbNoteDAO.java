@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import it.uniroma2.sapr.pojo.Note;
-import java.text.ParseException;
+
 import org.apache.log4j.Logger;
 
 /**

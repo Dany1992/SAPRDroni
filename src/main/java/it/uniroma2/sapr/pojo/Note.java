@@ -21,6 +21,7 @@ public class Note {
         this.date = date;
     }
 
+
     public Note() {
         
     }

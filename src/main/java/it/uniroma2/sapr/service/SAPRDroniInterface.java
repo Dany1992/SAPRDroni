@@ -1,5 +1,6 @@
 package it.uniroma2.sapr.service;
 
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -12,11 +13,12 @@ import it.uniroma2.sapr.bean.ResponseSapr;
 import it.uniroma2.sapr.utility.Opzione;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
-import it.uniroma2.sapr.bean.RequestCheckElement;
 import it.uniroma2.sapr.bean.ResponseFlightPlan;
 import it.uniroma2.sapr.bean.ResponseNote;
-import it.uniroma2.sapr.pojo.FlightPlan;
+import it.uniroma2.sapr.bean.ResponsePilot;
 import it.uniroma2.sapr.bean.ResponseDevice;
+
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -41,12 +43,15 @@ public interface SAPRDroniInterface {
     @WebMethod(operationName = "getPilots")
     public ResponseListPilots getPilots() throws Exception;
     
+    @WebMethod(operationName = "getPilot")
+    public ResponsePilot getPilot(String licensePilots) throws Exception;
+    
     @WebMethod(operationName = "getNote")
     public ResponseNote getNote(int idNote) throws Exception;
 
     @WebMethod(operationName = "selectSaprOfPilotWithState")
     public ArrayList<ResponseSapr> selectSaprOfPilotWithState(Opzione opzione, String pilotLicense) throws Exception;
-    
+
     @WebMethod(operationName = "selectSaprOfPilot")
     public ArrayList<ResponseSapr> selectSaprOfPilot(String pilotLicense) throws Exception;
     
@@ -62,5 +67,10 @@ public interface SAPRDroniInterface {
     @WebMethod(operationName = "selectEnableDevice")
     public ArrayList<ResponseDevice> selectEnableDevice(Opzione op, String owner) throws SQLException;
     
+    @WebMethod(operationName = "selectFlightPlanByFlight")
+    public ResponseFlightPlan selectFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException;
+    
+    @WebMethod(operationName = "selectFlightPlanBySapr")
+    public ArrayList<ResponseFlightPlan> selectFlightPlanBySapr(int idSapr) throws SQLException;
 }
 

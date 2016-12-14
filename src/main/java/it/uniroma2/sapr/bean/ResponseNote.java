@@ -25,6 +25,7 @@ public class ResponseNote {
     @XmlElement(name = "textNote")
     private String textNote;
     @XmlElement(name = "date")
+
     private String date;
 
     public ResponseNote(int idNote, String textNote, String date) {
