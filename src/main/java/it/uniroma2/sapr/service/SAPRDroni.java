@@ -669,11 +669,8 @@ public class SAPRDroni implements SAPRDroniInterface{
             PreparedStatement pt1 = null;
             ResponseDevice rispDev = new ResponseDevice();
 
-<<<<<<< HEAD
+
             String query = "SELECT idDevice, model, type, weight, producer, pilotLicense,active"
-=======
-            String query = "SELECT idDevice, model, type, weight, producer, pilotLicense, active"
->>>>>>> dindiBranch
                     + " FROM device WHERE idDevice = ?";
             String query1 = "SELECT valueCheckElement,IdDevice FROM checkDevice WHERE IdDevice = ?";
 
@@ -768,15 +765,6 @@ public class SAPRDroni implements SAPRDroniInterface{
              * @return ArrayList<ResponseDevice> array di dispositivi
              * @throws SQLException
              */
-<<<<<<< HEAD
-	    String method = "selectDevice";
-	    Connection con = null;
-	    PreparedStatement pt = null;
-	    PreparedStatement pt1 = null;
-	    ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
-            
-	    String query = "SELECT idDevice, model, type, weight, producer, pilotLicense, active FROM device WHERE pilotLicense = ?";
-=======
             String method = "selectAllDevice";
             Connection con = null;
             PreparedStatement pt = null;
@@ -786,7 +774,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 
             String query = "SELECT idDevice, model, type, weight, producer, pilotLicense, active"
                     + " FROM device WHERE pilotLicense = ?";
->>>>>>> dindiBranch
+
             if (op.name().equalsIgnoreCase("ENABLED")){
                 method = "selectDeviceEnabled";
                 query += " AND active = 1";
