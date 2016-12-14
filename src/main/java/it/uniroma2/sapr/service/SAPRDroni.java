@@ -637,7 +637,7 @@ public class SAPRDroni implements SAPRDroniInterface{
             PreparedStatement pt1 = null;
             ArrayList<ResponseCheckElement> arr_check = new ArrayList<ResponseCheckElement>();
 
-            String query = "SELECT idDevice, model, type, weight, producer, pilotLicense"
+            String query = "SELECT idDevice, model, type, weight, producer, pilotLicense, active"
                     + " FROM device WHERE idDevice = ?";
             String query1 = "SELECT valueCheckElement,IdDevice FROM checkDevice WHERE IdDevice = ?";
 
@@ -721,7 +721,7 @@ public class SAPRDroni implements SAPRDroniInterface{
             ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
             ArrayList<ResponseCheckElement> arr_check = new ArrayList<ResponseCheckElement>();
 
-            String query = "SELECT idDevice, model, type, weight, producer, pilotLicense"
+            String query = "SELECT idDevice, model, type, weight, producer, pilotLicense, active"
                     + " FROM device WHERE pilotLicense = ?";
             if (op.name().equalsIgnoreCase("ENABLED")){
                 method = "selectDeviceEnabled";
