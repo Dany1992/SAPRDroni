@@ -304,6 +304,132 @@ public class SAPRDroni implements SAPRDroniInterface{
             logger.info(String.format("Class:%s-Method:%s::END", classe,method));
             return responseNote;
         }
+        
+    public ArrayList<ResponseSapr> getSaprs(Opzione op) throws Exception{
+    	/**
+	     * questo metodo prende in input un'op
+	     * zione:
+	     * - unable, tutti i sapr abilitati (active = 1)
+	     * - disable, tutti i sapr disabilitati (active = 0)
+	     * - all, tutti i sapr 
+	     *
+	     * @param sapr è il bean contente tutti i dati da inserire nel db
+	     * @return ArrayList<ResponseSapr> array di sapr
+	     * @throws SQLException
+	     */	
+    	
+	    String method = "selectAllSaprs";
+	    Connection con = null;
+	    PreparedStatement pt = null;
+	    PreparedStatement pt1 = null;
+	    ArrayList<ResponseSapr> arr_sapr = new ArrayList<ResponseSapr>();
+	    String query;
+	    
+	    if(op.name().equalsIgnoreCase("ALL")){
+	    	query = "SELECT idSapr, model, producer, " +
+	    		    "weight, heavyweight, battery, maxDistance, maxHeight, pilotLicense, active FROM sapr";
+	    }
+	    
+	    else{
+	    	query = "SELECT idSapr, model, producer, " +
+	    		    "weight, heavyweight, battery, maxDistance, maxHeight, pilotLicense, active FROM sapr WHERE active = ? ";
+	    }
+	    
+	    
+	    String query1 = "SELECT valueCheckElement FROM checkSAPR WHERE idSapr = ?";
+    
+	    try {
+	        //logger per segnalare l'inizio della scrittura del metodo
+	        logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, op));
+	
+	        con = MySQLDbDAOFactory.createConnection();
+	        pt = con.prepareStatement(query);
+	        pt1 = con.prepareStatement(query1);
+
+	        //compilo il campo ? nella query, in base alla richiesta
+	        if(op.name().equalsIgnoreCase("ENABLED"))
+	        	pt.setInt(1, 1);
+	        
+	        if(op.name().equalsIgnoreCase("DISABLED"))
+	        	pt.setInt(1, 0);
+	        
+	        // eseguo la query
+	        ResultSet rs = pt.executeQuery();
+	     
+	        if (rs != null) {
+	        	 	
+        		logger.info(String.format("Class:%s-Method:%s::END select sapr with option: %s",
+        				classe, method, op));
+        		
+	            while (rs.next()) {
+	            	ResponseSapr rispSapr = new ResponseSapr();
+	            	ArrayList<ResponseCheckElement> checkSapr = new ArrayList<ResponseCheckElement>();
+	            	
+	            	//recupero la licenza dalla query 
+					int idS = rs.getInt("idSapr");
+					rispSapr.setIdSapr(idS);
+					String model = rs.getString("model");
+	                rispSapr.setModel(model);
+	                String producer = rs.getString("producer");
+	                rispSapr.setProducer(producer);
+	                String battery = rs.getString("battery");
+	                rispSapr.setBattery(battery);
+	                int weight = rs.getInt("weight");
+	                rispSapr.setWeight(weight);
+	                int heavyweight = rs.getInt("heavyweight");
+	                rispSapr.setHeavyweight(heavyweight);
+	                int maxDistance = rs.getInt("maxDistance");
+	                rispSapr.setMaxDistance(maxDistance);
+	                int maxHeight = rs.getInt("maxHeight");
+	                rispSapr.setMaxHeight(maxHeight);
+	                String license = rs.getString("pilotLicense");
+	                rispSapr.setPilotLicense(license);
+	                int active = rs.getInt("active");
+	                rispSapr.setActive(active);
+	                   
+	                pt1.setInt(1, idS);
+	                ResultSet rs1 = pt1.executeQuery();
+	                
+	                while(rs1.next()){	
+	                	String valore = rs1.getString("valueCheckElement");
+	                	checkSapr.add(new ResponseCheckElement(valore));
+	                }
+	                
+	                rispSapr.setCheckSapr(checkSapr);      
+	                arr_sapr.add(rispSapr);
+	                
+	            }
+	           
+	            return arr_sapr;
+	            
+	        } else {
+	        	
+	            pt.close();
+	            pt1.close();
+	            con.close();
+	            logger.info(String.format("Class:%s-Method:%s::END select no one sapr with option: %s",
+	                    classe, method, op));
+	            return arr_sapr;
+	        }
+	
+	    } catch (Exception e) {
+	    	
+	    	logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
+	        return arr_sapr;
+	        
+	    }finally {
+    	
+	        if (pt != null) 
+	            pt.close();
+	        
+	        if (pt1 != null) 
+	            pt.close();
+	        
+	        if (con != null) 
+	            con.close();
+        
+    	}
+    }
 	
 
   	public ArrayList<ResponseSapr> getSaprsOfPilot(Opzione opzione, String pilotLicense) throws SQLException{
@@ -318,7 +444,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	     * @return ArrayList<ResponseSapr> array di sapr
 	     * @throws SQLException
 	     */	
-	    String method = "selectSapr";
+	    String method = "selectSaprsOfPilot";
 	    Connection con = null;
 	    PreparedStatement pt = null;
 	    PreparedStatement pt1 = null;
@@ -556,7 +682,7 @@ public class SAPRDroni implements SAPRDroniInterface{
  
 	public ResponseSapr getSapr(int idSapr) throws SQLException {
 		
-		String method = "selectSapr";
+		String method = "selectSaprWithId";
 		Connection con = null;
 		PreparedStatement pt = null;
 		PreparedStatement pt1 = null;
@@ -770,7 +896,6 @@ public class SAPRDroni implements SAPRDroniInterface{
             PreparedStatement pt = null;
             PreparedStatement pt1 = null;
             ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
-            ArrayList<ResponseCheckElement> arr_check = new ArrayList<ResponseCheckElement>();
 
             String query = "SELECT idDevice, model, type, weight, producer, pilotLicense, active"
                     + " FROM device WHERE pilotLicense = ?";
@@ -1014,11 +1139,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 		return null;
 	}
 
-	public ArrayList<ResponseSapr> getSaprs(Opzione op) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	public ResponseDevice getDevices(Opzione op) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
