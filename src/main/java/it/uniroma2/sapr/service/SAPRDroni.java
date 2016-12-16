@@ -306,7 +306,7 @@ public class SAPRDroni implements SAPRDroniInterface{
         }
 	
 
-  	public ArrayList<ResponseSapr> selectSaprOfPilotWithState(Opzione opzione, String pilotLicense) throws SQLException{
+  	public ArrayList<ResponseSapr> getSaprsOfPilot(Opzione opzione, String pilotLicense) throws SQLException{
   		/**
 	     * questo metodo prende in input un'op
 	     * zione:
@@ -445,116 +445,116 @@ public class SAPRDroni implements SAPRDroniInterface{
   	
 	/*seleziona tutti i sapr appartenenti al pilota specificato*/
 	
-	public ArrayList<ResponseSapr> selectSaprOfPilot(String owner) throws SQLException {		
-		/**
-	     * questo metodo prende in input la licenza del pilota e restituisce tutti
-	     * i sapr a sua disposizione
-	     *
-	     * @param sapr è il bean contente tutti i dati da inserire nel db
-	     * @return ArrayList<Sapr> array di sapr
-	     * @throws SQLException
-	     */	
-	    String method = "selectSapr";
-	    Connection con = null;
-	    PreparedStatement pt = null;
-	    PreparedStatement pt1 = null;
-	    ArrayList<ResponseSapr> arr_sapr = new ArrayList<ResponseSapr>();
-	
-	    String query = "SELECT idSapr, model, producer, " +
-	    "weight, heavyweight, battery, maxDistance, maxHeight, pilotLicense, active FROM sapr WHERE pilotLicense = ? ";
-	    
-	    String query1 = "SELECT valueCheckElement FROM checkSAPR WHERE idSapr = ?";
-    
-	    try {
-	        //logger per segnalare l'inizio della scrittura del metodo
-	        logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, owner));
-	
-	        con = MySQLDbDAOFactory.createConnection();
-	        pt = con.prepareStatement(query);
-	        pt1 = con.prepareStatement(query1);
-	  
-	        //compilo il campo ? nella query
-	        pt.setString(1, owner);
-	        
-	        // eseguo la query
-	        ResultSet rs = pt.executeQuery();
-	        if (rs != null) {
-	
-	            logger.info(String.format("Class:%s-Method:%s::END select all sapr of pilot %s",
-	                    classe, method, owner));
-	
-	            while (rs.next()) {
-	            	ResponseSapr rispSapr = new ResponseSapr();
-	            	ArrayList<ResponseCheckElement> checkSapr = new ArrayList<ResponseCheckElement>();
-	            	
-	            	//recupero la licenza dalla query 
-					int idS = rs.getInt("idSapr");
-					rispSapr.setIdSapr(idS);
-					String model = rs.getString("model");
-	                rispSapr.setModel(model);
-	                String producer = rs.getString("producer");
-	                rispSapr.setProducer(producer);
-	                String battery = rs.getString("battery");
-	                rispSapr.setBattery(battery);
-	                int weight = rs.getInt("weight");
-	                rispSapr.setWeight(weight);
-	                int heavyweight = rs.getInt("heavyweight");
-	                rispSapr.setHeavyweight(heavyweight);
-	                int maxDistance = rs.getInt("maxDistance");
-	                rispSapr.setMaxDistance(maxDistance);
-	                int maxHeight = rs.getInt("maxHeight");
-	                rispSapr.setMaxHeight(maxHeight);
-	                String license = rs.getString("pilotLicense");
-	                rispSapr.setPilotLicense(license);
-	                int active = rs.getInt("active");
-	                rispSapr.setActive(active);
-	                   
-	                pt1.setInt(1, idS);
-	                ResultSet rs1 = pt1.executeQuery();
-	                
-	                while(rs1.next()){	
-	                	String valore = rs1.getString("valueCheckElement");
-	                	checkSapr.add(new ResponseCheckElement(valore));
-	                }
-	                
-	                rispSapr.setCheckSapr(checkSapr);      
-	                arr_sapr.add(rispSapr);
-	                
-	            }
-	
-	            return arr_sapr;
-	            
-	        } else {
-	        	
-	            pt.close();
-	            pt1.close();
-	            con.close();
-	            logger.info(String.format("Class:%s-Method:%s::END select no one sapr of pilot %s",
-	                    classe, method, owner));
-	            return arr_sapr;
-	        }
-	
-	    } catch (Exception e) {
-	    	
-	    	logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
-	        return arr_sapr;
-	        
-	    }finally {
-    	
-	        if (pt != null) 
-	            pt.close();
-	        
-	        if (pt1 != null) 
-	            pt.close();
-	        
-	        if (con != null) 
-	            con.close();
-        
-    	}
-
-	}
+//	public ArrayList<ResponseSapr> getSaprOfPilot(String owner) throws SQLException {		
+//		/**
+//	     * questo metodo prende in input la licenza del pilota e restituisce tutti
+//	     * i sapr a sua disposizione
+//	     *
+//	     * @param sapr è il bean contente tutti i dati da inserire nel db
+//	     * @return ArrayList<Sapr> array di sapr
+//	     * @throws SQLException
+//	     */	
+//	    String method = "selectSapr";
+//	    Connection con = null;
+//	    PreparedStatement pt = null;
+//	    PreparedStatement pt1 = null;
+//	    ArrayList<ResponseSapr> arr_sapr = new ArrayList<ResponseSapr>();
+//	
+//	    String query = "SELECT idSapr, model, producer, " +
+//	    "weight, heavyweight, battery, maxDistance, maxHeight, pilotLicense, active FROM sapr WHERE pilotLicense = ? ";
+//	    
+//	    String query1 = "SELECT valueCheckElement FROM checkSAPR WHERE idSapr = ?";
+//    
+//	    try {
+//	        //logger per segnalare l'inizio della scrittura del metodo
+//	        logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, owner));
+//	
+//	        con = MySQLDbDAOFactory.createConnection();
+//	        pt = con.prepareStatement(query);
+//	        pt1 = con.prepareStatement(query1);
+//	  
+//	        //compilo il campo ? nella query
+//	        pt.setString(1, owner);
+//	        
+//	        // eseguo la query
+//	        ResultSet rs = pt.executeQuery();
+//	        if (rs != null) {
+//	
+//	            logger.info(String.format("Class:%s-Method:%s::END select all sapr of pilot %s",
+//	                    classe, method, owner));
+//	
+//	            while (rs.next()) {
+//	            	ResponseSapr rispSapr = new ResponseSapr();
+//	            	ArrayList<ResponseCheckElement> checkSapr = new ArrayList<ResponseCheckElement>();
+//	            	
+//	            	//recupero la licenza dalla query 
+//					int idS = rs.getInt("idSapr");
+//					rispSapr.setIdSapr(idS);
+//					String model = rs.getString("model");
+//	                rispSapr.setModel(model);
+//	                String producer = rs.getString("producer");
+//	                rispSapr.setProducer(producer);
+//	                String battery = rs.getString("battery");
+//	                rispSapr.setBattery(battery);
+//	                int weight = rs.getInt("weight");
+//	                rispSapr.setWeight(weight);
+//	                int heavyweight = rs.getInt("heavyweight");
+//	                rispSapr.setHeavyweight(heavyweight);
+//	                int maxDistance = rs.getInt("maxDistance");
+//	                rispSapr.setMaxDistance(maxDistance);
+//	                int maxHeight = rs.getInt("maxHeight");
+//	                rispSapr.setMaxHeight(maxHeight);
+//	                String license = rs.getString("pilotLicense");
+//	                rispSapr.setPilotLicense(license);
+//	                int active = rs.getInt("active");
+//	                rispSapr.setActive(active);
+//	                   
+//	                pt1.setInt(1, idS);
+//	                ResultSet rs1 = pt1.executeQuery();
+//	                
+//	                while(rs1.next()){	
+//	                	String valore = rs1.getString("valueCheckElement");
+//	                	checkSapr.add(new ResponseCheckElement(valore));
+//	                }
+//	                
+//	                rispSapr.setCheckSapr(checkSapr);      
+//	                arr_sapr.add(rispSapr);
+//	                
+//	            }
+//	
+//	            return arr_sapr;
+//	            
+//	        } else {
+//	        	
+//	            pt.close();
+//	            pt1.close();
+//	            con.close();
+//	            logger.info(String.format("Class:%s-Method:%s::END select no one sapr of pilot %s",
+//	                    classe, method, owner));
+//	            return arr_sapr;
+//	        }
+//	
+//	    } catch (Exception e) {
+//	    	
+//	    	logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
+//	        return arr_sapr;
+//	        
+//	    }finally {
+//    	
+//	        if (pt != null) 
+//	            pt.close();
+//	        
+//	        if (pt1 != null) 
+//	            pt.close();
+//	        
+//	        if (con != null) 
+//	            con.close();
+//        
+//    	}
+//
+//	}
  
-	public ResponseSapr selectSapr(int idSapr) throws SQLException {
+	public ResponseSapr getSapr(int idSapr) throws SQLException {
 		
 		String method = "selectSapr";
 		Connection con = null;
@@ -655,7 +655,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 		}
 	}
 
-        public ResponseDevice selectADevice(int idDevice) throws SQLException {
+        public ResponseDevice getDevice(int idDevice) throws SQLException {
             /**
              * questo metodo prende in input un device e ci restituisce tutti
              * i suoi dettagli
@@ -755,7 +755,7 @@ public class SAPRDroni implements SAPRDroniInterface{
         }
 
 
-        public ArrayList<ResponseDevice> selectEnableDevice(Opzione op, String pilotLicense) throws SQLException {
+        public ArrayList<ResponseDevice> getDevicesOfPilot(Opzione op, String pilotLicense) throws SQLException {
             /**
              * questo metodo prende in input l'id del pilota e l'opzione che ci identifica cosa vogliamo
              * ENABLED/DISABLED/ALL sono i soli valori che puo' assumere opzione
@@ -900,7 +900,7 @@ public class SAPRDroni implements SAPRDroniInterface{
                     return result;
         }
 
-    public ResponseFlightPlan selectFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException{
+    public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException{
                 System.out.println("funzione selectFlightPlanByFlightPlan(int idSapr,String pilotLicense,String dateDeparture)");
 		String method = "selectFlightPlan";
                 ArrayList<Device> array=new ArrayList<Device>();
@@ -958,7 +958,7 @@ public class SAPRDroni implements SAPRDroniInterface{
     
     }
     
-    public ArrayList<ResponseFlightPlan> selectFlightPlanBySapr(int idSapr) throws SQLException{
+    public ArrayList<ResponseFlightPlan> getFlightPlanBySapr(int idSapr) throws SQLException{
                 System.out.println("funzione selectFlightPlanBySapr(int idSapr)");
 		String method = "selectFlightPlan";
 		Connection con = null;
@@ -979,12 +979,12 @@ public class SAPRDroni implements SAPRDroniInterface{
                         rs = pt.executeQuery();
 			//esito della query
 			if(rs!=null){
-                                System.out.println("Ho selezionato i flightPlan");
+                System.out.println("Ho selezionato i flightPlan");
 				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,idSapr));
-                                while(rs.next()){  
-                                    array.add(selectFlightPlanByFlight(rs.getInt("idsapr"),rs.getString("pilotLicense"),rs.getString("datedeparture")));
+                while(rs.next()){  
+                	array.add(getFlightPlanByFlight(rs.getInt("idsapr"),rs.getString("pilotLicense"),rs.getString("datedeparture")));
                                     //array.add(new ResponseFlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),rs.getInt("iddevice"),rs.getString("pilotLicense")));       
-                                }
+                    }
                                 return array;
                         }
                         else {
@@ -1010,6 +1010,16 @@ public class SAPRDroni implements SAPRDroniInterface{
     }
 
 	public ResponsePilot getPilot(String licensePilots) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<ResponseSapr> getSaprs(Opzione op) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ResponseDevice getDevices(Opzione op) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}

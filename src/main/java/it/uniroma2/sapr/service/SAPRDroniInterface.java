@@ -49,28 +49,29 @@ public interface SAPRDroniInterface {
     @WebMethod(operationName = "getNote")
     public ResponseNote getNote(int idNote) throws Exception;
 
-    @WebMethod(operationName = "selectSaprOfPilotWithState")
-    public ArrayList<ResponseSapr> selectSaprOfPilotWithState(Opzione opzione, String pilotLicense) throws Exception;
+    @WebMethod(operationName = "getSaprsOfPilot")
+    public ArrayList<ResponseSapr> getSaprsOfPilot(Opzione op, String pilotLicense) throws Exception;
 
-    @WebMethod(operationName = "selectSaprOfPilot")
-    public ArrayList<ResponseSapr> selectSaprOfPilot(String pilotLicense) throws Exception;
+    @WebMethod(operationName = "getSaprs")
+    public ArrayList<ResponseSapr> getSaprs(Opzione op) throws Exception;
     
     @WebMethod(operationName = "selectSapr")
-    public ResponseSapr selectSapr(int idSapr) throws Exception;
+    public ResponseSapr getSapr(int idSapr) throws Exception;
     
-    //@WebMethod(operationName = "selectDeviceOfPilot")
-    //public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException;
-    
-    @WebMethod(operationName = "selectADevice")
-    public ResponseDevice selectADevice(int idDevice) throws SQLException;
+    @WebMethod(operationName = "getDevice")
+    public ResponseDevice getDevice(int idDevice) throws SQLException;
  
-    @WebMethod(operationName = "selectEnableDevice")
-    public ArrayList<ResponseDevice> selectEnableDevice(Opzione op, String owner) throws SQLException;
+    @WebMethod(operationName = "getDevicesOfPilot")
+    public ArrayList<ResponseDevice> getDevicesOfPilot(Opzione op, String owner) throws SQLException;
     
-    @WebMethod(operationName = "selectFlightPlanByFlight")
-    public ResponseFlightPlan selectFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException;
+    @WebMethod(operationName = "getDevices")
+    public ResponseDevice getDevices(Opzione op) throws SQLException;
     
-    @WebMethod(operationName = "selectFlightPlanBySapr")
-    public ArrayList<ResponseFlightPlan> selectFlightPlanBySapr(int idSapr) throws SQLException;
+    @WebMethod(operationName = "getFlightPlanByFlight")
+    public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException;
+    
+    @WebMethod(operationName = "getFlightPlanBySapr")
+    public ArrayList<ResponseFlightPlan> getFlightPlanBySapr(int idSapr) throws SQLException;
+    
 }
 
