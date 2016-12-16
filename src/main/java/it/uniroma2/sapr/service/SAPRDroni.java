@@ -849,7 +849,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	            pt.close();
 	            pt1.close();
 	            con.close();
-	            logger.info(String.format("Class:%s-Method:%s::END select no one sapr of pilot %s",
+	            logger.info(String.format("Class:%s-Method:%s::END select no one device of pilot %s",
 	                    classe, method, pilotLicense));
 	            return arr_device;
 	        }
@@ -1019,9 +1019,112 @@ public class SAPRDroni implements SAPRDroniInterface{
 		return null;
 	}
 
-	public ResponseDevice getDevices(Opzione op) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<ResponseDevice> getDevices(Opzione op) throws SQLException {
+            /**
+             * questo metodo prende in input l'id del pilota e l'opzione che ci identifica cosa vogliamo
+             * ENABLED/DISABLED/ALL sono i soli valori che puo' assumere opzione
+             *
+             * @param owner il pilota a cui ci riferiamo
+             * @param opzione a quali dispositivi siamo interessati
+             * @return ArrayList<ResponseDevice> array di dispositivi
+             * @throws SQLException
+             */
+            String method = "selectAllDevice";
+            Connection con = null;
+            PreparedStatement pt = null;
+            PreparedStatement pt1 = null;
+            ArrayList<ResponseDevice> arr_device = new ArrayList<ResponseDevice>();
+            ArrayList<ResponseCheckElement> arr_check = new ArrayList<ResponseCheckElement>();
+
+            String query = "SELECT idDevice, model, type, weight, producer, pilotLicense, active"
+                    + " FROM device";
+
+            if (op.name().equalsIgnoreCase("ENABLED")){
+                method = "selectAllDeviceEnabled";
+                query += " WHERE active = 1";
+            }else if (op.name().equalsIgnoreCase("DISABLED")) {
+                method = "selectAllDeviceDisabled";
+                query += " WHERE active = 0";
+            }else if (op.name().equalsIgnoreCase("ALL")) {
+                    
+            }
+	    
+	    String query1 = "SELECT valueCheckElement FROM checkDevice WHERE IdDevice = ?";
+    
+	    try {
+	        //logger per segnalare l'inizio della scrittura del metodo
+	        logger.info(String.format("Class:%s-Method:%s::START with ", classe, method));
+	
+	        con = MySQLDbDAOFactory.createConnection();
+	        pt = con.prepareStatement(query);
+	        pt1 = con.prepareStatement(query1);
+	        
+	        // eseguo la query
+	        ResultSet rs = pt.executeQuery();
+	        if (rs != null) {
+                    if(op.name().equalsIgnoreCase("ENABLED"))
+                        logger.info(String.format("Class:%s-Method:%s::END select all enabled device",
+                        classe, method));
+
+                    if(op.name().equalsIgnoreCase("DISABLED"))
+                        logger.info(String.format("Class:%s-Method:%s::END select all disabled device",
+                        classe, method));
+
+                    if(op.name().equalsIgnoreCase("ALL"))
+                        logger.info(String.format("Class:%s-Method:%s::END select all device",
+                        classe, method));
+
+	            while (rs.next()) {
+                        ResponseDevice rispDev = new ResponseDevice();
+	            	ArrayList<ResponseCheckElement> checkDevice = new ArrayList<ResponseCheckElement>();
+	            	
+	            	//recupero la licenza dalla query 
+                        int idD = rs.getInt("idDevice");
+                        rispDev.setIdDevice(idD);
+                        String model = rs.getString("model");
+                        rispDev.setModel(model);
+                        String type = rs.getString("type");
+                        rispDev.setType(type);
+                        int weight = rs.getInt("weight");
+                        rispDev.setWeight(weight);
+                        String producer = rs.getString("producer");
+                        rispDev.setProducer(producer);
+                        String license = rs.getString("pilotLicense");
+                        rispDev.setPilotLicense(license);
+                        int active = rs.getInt("active");
+                        rispDev.setActive(active);
+	                   
+	                pt1.setInt(1, idD);
+	                ResultSet rs1 = pt1.executeQuery();
+	                
+	                while(rs1.next()){	
+                            String valore = rs1.getString("valueCheckElement");
+                            checkDevice.add(new ResponseCheckElement(valore));
+	                }
+	                rispDev.setCheckDevice(checkDevice);      
+	                arr_device.add(rispDev);   
+	            }
+	            return arr_device;
+	            
+	        } else {	
+	            pt.close();
+	            pt1.close();
+	            con.close();
+	            logger.info(String.format("Class:%s-Method:%s::END select no one device",
+	                    classe, method));
+	            return arr_device;
+	        }
+	    } catch (Exception e) {
+	    	logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
+	        return arr_device;
+	    }finally {
+	        if (pt != null) 
+	            pt.close();
+	        if (pt1 != null) 
+	            pt1.close();
+	        if (con != null) 
+	            con.close();
+            }
 	}
 
 }
