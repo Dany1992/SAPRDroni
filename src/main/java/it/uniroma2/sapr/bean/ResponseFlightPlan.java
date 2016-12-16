@@ -40,13 +40,13 @@ public class ResponseFlightPlan {
 	private int idNote;
 	
 	@XmlElement(name = "devices")
-	private ArrayList<Device> devices;
+	private ArrayList<Integer> devices;
 	
 	@XmlElement(name = "pilotLicense")
 	private String pilotLicense;
 
 	
-    public ResponseFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, ArrayList<Device> devices, String pilotLicense) {
+    public ResponseFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, ArrayList<Integer> devices, String pilotLicense) {
         this.destinations = destinations;
         this.departure = departure;
         this.dateDeparture = dateDeparture;
@@ -118,11 +118,11 @@ public class ResponseFlightPlan {
         this.idNote = idNote;
     }
 
-    public ArrayList<Device> getDevices() {
+    public ArrayList<Integer> getDevices() {
         return devices;
     }
 
-    public void setDevices(ArrayList<Device> devices) {
+    public void setDevices(ArrayList<Integer> devices) {
         this.devices = devices;
     }
 

@@ -902,7 +902,7 @@ public class SAPRDroni implements SAPRDroniInterface{
     public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws Exception{
                 System.out.println("funzione selectFlightPlanByFlightPlan(int idSapr,String pilotLicense,String dateDeparture)");
 		String method = "selectFlightPlan";
-                ArrayList<Device> array=new ArrayList<Device>();
+                ArrayList<Integer> array=new ArrayList<Integer>();
 		Connection con = null;
 		PreparedStatement pt = null;
                 ResultSet rs=null;
@@ -928,7 +928,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,idSapr));
         
                                 while(rs.next()){ 
-                                    array.add(new Device(rs.getInt("iddevice"),rs.getString("model"),rs.getString("type"),rs.getInt("weight"),rs.getString("producer"),rs.getString("pilotlicense"),null, rs.getInt("active")));
+                                    array.add(rs.getInt("iddevice"));
                                 }
                                 rs.first(); 
                                 ResponseFlightPlan flight1 = new ResponseFlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),array,rs.getString("pilotLicense"));
