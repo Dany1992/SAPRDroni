@@ -64,7 +64,7 @@ public class RequestFlightPlan extends Request{
         this.pilotLicense = pilotLicense;
         this.op=op;
     }
-    
+
     public String getDestinations() {
         return destinations;
     }

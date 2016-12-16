@@ -1,7 +1,6 @@
 package it.uniroma2.sapr.service;
 
 
-import it.uniroma2.sapr.bean.Request;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -11,13 +10,15 @@ import it.uniroma2.sapr.bean.RequestPilot;
 import it.uniroma2.sapr.bean.RequestSAPR;
 import it.uniroma2.sapr.bean.ResponseListPilots;
 import it.uniroma2.sapr.bean.ResponseSapr;
+import it.uniroma2.sapr.utility.Opzione;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
-
-import it.uniroma2.sapr.bean.Request.opzione;
-import it.uniroma2.sapr.bean.ResponseDevice;
 import it.uniroma2.sapr.bean.ResponseFlightPlan;
-import java.sql.SQLException;
+import it.uniroma2.sapr.bean.ResponseNote;
+import it.uniroma2.sapr.bean.ResponsePilot;
+import it.uniroma2.sapr.bean.ResponseDevice;
+
+
 import java.util.ArrayList;
 
 @WebService
@@ -41,31 +42,36 @@ public interface SAPRDroniInterface {
     @WebMethod(operationName = "getPilots")
     public ResponseListPilots getPilots() throws Exception;
     
-
-    @WebMethod(operationName = "selectSaprOfPilotWithState")
-    public ArrayList<ResponseSapr> selectSaprOfPilotWithState(opzione opzione, String pilotLicense) throws Exception;
+    @WebMethod(operationName = "getPilot")
+    public ResponsePilot getPilot(String licensePilots) throws Exception;
     
-    @WebMethod(operationName = "selectSaprOfPilot")
-    public ArrayList<ResponseSapr> selectSaprOfPilot(String pilotLicense) throws Exception;
+    @WebMethod(operationName = "getNote")
+    public ResponseNote getNote(int idNote) throws Exception;
+
+    @WebMethod(operationName = "getSaprsOfPilot")
+    public ArrayList<ResponseSapr> getSaprsOfPilot(Opzione op, String pilotLicense) throws Exception;
+
+    @WebMethod(operationName = "getSaprs")
+    public ArrayList<ResponseSapr> getSaprs(Opzione op) throws Exception;
     
     @WebMethod(operationName = "selectSapr")
-    public ResponseSapr selectSapr(int idSapr) throws Exception;
+    public ResponseSapr getSapr(int idSapr) throws Exception;
     
-    //@WebMethod(operationName = "selectDeviceOfPilot")
-    //public ArrayList<ResponseDevice> selectDevice(String owner) throws SQLException;
-    
-    @WebMethod(operationName = "selectADevice")
-    public ResponseDevice selectADevice(int idDevice) throws SQLException;
+    @WebMethod(operationName = "getDevice")
+    public ResponseDevice getDevice(int idDevice) throws Exception;
  
-    @WebMethod(operationName = "selectEnableDevice")
-    public ArrayList<ResponseDevice> selectEnableDevice(Request.opzione op, String owner) throws SQLException;
+    @WebMethod(operationName = "getDevicesOfPilot")
+    public ArrayList<ResponseDevice> getDevicesOfPilot(Opzione op, String owner) throws Exception;
     
-    @WebMethod(operationName = "selectFlightPlanByFlight")
-    public ResponseFlightPlan selectFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException;
+    @WebMethod(operationName = "getDevices")
+    public ResponseDevice getDevices(Opzione op) throws Exception;
+
     
-    @WebMethod(operationName = "selectFlightPlanBySapr")
-    public ArrayList<ResponseFlightPlan> selectFlightPlanBySapr(int idSapr) throws SQLException;
+    @WebMethod(operationName = "getFlightPlanByFlight")
+    public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws Exception;
+    
+    @WebMethod(operationName = "getFlightPlanBySapr")
+    public ArrayList<ResponseFlightPlan> getFlightPlanBySapr(int idSapr) throws Exception;
+    
 }
-
-
 
