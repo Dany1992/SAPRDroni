@@ -65,7 +65,7 @@ public interface SAPRDroniInterface {
     public ArrayList<ResponseDevice> getDevicesOfPilot(Opzione op, String owner) throws SQLException;
     
     @WebMethod(operationName = "getDevices")
-    public ResponseDevice getDevices(Opzione op) throws SQLException;
+    public ArrayList<ResponseDevice> getDevices(Opzione op) throws SQLException;
     
     @WebMethod(operationName = "getFlightPlanByFlight")
     public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException;
