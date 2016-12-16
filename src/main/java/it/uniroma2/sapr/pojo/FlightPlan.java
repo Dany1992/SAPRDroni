@@ -22,9 +22,9 @@ public class FlightPlan{
     private int idSapr;
     private int idNote;
     private String pilotLicense;
-    private ArrayList<Device> devices;
+    private ArrayList<Integer> devices;
 
-    public FlightPlan(String destination, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote,String pilotLicense, ArrayList<Device> devices) {
+    public FlightPlan(String destination, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote,String pilotLicense, ArrayList<Integer> devices) {
         this.destination = destination;
         this.departure = departure;
         this.dateDeparture = dateDeparture;
@@ -101,11 +101,11 @@ public class FlightPlan{
         this.pilotLicense = pilotLicense;
     }
 
-    public ArrayList<Device> getDevices() {
+    public ArrayList<Integer> getDevices() {
         return devices;
     }
 
-    public void setDevices(ArrayList<Device> devices) {
+    public void setDevices(ArrayList<Integer> devices) {
         this.devices = devices;
     }
 

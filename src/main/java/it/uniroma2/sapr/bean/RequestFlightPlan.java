@@ -42,7 +42,7 @@ public class RequestFlightPlan extends Request{
 	private int idNote;
 	
 	@XmlElement(name = "devices")
-	private ArrayList<Device> devices;
+	private ArrayList<Integer> devices;
 
 	@XmlElement(name = "pilotLicense")
 	private String pilotLicense;
@@ -52,7 +52,7 @@ public class RequestFlightPlan extends Request{
 	// TODO Auto-generated constructor stub
    }
 
-    public RequestFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, ArrayList<Device> devices, String pilotLicense,operation op) {
+    public RequestFlightPlan(String destinations, String departure, String dateDeparture, String timeDeparture, String nowArriving, int idSapr, int idNote, ArrayList<Integer> devices, String pilotLicense,operation op) {
         this.destinations = destinations;
         this.departure = departure;
         this.dateDeparture = dateDeparture;
@@ -121,11 +121,11 @@ public class RequestFlightPlan extends Request{
         this.idNote = idNote;
     }
 
-    public ArrayList<Device> getDevices() {
+    public ArrayList<Integer> getDevices() {
         return devices;
     }
 
-    public void setDevices(ArrayList<Device> devices) {
+    public void setDevices(ArrayList<Integer> devices) {
         this.devices = devices;
     }
 

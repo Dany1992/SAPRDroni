@@ -55,7 +55,7 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 			pt.setString(5, flight.getNowArriving());
 			pt.setInt(6, flight.getIdSapr());
 			pt.setInt(7, flight.getIdNote());
-			pt.setInt(8, flight.getDevices().get(i).getIdDevice());
+			pt.setInt(8, flight.getDevices().get(i));
 			pt.setString(9, flight.getPilotLicense());
     
                        
@@ -152,7 +152,7 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
    public ResponseFlightPlan selectFlightPlan(FlightPlan flight) throws SQLException{
                 System.out.println("funzione selectFlightPlan(FlightPlan flight)");
 		String method = "selectFlightPlan";
-                ArrayList<Device> array=new ArrayList<Device>();
+                ArrayList<Integer> array=new ArrayList<Integer>();
 		Connection con = null;
 		PreparedStatement pt = null;
                 ResultSet rs=null;
@@ -178,7 +178,7 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 				logger.info(String.format("Class:%s-Method:%s::END select flight plan with idSapr code-%s",classe,method,flight.getIdSapr()));
         
                                 while(rs.next()){ 
-                                    array.add(new Device(rs.getInt("iddevice"),rs.getString("model"),rs.getString("type"),rs.getInt("weight"),rs.getString("producer"),rs.getString("pilotlicense"),null, rs.getInt("active")));
+                                    array.add(rs.getInt("iddevice"));
                                 }
                                 rs.first(); 
                                 ResponseFlightPlan flight1 = new ResponseFlightPlan(rs.getString("destination"),rs.getString("departure"),rs.getString("datedeparture"),rs.getString("timeDeparture"),rs.getString("nowarriving"),rs.getInt("idsapr"),rs.getInt("idNote"),array,rs.getString("pilotLicense"));
@@ -314,9 +314,9 @@ public boolean updateFlightPlan(FlightPlan flight) throws SQLException {
   public static void main(String args[]) throws ParseException{
       
 		//INSERIMENTO:
-                ArrayList<Device> d = new ArrayList<Device>();
-                d.add(new Device(1,"model1","Camera",500,"producer2","0000000001",null,1));
-                d.add(new Device(4,"model3","Brightness Sensor",10,"producer4","0000000001",null,1));
+                ArrayList<Integer> d = new ArrayList<Integer>();
+                d.add(1);
+                d.add(4);
                 
 		FlightPlan flight = new FlightPlan("Piaggine", "Ciampino", "2016-09-11", "18:00:00", "24",2,1,"0000000002",d);
 		MySQLDbFlightPlanDAO mysqlTest = new MySQLDbFlightPlanDAO();
