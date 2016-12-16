@@ -59,19 +59,19 @@ public interface SAPRDroniInterface {
     public ResponseSapr getSapr(int idSapr) throws Exception;
     
     @WebMethod(operationName = "getDevice")
-    public ResponseDevice getDevice(int idDevice) throws SQLException;
+    public ResponseDevice getDevice(int idDevice) throws Exception;
  
     @WebMethod(operationName = "getDevicesOfPilot")
-    public ArrayList<ResponseDevice> getDevicesOfPilot(Opzione op, String owner) throws SQLException;
+    public ArrayList<ResponseDevice> getDevicesOfPilot(Opzione op, String owner) throws Exception;
     
     @WebMethod(operationName = "getDevices")
-    public ResponseDevice getDevices(Opzione op) throws SQLException;
+    public ResponseDevice getDevices(Opzione op) throws Exception;
     
     @WebMethod(operationName = "getFlightPlanByFlight")
-    public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException;
+    public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws Exception;
     
     @WebMethod(operationName = "getFlightPlanBySapr")
-    public ArrayList<ResponseFlightPlan> getFlightPlanBySapr(int idSapr) throws SQLException;
+    public ArrayList<ResponseFlightPlan> getFlightPlanBySapr(int idSapr) throws Exception;
     
 }
 

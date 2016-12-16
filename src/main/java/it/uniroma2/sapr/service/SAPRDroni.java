@@ -306,7 +306,7 @@ public class SAPRDroni implements SAPRDroniInterface{
         }
 	
 
-  	public ArrayList<ResponseSapr> getSaprsOfPilot(Opzione opzione, String pilotLicense) throws SQLException{
+  	public ArrayList<ResponseSapr> getSaprsOfPilot(Opzione opzione, String pilotLicense) throws Exception{
   		/**
 	     * questo metodo prende in input un'op
 	     * zione:
@@ -554,7 +554,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 //
 //	}
  
-	public ResponseSapr getSapr(int idSapr) throws SQLException {
+	public ResponseSapr getSapr(int idSapr) throws Exception {
 		
 		String method = "selectSapr";
 		Connection con = null;
@@ -655,7 +655,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 		}
 	}
 
-        public ResponseDevice getDevice(int idDevice) throws SQLException {
+        public ResponseDevice getDevice(int idDevice) throws  Exception {
             /**
              * questo metodo prende in input un device e ci restituisce tutti
              * i suoi dettagli
@@ -755,7 +755,7 @@ public class SAPRDroni implements SAPRDroniInterface{
         }
 
 
-        public ArrayList<ResponseDevice> getDevicesOfPilot(Opzione op, String pilotLicense) throws SQLException {
+        public ArrayList<ResponseDevice> getDevicesOfPilot(Opzione op, String pilotLicense) throws Exception {
             /**
              * questo metodo prende in input l'id del pilota e l'opzione che ci identifica cosa vogliamo
              * ENABLED/DISABLED/ALL sono i soli valori che puo' assumere opzione
@@ -900,7 +900,7 @@ public class SAPRDroni implements SAPRDroniInterface{
                     return result;
         }
 
-    public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws SQLException{
+    public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws Exception{
                 System.out.println("funzione selectFlightPlanByFlightPlan(int idSapr,String pilotLicense,String dateDeparture)");
 		String method = "selectFlightPlan";
                 ArrayList<Device> array=new ArrayList<Device>();
@@ -958,7 +958,7 @@ public class SAPRDroni implements SAPRDroniInterface{
     
     }
     
-    public ArrayList<ResponseFlightPlan> getFlightPlanBySapr(int idSapr) throws SQLException{
+    public ArrayList<ResponseFlightPlan> getFlightPlanBySapr(int idSapr) throws Exception{
                 System.out.println("funzione selectFlightPlanBySapr(int idSapr)");
 		String method = "selectFlightPlan";
 		Connection con = null;
@@ -1019,7 +1019,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 		return null;
 	}
 
-	public ResponseDevice getDevices(Opzione op) throws SQLException {
+	public ResponseDevice getDevices(Opzione op) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

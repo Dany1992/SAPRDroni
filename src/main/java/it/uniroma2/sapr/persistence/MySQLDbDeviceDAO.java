@@ -1,20 +1,13 @@
 package it.uniroma2.sapr.persistence;
-import it.uniroma2.sapr.utility.Opzione;
-import it.uniroma2.sapr.bean.Request;
-import it.uniroma2.sapr.bean.Request.opzione;
-import it.uniroma2.sapr.bean.Response;
-import it.uniroma2.sapr.bean.ResponseDevice;
-import it.uniroma2.sapr.pojo.CheckElement;
-import it.uniroma2.sapr.pojo.Device;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
-import it.uniroma2.sapr.service.SAPRDroni;
+import it.uniroma2.sapr.pojo.CheckElement;
+import it.uniroma2.sapr.pojo.Device;
 /**
  *
  * @author dario
