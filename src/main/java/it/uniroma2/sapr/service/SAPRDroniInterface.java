@@ -65,7 +65,6 @@ public interface SAPRDroniInterface {
     
     @WebMethod(operationName = "getDevices")
     public ResponseDevice getDevices(Opzione op) throws Exception;
-
     
     @WebMethod(operationName = "getFlightPlanByFlight")
     public ResponseFlightPlan getFlightPlanByFlight(int idSapr,String pilotLicense,String dateDeparture) throws Exception;

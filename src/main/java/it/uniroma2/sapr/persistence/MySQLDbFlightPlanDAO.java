@@ -34,14 +34,14 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 	 * @throws SQLException
 	 */
 	public boolean insertFlightPlan(FlightPlan flight) throws SQLException{
-                System.out.println("funzione insert");
+        System.out.println("funzione insert");
 		String method = "insertFlightPlan";
 		Connection con = null;
 		PreparedStatement pt = null;
 		try {
-                     for(int i=0;i<flight.getDevices().size();i++){
-                        String query = "INSERT INTO flightplan(destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,idDevice,pilotLicense) VALUES(?,?,?,?,?,?,?,?,?)";
-                        System.out.println(query);
+            for(int i=0;i<flight.getDevices().size();i++){
+            String query = "INSERT INTO flightplan(destination,departure,dateDeparture,timeDeparture,nowArriving,idSapr,idNote,idDevice,pilotLicense) VALUES(?,?,?,?,?,?,?,?,?)";
+            System.out.println(query);
 			//logger per segnalare l'inizio della scrittura del metodo
 			logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe,method,flight.toString()));
 			
@@ -57,20 +57,16 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 			pt.setInt(7, flight.getIdNote());
 			pt.setInt(8, flight.getDevices().get(i));
 			pt.setString(9, flight.getPilotLicense());
-    
-                       
-			
-			//esito della query
+			System.out.println("Before execute the query");
 			if(pt.executeUpdate() == 1){
-                                System.out.println("Ho inserito il flightPlan");	
-                                System.out.println(pt.toString());
-                                pt.close();
+				System.out.println("Ho inserito il flightPlan");	
+                System.out.println(pt.toString());
+                pt.close();
 				con.close();
-				
 				logger.info(String.format("Class:%s-Method:%s::END add flight plan with destination code-%s", //
 						classe,method,flight.getDestination()));
 				result=true;
-			}else {
+			}else{
 				pt.close();
 				con.close();
 				System.out.println("Non ho inserito il flightPlan");
@@ -78,11 +74,11 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 						classe,method,flight.getDestination()));
 				result=false;
 			}
-                    }
-                return result;
-			
+        }
+            return result;
 		} catch (Exception e) {
 			logger.error(String.format("Class:%s-Method:%s::ERROR", classe,method) + e);
+			System.out.println("Errore: " + e.toString());
 			return false;
 		} finally {
 			if (pt != null) {
@@ -93,7 +89,7 @@ public class MySQLDbFlightPlanDAO implements FlightPlanDAO{
 				con.close();
 			}
 		}
-        }
+    }
         
         
         

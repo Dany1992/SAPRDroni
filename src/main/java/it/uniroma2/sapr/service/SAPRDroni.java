@@ -17,6 +17,7 @@ import it.uniroma2.sapr.persistence.DAOFactory;
 import it.uniroma2.sapr.persistence.PilotDAO;
 import it.uniroma2.sapr.pojo.Pilot;
 import it.uniroma2.sapr.pojo.Device;
+import it.uniroma2.sapr.bean.Request.operation;
 import it.uniroma2.sapr.bean.RequestCheckElement;
 import it.uniroma2.sapr.bean.RequestDevice;
 import it.uniroma2.sapr.bean.RequestFlightPlan;
@@ -114,22 +115,26 @@ public class SAPRDroni implements SAPRDroniInterface{
             logger.info(String.format("Class:%s-Method:%s::START", classe,method));
             logger.info(String.format("Class:%s-Method:%s::The request is: %s", classe,method,request.toString()));
             ArrayList<CheckElement> checkList = new ArrayList<CheckElement>();
-            
-            for(RequestCheckElement e : request.getCheckSapr()){
-            	CheckElement a = new CheckElement(e.getValue());
-            	checkList.add(a);
+            System.out.println("operation: " + request.getOp() + " idSapr " + request.getIdSapr());
+            Sapr sapr;
+            if (request.getOp().name().equalsIgnoreCase("ENABLE")){
+            	sapr = new Sapr();
+            	sapr.setIdSapr((int)request.getIdSapr());
+            }else{
+	            for(RequestCheckElement e : request.getCheckSapr()){
+	            	CheckElement a = new CheckElement(e.getValue());
+	            	checkList.add(a);
+	            }
+	            
+	            sapr = new Sapr((int)request.getIdSapr(), request.getModel(), request.getProducer(), 
+	                            request.getWeight(), request.getHeavyweight(), request.getBattery(), 
+	                            request.getMaxDistance(), request.getMaxHeight(), request.getPilotLicense(), 
+	                            checkList, 0);
             }
-            
-            Sapr sapr = new Sapr((int)request.getIdSapr(), request.getModel(), request.getProducer(), 
-                            request.getWeight(), request.getHeavyweight(), request.getBattery(), 
-                            request.getMaxDistance(), request.getMaxHeight(), request.getPilotLicense(), 
-                            checkList, 0);
             
             //Creo le classi per accedere al db.
             DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
             SaprDAO saprDAO = mySQLFactory.getSaprDAO();
-            
-
             
             System.out.println("***********************START WS***********************");
             System.out.println("La richiesta è: " + request.toString());
@@ -323,7 +328,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	    PreparedStatement pt1 = null;
 	    ArrayList<ResponseSapr> arr_sapr = new ArrayList<ResponseSapr>();
 	    String query;
-	    
+	    System.out.println("Dati in input: opzione[" + opzione.toString() + "] licensa [" + pilotLicense + "]");
 	    if(opzione.name().equalsIgnoreCase("ALL")){
 	    	query = "SELECT idSapr, model, producer, " +
 	    		    "weight, heavyweight, battery, maxDistance, maxHeight, pilotLicense, active FROM sapr WHERE pilotLicense = ? ";
@@ -358,7 +363,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	        // eseguo la query
 	        ResultSet rs = pt.executeQuery();
 	        if (rs != null) {
-	        	
+	        	System.out.println("Query eseguita correttamente");
 	        	if(opzione.name().equalsIgnoreCase("ENABLED"))
 	        		logger.info(String.format("Class:%s-Method:%s::END select enabled sapr of pilot %s",
 	        				classe, method, pilotLicense));
@@ -370,7 +375,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	        	if(opzione.name().equalsIgnoreCase("ALL"))
 	        		logger.info(String.format("Class:%s-Method:%s::END select all sapr of pilot %s",
 	        				classe, method, pilotLicense));
-	
+	        	
 	            while (rs.next()) {
 	            	ResponseSapr rispSapr = new ResponseSapr();
 	            	ArrayList<ResponseCheckElement> checkSapr = new ArrayList<ResponseCheckElement>();
@@ -409,7 +414,7 @@ public class SAPRDroni implements SAPRDroniInterface{
 	                arr_sapr.add(rispSapr);
 	                
 	            }
-	
+	            System.out.println("Risposta: " + arr_sapr.toString());
 	            return arr_sapr;
 	            
 	        } else {
@@ -958,7 +963,7 @@ public class SAPRDroni implements SAPRDroniInterface{
     }
     
     public ArrayList<ResponseFlightPlan> getFlightPlanBySapr(int idSapr) throws Exception{
-                System.out.println("funzione selectFlightPlanBySapr(int idSapr)");
+        System.out.println("funzione selectFlightPlanBySapr(int idSapr)");
 		String method = "selectFlightPlan";
 		Connection con = null;
 		PreparedStatement pt = null;
@@ -1014,8 +1019,22 @@ public class SAPRDroni implements SAPRDroniInterface{
 	}
 
 	public ArrayList<ResponseSapr> getSaprs(Opzione op) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String method = "getPilots";
+		logger.info(String.format("Class:%s-Method:%s::START", classe,method ));
+		
+		
+		//Factory per il db
+		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		
+		ArrayList<ResponseSapr> listSapr = new ArrayList<ResponseSapr>();
+		if (op == Opzione.DISABLED){
+			SaprDAO saprDAO = mysqlFactory.getSaprDAO();
+			listSapr  = saprDAO.saprDisable();
+		}
+		
+		
+		logger.info(String.format("Class:%s-Method:%s::END", classe,method));
+		return listSapr;
 	}
 
 	public ResponseDevice getDevices(Opzione op) throws Exception {

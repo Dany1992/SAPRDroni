@@ -34,7 +34,11 @@ public class Sapr {
         this.setActive(active);
     }
 
-    public int getIdSapr() {
+    public Sapr() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getIdSapr() {
         return idSapr;
     }
 
