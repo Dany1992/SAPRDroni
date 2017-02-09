@@ -38,6 +38,7 @@ import it.uniroma2.sapr.utility.Opzione;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -1014,8 +1015,61 @@ public class SAPRDroni implements SAPRDroniInterface{
     }
 
 	public ResponsePilot getPilot(String licensePilots) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+            String method = "getPilot";
+            Connection con = null;
+            PreparedStatement pt = null;
+            ResponsePilot pilot = new ResponsePilot();
+            
+            String query = "SELECT name,surname,birthDate,nation,taxCode,state,residence,phone,mail,password"
+                    + " FROM pilot WHERE pilotLicense = ?";
+    
+	    try {
+	        //logger per segnalare l'inizio della scrittura del metodo
+	        logger.info(String.format("Class:%s-Method:%s::START with dates %s", classe, method, licensePilots));
+	
+	        con = MySQLDbDAOFactory.createConnection();
+	        pt = con.prepareStatement(query);
+	  
+	        //compilo il primo campo ? nella query
+	        pt.setString(1, licensePilots);
+	        
+	        // eseguo la query
+	        ResultSet rs = pt.executeQuery();
+	        if (rs != null) {
+                    logger.info(String.format("Class:%s-Method:%s::END select all device of pilot %s",
+                    classe, method, licensePilots));
+
+	            while (rs.next()) {
+	            	//recupero la licenza dalla query
+                        pilot.setName(rs.getString("name"));
+                        pilot.setBirthDate(rs.getString("birthDate"));
+                        pilot.setNation(rs.getString("nation"));
+                        pilot.setTaxCode(rs.getString("taxCode"));
+                        pilot.setState(rs.getString("state"));
+                        pilot.setResidence(rs.getString("residence"));
+                        pilot.setPhone(rs.getString("phone"));
+                        pilot.setMail(rs.getString("mail"));
+                        pilot.setPassword(rs.getString("password"));
+   
+	            }
+	            return pilot;
+	            
+	        } else {	
+	            pt.close();
+	            con.close();
+	            logger.info(String.format("Class:%s-Method:%s::END select no one sapr of pilot %s",
+	                    classe, method, licensePilots));
+	            return pilot;
+	        }
+	    } catch (Exception e) {
+	    	logger.error(String.format("Class:%s-Method:%s::ERROR", classe, method) + e);
+	        return pilot;
+	    }finally {
+	        if (pt != null) 
+	            pt.close();
+	        if (con != null) 
+	            con.close();
+            }
 	}
 
 	public ArrayList<ResponseSapr> getSaprs(Opzione op) throws Exception {
@@ -1041,5 +1095,12 @@ public class SAPRDroni implements SAPRDroniInterface{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+        
+        
+        public static void main(String args[]) throws Exception{
+            String license = "0000000001";
+            SAPRDroni a = new SAPRDroni();
+            System.out.println(a.getPilot(license));
+        
+        }
 }
